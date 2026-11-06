@@ -6,9 +6,11 @@ rd=lambda f:open(os.path.join(src,f),encoding='utf-8').read()
 css,js=rd('base.css'),rd('data.js')+'\n'+rd('ui.js')
 head=rd('head.html')
 os.makedirs(out,exist_ok=True)
-for f in sorted(glob.glob(os.path.join(src,'0*.html'))):
+jobs=[(f,out) for f in sorted(glob.glob(os.path.join(src,'0*.html')))]+[(f,os.path.join(here,'homepage')) for f in sorted(glob.glob(os.path.join(src,'v2*.html')))]
+for f,o in jobs:
+    os.makedirs(o,exist_ok=True)
     page=open(f,encoding='utf-8').read()
     title,body=page.split('\n',1)
     html=head.replace('{{TITLE}}',title.strip()).replace('/*CSS*/',css)+body.replace('/*DATA*/',js)
-    open(os.path.join(out,os.path.basename(f)),'w',encoding='utf-8').write(html)
+    open(os.path.join(o,os.path.basename(f)),'w',encoding='utf-8').write(html)
     print('built',os.path.basename(f))

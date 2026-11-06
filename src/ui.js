@@ -91,7 +91,7 @@
   function usp() {
     return `<div class="usp"><div class="wrap">
       <div>${ui('truck', 'ico')}<span><b>3–5 werkdagen</b><small>Levertijd voor artikelen op voorraad</small></span></div>
-      <div>${ui('store', 'ico')}<span><b>Showroom Kwintsheul</b><small>Kom passen en voelen, di t/m vr open</small></span></div>
+      <div>${ui('store', 'ico')}<span><b>Showroom Kwintsheul</b><small>Kom passen en voelen, di t/m za open</small></span></div>
       <div>${ui('shirt', 'ico')}<span><b>Clubkleding</b><small>Jerseys, caps en jassen voor je team</small></span></div>
       <div>${ui('pen', 'ico')}<span><b>Glove Customizer</b><small>Ontwerp je eigen handschoen</small></span></div>
     </div></div>`;

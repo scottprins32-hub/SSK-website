@@ -14,6 +14,12 @@ Open `index.html` for an overview, or open any file in `concepts/` on its own. E
 | 04 | Rustig | White header, lots of whitespace, products in tabs |
 | 05 | Promoraster | Large customiser tile next to New Arrivals and Outlet tiles |
 
+## Homepage versie 2 (gekozen richting)
+
+`homepage/v2-homepage.html` is version 02 "Customizer voorop" worked out as a complete homepage: the customiser as the hero, then gloves, the 2026 bats, outlet and balls, a short SSK heritage strip, club apparel and Holland Series, the showroom with opening hours, brands and the footer. Every product shown is a real product from the shop with its real name, price, link and product photo (the `og:image` of its product page). The heritage line "Baseball, it's our game." comes from SSK's US site, sskbaseballshop.com.
+
+Still to fill in: `CUSTOMIZER_URL` (the customiser link) and `CUSTOMIZER_IMG` (a customiser screenshot for the hero) in `src/data.js`.
+
 ## Placeholders
 
 - **Customiser link:** set `CUSTOMIZER_URL` in `src/data.js` to the real customiser URL.
@@ -23,4 +29,4 @@ Open `index.html` for an overview, or open any file in `concepts/` on its own. E
 
 ## Editing
 
-`src/base.css` holds the design tokens and components, `src/ui.js` the shared header, cards, customiser block, showroom and footer, and `src/data.js` the content. Edit `src/`, then run `python3 build.py` to rebuild the files in `concepts/`.
+`src/base.css` holds the design tokens and components, `src/ui.js` the shared header, cards, customiser block, showroom and footer, and `src/data.js` the content. Edit `src/`, then run `python3 build.py` to rebuild the files in `concepts/` and `homepage/`.

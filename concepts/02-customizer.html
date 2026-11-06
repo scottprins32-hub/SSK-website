@@ -339,6 +339,8 @@ img{display:block;max-width:100%}
   const BASE = 'https://sskeurope.ccvshop.nl';
   // Link for the existing glove customiser. Replace with the real URL.
   const CUSTOMIZER_URL = '#customizer';
+  // Screenshot of the existing customiser for the version 2 hero. Leave empty to show the placeholder.
+  const CUSTOMIZER_IMG = '';
 
   const I = {
     glove: '<path d="M21 56C12 52 7 44 7 34c0-8 3-14 8-16l5 10c2-10 6-17 14-19 9-2 18 2 21 10 3 9 1 21-3 28-4 6-11 9-19 9z"/><path d="M29 12c2 9 2 20 0 30M39 10c2 10 2 22 0 34M48 14c2 9 2 20-1 30" stroke-dasharray="3 3.5"/><path d="M15 18l-3 6 5 6 3-2"/><path d="M24 47c6 4 15 4 21-2"/><path d="M9 40c4 8 10 13 18 14"/>',
@@ -400,6 +402,15 @@ img{display:block;max-width:100%}
   // Product photos (og:image from each product page). Missing ones show a neutral placeholder.
   const PH = BASE + '/Files/2/81000/81585/ProductPhotos/1200x630/';
   const PHOTO = {
+  'Rawlings-Pro-Preferred-Mike-Trout-12.75-Outfield-Glove-Black/Gray-RHT': PH + '2401957967.png',
+  'Wilson-A2K-FALL-2024-B23-BLACK-12%E2%80%9D': PH + '2105045046.jpg',
+  'Rawlings-Heart-of-the-Hide-33.5-Catcher-Glove-Black/Red/Splatter-RHT': PH + '2366995640.png',
+  'Rawlings-Heart-Of-The-Hide-13-First-Base-Glove-Tan/Black-RHT': PH + '2366995622.png',
+  'Easton-Ghost-Advanced-2026-10': PH + '2363268062.png',
+  'Rawlings-Mantra-2026-10': PH + '2363268137.png',
+  'DeMarini-The-Goods-26-BBCOR-3': PH + '2354495435.png',
+  'Easton-Hype-Fire-2026-USA-5': PH + '2363268023.png',
+  'CBB96-Champro-9-Control-Flight-Ball': PH + '400387691.jpg',
   'Champro-CSB24Y-12-Slowpitch-Softball': PH + '2097276075.jpg',
   'Baseball-Nordics-Weighted-Plyo-Ball-Set': PH + '2120016678.jpg',
   'Champro-Contour-Fit-Body-Protector-14.5-Navy': PH + '274531413.jpg',
@@ -426,15 +437,21 @@ img{display:block;max-width:100%}
       P('Rawlings', 'REV1X 34" Catcher Glove Columbia blue/Black/Pink RHT', 494.95, 0, 'glove', ['#8db8e0', '#1b1a19'], 'Nieuw', 'Rawlings-REV1X-34-Catcher-Glove-Columbia-blue/Black/Pink-RHT')
     ],
     more: [
-      P('Rawlings', 'REV1X Francisco Lindor 11.75" Infield Glove RHT', 454.95, 494.95, 'glove', ['#a8723f', '#1b1a19'], 'Sale', 'Webwinkel-Category-5784651/Handschoenen.html'),
-      P('Rawlings', 'Pro Preferred Mike Trout 12.75" Outfield Glove RHT', 499.95, 0, 'glove', ['#c9935b', '#1b1a19'], '', 'Webwinkel-Category-5784651/Handschoenen.html'),
-      P('Wilson', 'A2K Fall 2024 12" Pitcher Glove RHT', 475.00, 0, 'glove', ['#7a4a2a', '#1b1a19'], '', 'Webwinkel-Category-5784651/Handschoenen.html'),
-      P('Rawlings', 'RX2 Matte Batting Helmet Navy', 69.95, 0, 'helmet', ['#1d2947', '#3a4a70'], 'Nieuw', 'Rawlings-RX2-Matte-Batting-Helmet-Navy')
+      P('Rawlings', 'Pro Preferred Mike Trout 12.75" Outfield Glove Black/Gray RHT', 499.95, 0, 'glove', ['#1b1a19', '#80827f'], '', 'Rawlings-Pro-Preferred-Mike-Trout-12.75-Outfield-Glove-Black/Gray-RHT'),
+      P('Wilson', 'A2K Fall 2024 B23 12" Pitcher Glove Black/Red RHT', 475.00, 0, 'glove', ['#1b1a19', '#b3222b'], '', 'Wilson-A2K-FALL-2024-B23-BLACK-12%E2%80%9D'),
+      P('Rawlings', 'Heart of the Hide 33.5" Catcher Glove Black/Red/Splatter RHT', 449.95, 0, 'glove', ['#1b1a19', '#b3222b'], '', 'Rawlings-Heart-of-the-Hide-33.5-Catcher-Glove-Black/Red/Splatter-RHT'),
+      P('Rawlings', 'Heart of the Hide 13" First Base Glove Tan/Black RHT', 449.95, 0, 'glove', ['#c9935b', '#1b1a19'], '', 'Rawlings-Heart-Of-The-Hide-13-First-Base-Glove-Tan/Black-RHT')
+    ],
+    bats: [
+      P('Easton', 'Ghost Advanced 2026 -10', 544.95, 0, 'bat', ['#1b1a19', '#80827f'], 'Nieuw', 'Easton-Ghost-Advanced-2026-10'),
+      P('Rawlings', 'Mantra 2026 -10', 539.95, 0, 'bat', ['#1b1a19', '#80827f'], 'Nieuw', 'Rawlings-Mantra-2026-10'),
+      P('DeMarini', 'The Goods 26 BBCOR -3', 529.95, 0, 'bat', ['#1b1a19', '#80827f'], 'Nieuw', 'DeMarini-The-Goods-26-BBCOR-3'),
+      P('Easton', 'Hype Fire 2026 USA -5', 449.95, 0, 'bat', ['#1b1a19', '#80827f'], 'Nieuw', 'Easton-Hype-Fire-2026-USA-5')
     ],
     balls: [
       P('SSK', 'GDN100 - SSK Baseball', 4.95, 5.95, 'ball', ['#efe9df', '#b3222b'], 'Sale', 'GDN100-SSK-Baseball'),
       P('SSK', 'GDN200 - SSK Baseball', 5.95, 6.95, 'ball', ['#efe9df', '#b3222b'], 'Sale', 'GDN200-SSK-Baseball'),
-      P('Champro', 'CSB24Y 12" Slowpitch Softball', 8.95, 9.95, 'ball', ['#e7f04a', '#b3222b'], 'Sale', 'Champro-CSB24Y-12-Slowpitch-Softball'),
+      P('Champro', 'CBB96 - Champro 9" Control Flight Ball', 9.00, 0, 'ball', ['#efe9df', '#b3222b'], '', 'CBB96-Champro-9-Control-Flight-Ball'),
       P('Baseball Nordics', 'Weighted Plyo Ball Set', 65.00, 0, 'ball', ['#2a2a2a', '#e3ae27'], '', 'Baseball-Nordics-Weighted-Plyo-Ball-Set')
     ],
     outlet: [
@@ -445,8 +462,8 @@ img{display:block;max-width:100%}
     ]
   };
 
-  const BRANDS = ['SSK', 'Rawlings', 'Wilson', 'Easton', 'Louisville Slugger', 'Champro', 'Franklin', 'Evoshield'];
-  const HOURS = [['Maandag', 'Gesloten'], ['Dinsdag', '12:00 – 16:30'], ['Woensdag', '10:00 – 17:30'], ['Donderdag', '12:00 – 16:30'], ['Vrijdag', '12:00 – 20:30'], ['Zaterdag', 'Gesloten'], ['Zondag', 'Gesloten']];
+  const BRANDS = ['SSK', 'Rawlings', 'Wilson', 'Easton', 'DeMarini', 'Louisville Slugger', 'Champro', 'Evoshield'];
+  const HOURS = [['Maandag', 'Gesloten'], ['Dinsdag', '12:00 – 16:30'], ['Woensdag', '10:00 – 17:30'], ['Donderdag', '12:00 – 16:30'], ['Vrijdag', '12:00 – 20:30'], ['Zaterdag', '10:00 – 16:00'], ['Zondag', 'Gesloten']];
   const PAGES = ['Openingstijden', 'Algemene voorwaarden', 'Privacy Verklaring', 'Prijslijst', 'Levertijden', 'Retour Zenden', 'Niet Te Ruilen', 'Maten', 'Garantie', '3D Geborduurde Caps en Sublimatie Jerseys', 'Was Voorschrift', 'Welke Bal Koopt U?', 'Bedrukken Kleding / Caps', 'Voorverkoop Aanbieding Ballen 2027'];
   const CONTACT = { name: 'SSK European Baseball Center', street: 'Heulweg 128B', city: '2295 KK Kwintsheul', phone: '+31 174 501 888', email: 'info@sskeurope.com', instagram: 'https://www.instagram.com/ssk_europe', facebook: 'https://www.facebook.com/SSK-Europe-1806900749536624/' };
   const LEAD = [['Op voorraad (webshop)', '3 – 5 werkdagen'], ['Bedrukken op voorraad', '+ 3 – 5 werkdagen'], ['Standaard wedstrijdkleding', '30 – 35 werkdagen'], ['Speciale broeken', '36 – 45 werkdagen'], ['Club- en studentenjassen', '36 – 45 werkdagen']];
@@ -455,7 +472,7 @@ img{display:block;max-width:100%}
   // Image with graceful fallback: if the shop image fails, the tile keeps its icon.
   const img = (src, alt) => src ? `<img src="${src}" alt="${alt}" loading="lazy" onerror="this.remove()">` : '';
 
-  window.SSK = { LOGO, BASE, CUSTOMIZER_URL, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
+  window.SSK = { LOGO, BASE, CUSTOMIZER_URL, CUSTOMIZER_IMG, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
 })();
 
 /* Shared render helpers for the five versions. Uses window.SSK from data.js. */
@@ -551,7 +568,7 @@ img{display:block;max-width:100%}
   function usp() {
     return `<div class="usp"><div class="wrap">
       <div>${ui('truck', 'ico')}<span><b>3–5 werkdagen</b><small>Levertijd voor artikelen op voorraad</small></span></div>
-      <div>${ui('store', 'ico')}<span><b>Showroom Kwintsheul</b><small>Kom passen en voelen, di t/m vr open</small></span></div>
+      <div>${ui('store', 'ico')}<span><b>Showroom Kwintsheul</b><small>Kom passen en voelen, di t/m za open</small></span></div>
       <div>${ui('shirt', 'ico')}<span><b>Clubkleding</b><small>Jerseys, caps en jassen voor je team</small></span></div>
       <div>${ui('pen', 'ico')}<span><b>Glove Customizer</b><small>Ontwerp je eigen handschoen</small></span></div>
     </div></div>`;
