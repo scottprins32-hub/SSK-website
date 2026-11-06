@@ -1,6 +1,6 @@
 # SSK Europe website redesigns
 
-Five homepage layouts for [sskeurope.ccvshop.nl](https://sskeurope.ccvshop.nl/), all built on the SSK Europe design system: navy `#0B1F3A`, red `#C8102E` as the only action colour, Barlow Condensed headings, Barlow body text, IBM Plex Mono prices, 3/6px radii, a 1200px container and the dashed red stitch line once per page. The versions share one stylesheet and one set of components and differ only in layout.
+Five homepage layouts for [sskeurope.ccvshop.nl](https://sskeurope.ccvshop.nl/), all built on the SSK Europe design system: the SSK colours black, white and red `#C8102E` (red as the action colour), Barlow Condensed headings, Barlow body text, IBM Plex Mono prices, 3/6px radii, a 1200px container and the dashed red stitch line once per page. The versions share one stylesheet and one set of components and differ only in layout.
 
 Every version keeps the content of the current shop: all 17 categories, new arrivals, balls, outlet, club apparel and printing with lead times, the Hoofdklasse Holland Series 2026, brands, the showroom with opening hours, and the full footer. Each one gives the glove customiser a prominent spot and button. The customiser itself is not changed.
 
