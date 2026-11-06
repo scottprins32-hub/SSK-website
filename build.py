@@ -1,7 +1,6 @@
-import glob,os
-g=open('src/glove.js').read()
-os.makedirs('concepts',exist_ok=True)
+import glob,os,sys
+d=open('src/data.js').read()
+out=sys.argv[1] if len(sys.argv)>1 else 'concepts'
+os.makedirs(out,exist_ok=True)
 for f in sorted(glob.glob('src/0*.html')):
-    s=open(f).read().replace('/*GLOVE*/',g)
-    open('concepts/'+os.path.basename(f),'w').write(s)
-    print(f)
+    open(os.path.join(out,os.path.basename(f)),'w').write(open(f).read().replace('/*DATA*/',d))

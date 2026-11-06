@@ -3,209 +3,236 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SSK Europe · Concept 02 · Raster</title>
+<title>SSK Europe · Versie 02 · Raster</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,700;0,800;0,900;1,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f2f0eb;--ink:#0f0f0f;--red:#e3001b;--line:#0f0f0f;--mute:#6d6a64;--sans:'Inter Tight',system-ui,sans-serif;--mono:'JetBrains Mono',monospace}
+:root{--bg:#f2f0eb;--ink:#0f0f0f;--red:#e3001b;--mute:#6d6a64;--l:1px solid #0f0f0f;--sans:'Inter Tight',system-ui,sans-serif;--mono:'JetBrains Mono',monospace}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{overflow-x:clip}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
-button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-.mono{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase}
-.g{display:grid;grid-template-columns:repeat(12,1fr);border-left:1px solid var(--line)}
-.g>*{border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-.wrap{padding:0 clamp(16px,2vw,28px)}
-/* header */
-header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--line)}
-header .in{display:grid;grid-template-columns:auto 1fr auto;align-items:stretch;height:64px}
-.logo{display:flex;align-items:center;gap:10px;padding:0 24px;border-right:1px solid var(--line);font-weight:900;font-size:26px;letter-spacing:-.04em}
-.logo i{width:14px;height:14px;background:var(--red);border-radius:50%}
-nav{display:flex;align-items:center;overflow:auto}
-nav a{padding:0 18px;height:100%;display:flex;align-items:center;font-weight:500;font-size:14px;border-right:1px solid transparent;white-space:nowrap}
-nav a:hover{background:var(--ink);color:var(--bg)}
-.hcta{display:flex;align-items:center;gap:0}
-.hcta a{height:100%;display:flex;align-items:center;padding:0 22px;border-left:1px solid var(--line);font-weight:700;font-size:14px}
-.hcta a.r{background:var(--red);color:#fff}
-/* hero */
-.hero{display:grid;grid-template-columns:repeat(12,1fr);border-bottom:1px solid var(--line)}
-.hero-t{grid-column:span 12;padding:28px 24px 0;display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line);padding-bottom:14px}
-h1{grid-column:span 12;font-weight:900;font-size:clamp(64px,14.4vw,250px);line-height:.8;letter-spacing:-.065em;padding:26px 18px 30px;border-bottom:1px solid var(--line)}
-h1 span{color:var(--red)}
-/* config */
-.cfg{grid-column:span 12;display:grid;grid-template-columns:3fr 5fr 4fr;min-height:640px}
-.cfg>*{border-right:1px solid var(--line)}
-.cfg>*:last-child{border-right:0}
-.steps{display:flex;flex-direction:column}
-.steps .h{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}
-[data-zones]{display:flex;flex-direction:column;flex:1}
-[data-zones] button{flex:1;display:grid;grid-template-columns:44px 1fr 24px;align-items:center;padding:0 24px;border-bottom:1px solid var(--line);font-weight:700;font-size:clamp(18px,1.6vw,24px);letter-spacing:-.02em;text-align:left;counter-increment:z;min-height:52px;transition:background .15s}
-[data-zones]{counter-reset:z}
-[data-zones] button:before{content:counter(z,decimal-leading-zero);font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:0;color:var(--mute)}
-[data-zones] button i{order:3;width:20px;height:20px;background:var(--c);border:1px solid var(--ink)}
-[data-zones] button:hover{background:#e6e3dc}
-[data-zones] button.on{background:var(--ink);color:var(--bg)}
-[data-zones] button.on:before{color:var(--red)}
-.stage{position:relative;display:grid;place-items:center;background:var(--bg);overflow:hidden}
-.stage .cross{position:absolute;inset:0;background:linear-gradient(var(--line),var(--line)) center/1px 100% no-repeat,linear-gradient(var(--line),var(--line)) center/100% 1px no-repeat;opacity:.12}
-.stage .circle{position:absolute;width:82%;aspect-ratio:1;border-radius:50%;background:var(--red)}
-[data-glove]{width:min(86%,430px);position:relative;transition:transform .2s ease-out}
-.glove-svg{width:100%;height:auto;display:block}
-.pulse{animation:pl .5s steps(2)}@keyframes pl{50%{opacity:.4}}
-.stage .tl,.stage .tr,.stage .bl,.stage .br{position:absolute;padding:16px 18px}
-.tl{left:0;top:0}.tr{right:0;top:0;text-align:right}.bl{left:0;bottom:0}.br{right:0;bottom:0}
-.stage .big{font-weight:900;font-size:44px;letter-spacing:-.04em;line-height:1;margin-top:6px}
-.opts{display:flex;flex-direction:column}
-.opts>div{padding:18px 24px;border-bottom:1px solid var(--line)}
-.opts .hd{display:flex;justify-content:space-between;margin-bottom:12px}
-[data-swatches]{display:grid;grid-template-columns:repeat(7,1fr);border-left:1px solid var(--ink);border-top:1px solid var(--ink)}
-[data-swatches] button{aspect-ratio:1;background:var(--c);border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);position:relative}
-[data-swatches] button.on:after{content:"";position:absolute;inset:30%;background:var(--bg);border:1px solid var(--ink);border-radius:50%}
-.row{display:flex;flex-wrap:wrap;border-left:1px solid var(--ink);border-top:1px solid var(--ink)}
-.row button{flex:1 0 auto;padding:10px 12px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);font-weight:600;font-size:13px}
-.row button.on{background:var(--red);color:#fff}
-input[data-text]{width:100%;border:1px solid var(--ink);background:#fff;padding:12px;font:700 18px var(--sans);outline:none;text-transform:uppercase;letter-spacing:.04em}
-input[data-text]:focus{outline:2px solid var(--red)}
-.buy{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;border-bottom:0!important;padding:0!important}
-.buy .p{padding:18px 24px;border-right:1px solid var(--line)}
-.buy .p b{display:block;font-weight:900;font-size:40px;letter-spacing:-.04em}
-.buy a{background:var(--red);color:#fff;display:flex;align-items:end;padding:18px 24px;font-weight:800;font-size:22px;letter-spacing:-.02em;transition:.2s}
-.buy a:hover{background:var(--ink)}
-/* info strip */
-.strip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
-.strip>div{padding:22px 24px;border-right:1px solid var(--line)}
-.strip>div:last-child{border-right:0}
-.strip b{display:block;font-weight:800;font-size:22px;letter-spacing:-.02em;margin-top:8px}
-/* sections */
-.sec{border-bottom:1px solid var(--line)}
-.sec-h{display:grid;grid-template-columns:3fr 9fr;border-bottom:1px solid var(--line)}
-.sec-h>*{padding:24px}
-.sec-h>*:first-child{border-right:1px solid var(--line)}
-h2{font-weight:900;font-size:clamp(44px,6.4vw,112px);line-height:.86;letter-spacing:-.055em}
+a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.ico{width:100%;height:100%}
+.m{font-family:var(--mono);font-size:11px;letter-spacing:.03em;text-transform:uppercase}
+.p24{padding:20px 24px}
+h2{font-weight:900;font-size:clamp(46px,7vw,120px);line-height:.84;letter-spacing:-.06em}
 h2 span{color:var(--red)}
-.cats{display:grid;grid-template-columns:repeat(6,1fr)}
-.cat{border-right:1px solid var(--line);padding:20px;min-height:300px;display:flex;flex-direction:column;justify-content:space-between;transition:.2s;position:relative}
-.cat:last-child{border-right:0}
-.cat:hover{background:var(--red);color:#fff}
-.cat h3{font-weight:900;font-size:clamp(22px,2.2vw,34px);letter-spacing:-.045em;line-height:.95}
-.cat .c{display:flex;justify-content:space-between;align-items:end}
-.cat .c span:last-child{font-size:30px;font-weight:300}.cat .c .mono{max-width:70%}
+.bar{background:var(--ink);color:var(--bg);display:flex;justify-content:space-between;padding:8px 24px;gap:20px}
+header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:var(--l)}
+.hd{display:grid;grid-template-columns:auto 1fr auto auto auto;height:64px}
+.hd>*{display:flex;align-items:center;padding:0 22px;border-right:var(--l)}
+.hd>*:last-child{border-right:0}
+.logo{font-weight:900;font-size:28px;letter-spacing:-.05em;gap:10px}
+.logo i{width:14px;height:14px;background:var(--red);border-radius:50%}
+.srch{gap:12px;color:var(--mute);font-size:15px}
+.hd a.r{background:var(--red);color:#fff;font-weight:700}
+.hd a{font-weight:600;font-size:14px}
+.cn{display:flex;overflow:auto;scrollbar-width:none;border-top:var(--l)}
+.cn a{padding:12px 16px;border-right:var(--l);white-space:nowrap;font-weight:500;font-size:13px}
+.cn a:hover{background:var(--ink);color:var(--bg)}
+.cn a.hl{color:var(--red)}
+/* hero */
+.hero{border-bottom:var(--l)}
+.hero .top{display:flex;justify-content:space-between;border-bottom:var(--l)}
+h1{font-weight:900;font-size:clamp(70px,15vw,260px);line-height:.78;letter-spacing:-.07em;padding:30px 16px 34px;border-bottom:var(--l)}
+h1 span{color:var(--red)}
+.hg{display:grid;grid-template-columns:repeat(12,1fr)}
+.hg>*{border-right:var(--l)}.hg>*:last-child{border-right:0}
+.hg .t{grid-column:span 4;display:flex;flex-direction:column;justify-content:space-between;gap:30px}
+.hg .t p{font-size:22px;line-height:1.3;font-weight:500;letter-spacing:-.01em}
+.btns{display:flex;flex-wrap:wrap;border-top:var(--l);border-left:var(--l)}
+.btns a{flex:1 0 auto;padding:16px 18px;border-right:var(--l);border-bottom:var(--l);font-weight:700;display:flex;justify-content:space-between;gap:20px}
+.btns a.r{background:var(--red);color:#fff}
+.btns a:hover{background:var(--ink);color:var(--bg)}
+.hg .v{grid-column:span 5;position:relative;min-height:440px;display:grid;place-items:center;overflow:hidden}
+.hg .v .c{position:absolute;width:74%;aspect-ratio:1;border-radius:50%;background:var(--red)}
+.hg .v .i{position:relative;width:46%;color:#fff}
+.hg .v img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hg .v .lb{position:absolute;left:16px;bottom:14px;background:var(--bg);border:var(--l);padding:6px 10px}
+.hg .s{grid-column:span 3;display:flex;flex-direction:column}
+.hg .s div{flex:1;border-bottom:var(--l);padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between}
+.hg .s div:last-child{border-bottom:0}
+.hg .s b{font-weight:900;font-size:52px;letter-spacing:-.05em;line-height:1}
+/* customiser */
+.cz{background:var(--red);color:#fff;display:grid;grid-template-columns:repeat(12,1fr);border-bottom:var(--l)}
+.cz>*{border-right:1px solid rgba(255,255,255,.4)}.cz>*:last-child{border-right:0}
+.cz .a{grid-column:span 7;padding:28px 24px}
+.cz .a h2 span{color:var(--ink)}
+.cz .a p{font-size:22px;font-weight:500;max-width:560px;margin-top:24px;line-height:1.3}
+.cz .b{grid-column:span 5;display:flex;flex-direction:column}
+.cz .b div{flex:1;display:grid;grid-template-columns:60px 1fr;align-items:center;padding:0 24px;border-bottom:1px solid rgba(255,255,255,.4);font-weight:700;font-size:clamp(20px,2vw,28px);letter-spacing:-.03em;min-height:80px}
+.cz .b div span{font-family:var(--mono);font-size:12px;font-weight:400}
+.cz .b a{background:var(--ink);padding:24px;font-weight:800;font-size:26px;letter-spacing:-.03em;display:flex;justify-content:space-between}
+.cz .b a:hover{background:#fff;color:var(--red)}
+/* index */
+.sec{border-bottom:var(--l)}
+.sh{display:grid;grid-template-columns:3fr 9fr;border-bottom:var(--l)}
+.sh>*{padding:22px 24px}.sh>*:first-child{border-right:var(--l);display:flex;flex-direction:column;justify-content:space-between}
+.idx{display:grid;grid-template-columns:1fr 1fr}
+.idx a{display:grid;grid-template-columns:60px 1fr 48px 140px;align-items:center;gap:10px;padding:14px 24px;border-bottom:var(--l);font-weight:800;font-size:clamp(22px,2.4vw,36px);letter-spacing:-.04em;transition:background .15s}
+.idx a:nth-child(odd){border-right:var(--l)}
+.idx a .m{font-weight:400;letter-spacing:0}
+.idx a .i{width:40px;height:40px;opacity:0;transform:translateX(-10px);transition:.2s}
+.idx a .d{font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:0;color:var(--mute);text-align:right;text-transform:uppercase}
+.idx a:hover{background:var(--red);color:#fff}
+.idx a:hover .i{opacity:1;transform:none}.idx a:hover .d{color:#fff}
+/* products */
 .prods{display:grid;grid-template-columns:repeat(4,1fr)}
-.prod{border-right:1px solid var(--line);display:flex;flex-direction:column}
-.prod:last-child{border-right:0}
-.prod .img{aspect-ratio:1;display:grid;place-items:center;border-bottom:1px solid var(--line);position:relative;background:#e9e6df}
-.prod .img>div{width:66%;transition:.4s}
-.prod:hover .img>div{transform:translateY(-8px)}
-.prod .img .tag{position:absolute;top:12px;left:12px;background:var(--ink);color:var(--bg);padding:4px 8px}
-.prod .img .tag.r{background:var(--red)}
-.prod .meta{padding:16px 18px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
-.prod h4{font-weight:700;font-size:18px;letter-spacing:-.02em;line-height:1.15}
-.prod .pr{margin-top:auto;display:flex;justify-content:space-between;align-items:end}
-.prod .pr b{font-weight:900;font-size:24px;letter-spacing:-.03em}
+.prod{border-right:var(--l);border-bottom:var(--l);display:flex;flex-direction:column}
+.prod:nth-child(4n){border-right:0}
+.prod .img{aspect-ratio:1;border-bottom:var(--l);position:relative;display:grid;place-items:center;background:var(--a)}
+.prod .img .i{width:44%;color:var(--b);transition:.3s}
+.prod:hover .img .i{transform:translateY(-8px) rotate(-6deg)}
+.prod .tag{position:absolute;top:12px;left:12px;background:var(--ink);color:var(--bg);padding:4px 8px}
+.prod .tag.s{background:var(--red);color:#fff}
+.prod .sw{position:absolute;right:12px;top:12px;display:flex;border:var(--l)}
+.prod .sw i{width:14px;height:14px}
+.prod .meta{padding:14px 16px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.prod h4{font-weight:700;font-size:17px;letter-spacing:-.02em;line-height:1.15}
+.prod .pr{margin-top:auto;display:flex;justify-content:space-between;align-items:end;padding-top:10px}
+.prod .pr b{font-weight:900;font-size:24px;letter-spacing:-.04em}
 .prod s{color:var(--mute);font-size:13px}
-.club{display:grid;grid-template-columns:7fr 5fr;background:var(--red);color:#fff}
-.club>div{padding:28px 24px}
-.club>div:first-child{border-right:1px solid rgba(255,255,255,.4)}
-.club h2 span{color:var(--ink)}
-.club p{font-size:20px;line-height:1.35;max-width:540px;margin-top:26px;font-weight:500}
-.club ol{list-style:none;border-top:1px solid rgba(255,255,255,.4)}
-.club li{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.4);font-weight:700;font-size:20px}
-.club .btn{display:inline-block;margin-top:24px;background:var(--ink);color:#fff;padding:14px 22px;font-weight:800}
+.prod .add{border:var(--l);width:34px;height:34px;display:grid;place-items:center;font-weight:700}
+.prod:hover .add{background:var(--red);color:#fff;border-color:var(--red)}
+/* hhs + services */
+.hhs{display:grid;grid-template-columns:repeat(12,1fr);background:var(--ink);color:var(--bg)}
+.hhs>div{padding:24px}
+.hhs .a{grid-column:span 8;border-right:1px solid #333}
+.hhs .b{grid-column:span 4;display:flex;flex-direction:column;justify-content:space-between;gap:20px}
+.hhs .b b{font-weight:900;font-size:clamp(90px,12vw,200px);letter-spacing:-.08em;line-height:.8;color:var(--red)}
+.hhs a{display:inline-block;margin-top:24px;background:var(--red);color:#fff;padding:14px 20px;font-weight:800}
+.svc{display:grid;grid-template-columns:repeat(3,1fr)}
+.svc>div{border-right:var(--l);padding:24px;display:flex;flex-direction:column;gap:16px;min-height:320px}
+.svc>div:last-child{border-right:0}
+.svc .i{width:50px;height:50px}
+.svc h3{font-weight:900;font-size:34px;letter-spacing:-.04em;line-height:.95}
+.svc p{line-height:1.5;color:#333}
+.svc a{margin-top:auto;font-weight:700;border-top:var(--l);padding-top:12px;display:flex;justify-content:space-between}
+.lt{display:grid;grid-template-columns:repeat(5,1fr);border-top:var(--l)}
+.lt div{border-right:var(--l);padding:18px 24px}.lt div:last-child{border-right:0}
+.lt b{display:block;font-weight:900;font-size:26px;letter-spacing:-.04em;margin-top:8px}
+.brands{display:grid;grid-template-columns:repeat(8,1fr)}
+.brands div{border-right:var(--l);padding:40px 12px;text-align:center;font-weight:800;font-size:clamp(14px,1.4vw,20px);letter-spacing:-.03em;transition:.15s}
+.brands div:last-child{border-right:0}
+.brands div:hover{background:var(--ink);color:var(--bg)}
+.usp{display:grid;grid-template-columns:repeat(4,1fr)}
+.usp div{border-right:var(--l);padding:20px 24px;display:flex;gap:14px;align-items:center}
+.usp div:last-child{border-right:0}
+.usp .i{width:36px;height:36px;flex:none;color:var(--red)}
+.usp b{display:block;font-weight:800;font-size:18px}
 .visit{display:grid;grid-template-columns:repeat(3,1fr)}
-.visit>div{padding:24px;border-right:1px solid var(--line)}
-.visit>div:last-child{border-right:0}
-.visit h3{font-weight:800;font-size:28px;letter-spacing:-.03em;margin:10px 0 16px}
-.visit p{line-height:1.6}
-.hours li{list-style:none;display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:7px 0;font-size:15px}
+.visit>div{border-right:var(--l);padding:24px}.visit>div:last-child{border-right:0}
+.visit h3{font-weight:900;font-size:30px;letter-spacing:-.04em;margin:10px 0 14px;line-height:1}
+.visit li{list-style:none;display:flex;justify-content:space-between;border-bottom:var(--l);padding:7px 0}
 footer{padding:24px}
-footer .fb{font-weight:900;font-size:clamp(80px,22vw,380px);letter-spacing:-.08em;line-height:.78;margin-top:24px}
-footer .fb span{color:var(--red)}
-.fl{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
-@media (max-width:1100px){nav{display:none}.cfg{grid-template-columns:1fr 1fr}.cfg .steps{grid-column:span 2;border-right:0;border-bottom:1px solid var(--line)}[data-zones]{display:grid;grid-template-columns:1fr 1fr}.cats{grid-template-columns:repeat(3,1fr)}.cat{border-bottom:1px solid var(--line)}.prods{grid-template-columns:1fr 1fr}.prod{border-bottom:1px solid var(--line)}}
-@media (max-width:760px){.cfg{grid-template-columns:1fr}.cfg .steps{grid-column:auto}.cfg>*{border-right:0;border-bottom:1px solid var(--line)}.stage{min-height:420px}.strip,.visit,.club,.sec-h{grid-template-columns:1fr}.strip>div,.visit>div,.sec-h>*{border-right:0!important;border-bottom:1px solid var(--line)}.cats{grid-template-columns:1fr 1fr}.prods{grid-template-columns:1fr}.hcta a:not(.r){display:none}.hero-t span:nth-child(2){display:none}}
+.fg{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;border-bottom:var(--l);padding-bottom:30px}
+.fg ul{list-style:none;line-height:2;font-size:14px;margin-top:12px}
+.fb{font-weight:900;font-size:clamp(90px,23vw,400px);letter-spacing:-.085em;line-height:.76;margin-top:30px}
+.fb span{color:var(--red)}
+.fl{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:20px}
+@media (max-width:1100px){.srch,.hd .acc{display:none}.hd{grid-template-columns:auto 1fr auto}.hg .t,.hg .v{grid-column:span 6}.hg .s{grid-column:span 12;flex-direction:row;border-top:var(--l)}.hg .s div{border-bottom:0;border-right:var(--l)}.idx{grid-template-columns:1fr}.idx a:nth-child(odd){border-right:0}.prods{grid-template-columns:1fr 1fr}.prod:nth-child(2n){border-right:0}.brands{grid-template-columns:repeat(4,1fr)}.brands div{border-bottom:var(--l)}.lt{grid-template-columns:1fr 1fr}.lt div{border-bottom:var(--l)}.cz .a,.cz .b,.hhs .a,.hhs .b{grid-column:span 12}.cz .a,.hhs .a{border-right:0;border-bottom:1px solid rgba(255,255,255,.4)}}
+@media (max-width:700px){.hg .t,.hg .v{grid-column:span 12}.hg .t{border-right:0;border-bottom:var(--l)}.hg .s{flex-direction:column}.hg .s div{border-right:0;border-bottom:var(--l)}.sh,.svc,.visit,.usp,.fg{grid-template-columns:1fr}.sh>*:first-child,.svc>div,.visit>div,.usp div{border-right:0!important;border-bottom:var(--l)}.idx a{grid-template-columns:44px 1fr 40px}.idx a .d{display:none}.prods{grid-template-columns:1fr}.prod{border-right:0!important}.brands{grid-template-columns:1fr 1fr}.bar span:last-child{display:none}.hd .cart{display:none}}
 </style>
 </head>
 <body>
-<header><div class="in">
-  <a class="logo" href="#"><i></i>SSK</a>
-  <nav><a href="#">Handschoenen</a><a href="#">Knuppels</a><a href="#">Ballen</a><a href="#">Clubkleding</a><a href="#">Kleding</a><a href="#">Catcher</a><a href="#">Schoenen</a><a href="#">Helmen</a><a href="#">Outlet</a></nav>
-  <div class="hcta"><a href="#">Zoeken</a><a href="#">Winkelwagen (0)</a><a class="r" href="#cfg">Glove Builder →</a></div>
-</div></header>
+<div class="bar m"><span>Op voorraad = 3–5 werkdagen</span><span>Showroom Heulweg 128B Kwintsheul</span><span>NL / EN</span></div>
+<header>
+  <div class="hd"><a class="logo" href="#"><i></i>SSK</a><div class="srch m">⌕ Zoeken in 17 categorieën</div><a class="acc" href="#">Account</a><a class="cart" href="#">Mand (0)</a><a class="r" data-cz href="#">Glove Customizer →</a></div>
+  <nav class="cn" id="cn"></nav>
+</header>
 
 <section class="hero">
-  <div class="hero-t mono"><span>SSK European Baseball Center</span><span>Kwintsheul, NL · 52.0°N 4.3°E</span><span>Nr. 001 / Glove Builder</span></div>
-  <h1>Bouw je<br>eigen <span>glove.</span></h1>
-  <div class="cfg" id="cfg" data-cfg>
-    <div class="steps">
-      <div class="h mono"><span>Stap 1 · Onderdeel</span><span>8 zones</span></div>
-      <div data-zones></div>
-    </div>
-    <div class="stage" data-tilt>
-      <div class="circle"></div><div class="cross"></div>
-      <div data-glove></div>
-      <div class="tl mono">Actief<div class="big" data-zone-name>Palm</div></div>
-      <div class="tr mono">Kleur<div class="big" data-color-name>Tan</div></div>
-      <div class="bl"><div class="row" data-hands style="border-color:var(--ink);background:var(--bg)"></div></div>
-      <div class="br"><button class="mono" data-random style="background:var(--ink);color:var(--bg);padding:10px 14px">Random ↻</button></div>
-    </div>
-    <div class="opts">
-      <div><div class="hd mono"><span>Stap 2 · Leer</span><span data-color-name></span></div><div data-swatches></div></div>
-      <div><div class="hd mono"><span>Stap 3 · Web</span></div><div class="row" data-webs></div></div>
-      <div><div class="hd mono"><span>Stap 4 · Positie</span></div><div class="row" data-positions></div></div>
-      <div><div class="hd mono"><span>Stap 5 · Naam op duim</span><span>max. 12</span></div><input data-text placeholder="JOUW NAAM"></div>
-      <div class="buy"><div class="p mono">Indicatief<b data-price>€349,00</b></div><a href="#">Aanvragen →</a></div>
-    </div>
+  <div class="top m p24"><span>SSK European Baseball Center</span><span>Baseball · Softball</span><span>Kwintsheul · Nederland</span></div>
+  <h1>Baseball<br><span>Europe.</span></h1>
+  <div class="hg">
+    <div class="t p24"><p>Handschoenen, knuppels, ballen, catcher gear en clubkleding van SSK, Rawlings, Wilson, Easton, Louisville Slugger en Champro.</p>
+      <div class="btns"><a class="r" href="#new">New Arrivals <span>→</span></a><a href="#idx">Alle categorieën <span>→</span></a><a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-10665083/Outlet.html">Outlet −50% <span>→</span></a></div></div>
+    <div class="v" id="heroVis"><div class="c"></div><div class="i" data-icon="glove"></div><span class="lb m">Fig. 01 · Handschoenen</span></div>
+    <div class="s"><div><span class="m">Levering</span><b>3–5</b><span>werkdagen op voorraad</span></div><div><span class="m">Merken</span><b>8</b><span>topmerken in de shop</span></div><div><span class="m">Categorieën</span><b>17</b><span>van ballen tot umpire gear</span></div></div>
   </div>
 </section>
 
-<div class="strip">
-  <div><span class="mono">01 · Levering</span><b>3–5 werkdagen op voorraad</b></div>
-  <div><span class="mono">02 · Showroom</span><b>Passen in Kwintsheul</b></div>
-  <div><span class="mono">03 · Merken</span><b>SSK, Rawlings, Wilson +4</b></div>
-  <div><span class="mono">04 · Clubs</span><b>Clubkleding op maat</b></div>
-</div>
+<section class="cz" id="customizer">
+  <div class="a"><span class="m">Nieuw · 001 / Glove Customizer</span><h2 style="margin-top:20px">Ontwerp<br>je eigen<br><span>handschoen.</span></h2><p>Kies je model, je leer en je kleuren per onderdeel. Zet je naam op de duim. Wij maken hem.</p></div>
+  <div class="b"><div><span>01</span>Model &amp; positie</div><div><span>02</span>Leer &amp; kleuren</div><div><span>03</span>Borduring</div><a data-cz href="#">Start de customizer <span>→</span></a></div>
+</section>
 
-<section class="sec">
-  <div class="sec-h"><span class="mono">Index / Categorieën</span><h2>Shop per <span>categorie.</span></h2></div>
-  <div class="cats">
-    <a class="cat" href="#"><span class="mono">A</span><h3>Handschoenen</h3><div class="c"><span class="mono">Veld · Catcher · 1e honk</span><span>↗</span></div></a>
-    <a class="cat" href="#"><span class="mono">B</span><h3>Knuppels</h3><div class="c"><span class="mono">BB-COR · Fastpitch</span><span>↗</span></div></a>
-    <a class="cat" href="#"><span class="mono">C</span><h3>Ballen</h3><div class="c"><span class="mono">Honk · Softbal</span><span>↗</span></div></a>
-    <a class="cat" href="#"><span class="mono">D</span><h3>Clubkleding</h3><div class="c"><span class="mono">Jerseys · Jassen</span><span>↗</span></div></a>
-    <a class="cat" href="#"><span class="mono">E</span><h3>Catcher</h3><div class="c"><span class="mono">Gear · Helmen</span><span>↗</span></div></a>
-    <a class="cat" href="#"><span class="mono">F</span><h3>Outlet</h3><div class="c"><span class="mono">Zomer korting</span><span>↗</span></div></a>
-  </div>
+<section class="sec" id="idx">
+  <div class="sh"><span class="m">Index / Categorieën<br><br>A – Q</span><h2>Shop per <span>categorie.</span></h2></div>
+  <div class="idx" id="index"></div>
+</section>
+
+<section class="sec" id="new">
+  <div class="sh"><span class="m">Selectie / New Arrivals</span><h2>Net <span>binnen.</span></h2></div>
+  <div class="prods" data-list="gloves"></div><div class="prods" data-list="more"></div>
+</section>
+
+<section class="sec hhs">
+  <div class="a"><span class="m">Event / 2026</span><h2 style="margin-top:20px">Hoofdklasse<br>Holland <span>Series.</span></h2><p style="font-size:20px;max-width:520px;margin-top:20px;line-height:1.35">De HHS 2026 collectie: shirts, caps en merchandise van de Nederlandse finale.</p><a href="#">Shop HHS 2026 →</a></div>
+  <div class="b"><span class="m">HHS</span><b>’26</b></div>
 </section>
 
 <section class="sec">
-  <div class="sec-h"><span class="mono">Selectie / Handschoenen</span><h2>Nu in de <span>winkel.</span></h2></div>
-  <div class="prods">
-    <a class="prod" href="#"><div class="img"><span class="tag r mono">−€40</span><div data-preset='{"palm":"camel","fingers":"camel","thumb":"camel","web":"camel","binding":"zwart","laces":"zwart","stitch":"zwart","logo":"zwart"}' data-mark="" data-shadow=".18"></div></div><div class="meta"><span class="mono">Rawlings · Infield · 11.75"</span><h4>REV1X Francisco Lindor</h4><div class="pr"><s>€494,95</s><b>€454,95</b></div></div></a>
-    <a class="prod" href="#"><div class="img"><span class="tag mono">Outfield</span><div data-preset='{"palm":"tan","fingers":"zwart","thumb":"zwart","web":"zwart","binding":"rood","laces":"tan","stitch":"rood","logo":"rood"}' data-web="trapeze" data-mark="" data-shadow=".18"></div></div><div class="meta"><span class="mono">Rawlings · Outfield · 12.75"</span><h4>Pro Preferred Mike Trout</h4><div class="pr"><span></span><b>€499,95</b></div></div></a>
-    <a class="prod" href="#"><div class="img"><span class="tag mono">Pitcher</span><div data-preset='{"palm":"bruin","fingers":"bruin","thumb":"zwart","web":"bruin","binding":"zwart","laces":"bruin","stitch":"geel","logo":"zwart"}' data-web="basket" data-mark="" data-shadow=".18"></div></div><div class="meta"><span class="mono">Wilson · Pitcher · 12"</span><h4>A2K Fall 2024</h4><div class="pr"><span></span><b>€475,00</b></div></div></a>
-    <a class="prod" href="#"><div class="img"><span class="tag mono">Infield</span><div data-preset="Classic Tan" data-web="H" data-mark="" data-shadow=".18"></div></div><div class="meta"><span class="mono">Rawlings · Infield · 11.75"</span><h4>Heart of the Hide</h4><div class="pr"><span></span><b>€449,95</b></div></div></a>
+  <div class="sh"><span class="m">Service / Club</span><h2>Eén club. Eén <span>tenue.</span></h2></div>
+  <div class="svc">
+    <div><div class="i" data-icon="shirt"></div><h3>Club&shy;kleding</h3><p>Jerseys, broeken, jassen en hoodies in je clubkleuren. Met letters en nummers.</p><a href="#">Bekijk <span>→</span></a></div>
+    <div><div class="i" data-icon="needle"></div><h3>Bedrukken kleding &amp; caps</h3><p>Je logo op kleding en caps, ook op voorraadartikelen.</p><a href="#">Bekijk <span>→</span></a></div>
+    <div><div class="i" data-icon="cap"></div><h3>3D borduring &amp; sublimatie</h3><p>3D geborduurde caps en volledig gesublimeerde jerseys.</p><a href="#">Bekijk <span>→</span></a></div>
   </div>
+  <div class="lt" id="lead"></div>
 </section>
 
-<section class="sec club">
-  <div><span class="mono">Service / Clubkleding &amp; bedrukken</span><h2 style="margin-top:20px">Eén club.<br>Eén <span>kleur.</span></h2><p>Jerseys, broeken, jassen en caps voor je hele team. Met 3D borduring, sublimatie en letters &amp; nummers in jouw clubkleuren.</p><a class="btn" href="#">Offerte aanvragen →</a></div>
-  <div><ol><li><span>Wedstrijdkleding</span><span>30–35 dagen</span></li><li><span>Speciale broeken</span><span>36–45 dagen</span></li><li><span>Club- &amp; studentenjassen</span><span>36–45 dagen</span></li><li><span>Bedrukken voorraad</span><span>+3–5 dagen</span></li><li><span>3D caps &amp; sublimatie</span><span>Op aanvraag</span></li></ol></div>
+<section class="sec">
+  <div class="sh"><span class="m">Selectie / Ballen<br><br><a href="#" style="text-decoration:underline">Welke bal koopt u?</a></span><h2>Ballen <span>deals.</span></h2></div>
+  <div class="prods" data-list="balls"></div>
+</section>
+
+<section class="sec">
+  <div class="sh"><span class="m">Merken</span><h2>8 <span>merken.</span></h2></div>
+  <div class="brands" id="brands"></div>
+</section>
+
+<section class="sec">
+  <div class="sh"><span class="m">Outlet / tot −50%</span><h2>Laatste <span>kans.</span></h2></div>
+  <div class="prods" data-list="outlet"></div>
+</section>
+
+<section class="sec usp">
+  <div><span class="i" data-icon="truck"></span><div><b>3–5 werkdagen</b><span class="m">Levering op voorraad</span></div></div>
+  <div><span class="i" data-icon="shield"></span><div><b>Garantie</b><span class="m">Handschoenen · knuppels · stiksel</span></div></div>
+  <div><span class="i" data-icon="ruler"></span><div><b>Maten</b><span class="m">Maattabellen</span></div></div>
+  <div><span class="i" data-icon="pin"></span><div><b>Showroom</b><span class="m">Kwintsheul</span></div></div>
 </section>
 
 <section class="sec visit">
-  <div><span class="mono">Adres</span><h3>Heulweg 128B<br>2295 KK Kwintsheul</h3><p>Kom langs om handschoenen te passen en je ontwerp te bespreken.</p></div>
-  <div><span class="mono">Openingstijden</span><ul class="hours" style="margin-top:12px"><li>Ma<b>Gesloten</b></li><li>Di<b>12:00–16:30</b></li><li>Wo<b>10:00–17:30</b></li><li>Do<b>12:00–16:30</b></li><li>Vr<b>12:00–20:30</b></li><li>Za–Zo<b>Gesloten</b></li></ul></div>
-  <div><span class="mono">Contact</span><h3>+31 174 501 888</h3><p>info@sskeurope.com<br>Instagram @ssk_europe<br>Facebook SSK Europe</p></div>
+  <div><span class="m">Adres</span><h3>Heulweg 128B<br>2295 KK Kwintsheul</h3><p>Kom passen en krijg advies over maat, model en positie.</p></div>
+  <div><span class="m">Openingstijden</span><ul id="hours" style="margin-top:12px"></ul></div>
+  <div><span class="m">Contact</span><h3>+31 174 501 888</h3><p>info@sskeurope.com<br><a href="https://www.instagram.com/ssk_europe">Instagram @ssk_europe</a><br><a href="https://www.facebook.com/SSK-Europe-1806900749536624/">Facebook SSK Europe</a></p></div>
 </section>
 
 <footer>
-  <div class="fl mono"><span>Levertijden · Retour zenden · Garantie · Maten · Prijslijst · Algemene voorwaarden · Privacy</span><span>NL / EN</span></div>
+  <div class="fg"><div><span class="m">Nieuwsbrief</span><p style="font-weight:700;font-size:22px;letter-spacing:-.02em;margin-top:12px">Nieuwe collecties en deals in je inbox.</p></div><div><span class="m">Shop</span><ul id="fCats"></ul></div><div><span class="m">Klantenservice</span><ul id="fP1"></ul></div><div><span class="m">Informatie</span><ul id="fP2"></ul></div></div>
   <div class="fb">SSK<span>.</span>EU</div>
-  <div class="fl mono" style="margin-top:20px"><span>© 2026 SSK European Baseball Center</span><span>Concept 02 · Raster</span></div>
+  <div class="fl m"><span>© 2026 SSK European Baseball Center</span><span>Versie 02 · Raster</span></div>
 </footer>
 
-<script>/*GLOVE*/</script>
-<script>SSKGlove.paint();SSKGlove.bind(document.querySelector('[data-cfg]'));</script>
+<script>/*DATA*/</script>
+<script>
+const S=SSK,$=s=>document.querySelector(s);
+document.querySelectorAll('[data-icon]').forEach(e=>e.innerHTML=S.icon(e.dataset.icon));
+document.querySelectorAll('[data-cz]').forEach(a=>a.href=S.CUSTOMIZER_URL);
+$('#cn').innerHTML=S.NAV.map(n=>`<a href="${n.url}" class="${/Outlet|Zomer|Hoofdklasse/.test(n.name)?'hl':''}">${n.name}</a>`).join('');
+$('#index').innerHTML=S.NAV.map((n,i)=>`<a href="${n.url}"><span class="m">${String.fromCharCode(65+i)}</span>${n.name}<span class="i">${S.icon(n.icon)}</span><span class="d">${n.sub}</span></a>`).join('');
+const card=p=>`<a class="prod" href="${p.url}"><div class="img" style="--a:${p.c[0]};--b:${p.c[1]}">${p.tag?`<span class="tag m ${p.was?'s':''}">${p.tag}</span>`:''}<span class="sw">${p.c.map(c=>`<i style="background:${c}"></i>`).join('')}</span><div class="i">${S.icon(p.icon)}</div></div><div class="meta"><span class="m">${p.brand}</span><h4>${p.name}</h4><div class="pr"><div>${p.was?`<s>${S.eur(p.was)}</s><br>`:''}<b>${S.eur(p.price)}</b></div><span class="add">+</span></div></div></a>`;
+document.querySelectorAll('[data-list]').forEach(el=>el.innerHTML=S.PRODUCTS[el.dataset.list].map(card).join(''));
+document.querySelectorAll('.prod .img').forEach(e=>{const a=getComputedStyle(e).getPropertyValue('--a').trim(),b=getComputedStyle(e).getPropertyValue('--b').trim();if(a===b||b==='#1b1a19'&&a==='#1b1a19')e.style.setProperty('--b','#fff')});
+$('#lead').innerHTML=S.LEAD.map(([a,b])=>`<div><span class="m">${a}</span><b>${b}</b></div>`).join('');
+$('#brands').innerHTML=S.BRANDS.map(b=>`<div>${b}</div>`).join('');
+$('#hours').innerHTML=S.HOURS.map(([d,h])=>`<li>${d}<b>${h}</b></li>`).join('');
+$('#fCats').innerHTML=S.NAV.slice(0,9).map(n=>`<li><a href="${n.url}">${n.name}</a></li>`).join('');
+$('#fP1').innerHTML=S.PAGES.slice(0,7).map(p=>`<li>${p}</li>`).join('');
+$('#fP2').innerHTML=S.PAGES.slice(7).map(p=>`<li>${p}</li>`).join('');
+const hi=S.NAV.find(n=>n.name==='Handschoenen').img;if(hi){const im=new Image();im.onload=()=>$('#heroVis').insertAdjacentHTML('afterbegin',`<img src="${hi}" alt="Handschoenen">`);im.src=hi;}
+</script>
 </body>
 </html>

@@ -1,23 +1,23 @@
-# SSK Europe website concepts
+# SSK Europe website redesigns
 
-Five redesign directions for [sskeurope.ccvshop.nl](https://sskeurope.ccvshop.nl/). Each one puts the new glove customiser in the hero.
+Five homepage redesigns of [sskeurope.ccvshop.nl](https://sskeurope.ccvshop.nl/), each in a different style. Every version keeps the content of the current shop: all 17 categories, new arrivals, balls, outlet, club apparel and printing, the Hoofdklasse Holland Series 2026, brands, the showroom and opening hours, and the full footer. Each one gives the glove customiser a prominent spot and button.
 
-Open `index.html` for an overview, or open any file in `concepts/` on its own. Every concept is a single self-contained HTML file (fonts load from Google Fonts), so it can be emailed or opened straight from disk.
+Open `index.html` for an overview, or open any file in `concepts/` on its own. Every file is self-contained (fonts load from Google Fonts), so it can be emailed or opened straight from disk.
 
-| # | Concept | Style |
+| # | Version | Style |
 |---|---------|-------|
-| 01 | Kuro | Dark luxury, Japanese craft, serif and gold |
-| 02 | Raster | Swiss grid, huge type, red and black |
-| 03 | Floodlight | Night game under stadium lights, scoreboard customiser |
-| 04 | Atelier | Warm leather and paper, swatch book on a workbench |
-| 05 | Glove Lab | Clean tech configurator with callouts and a spec sheet |
+| 01 | Kuro | Dark luxury, serif and gold, editorial |
+| 02 | Raster | Swiss grid, huge type, A–Q category index |
+| 03 | Floodlight | Night game under stadium lights, bento grid and scoreboard |
+| 04 | Atelier | Warm leather and paper, polaroids, tags and stitching |
+| 05 | Lab | Clean app feel, mega menu, category filters and product tabs |
 
-## The customiser
+## Placeholders
 
-All five share one glove engine (`src/glove.js`): 8 colourable parts (palm, fingers, thumb, web, binding, laces, stitching, logo), 14 leather colours, 4 web types, left/right hand, position, size, thumb embroidery, presets and an indicative price.
-
-The price rules and colour list are placeholders until SSK supplies the real ones.
+- **Customiser link:** set `CUSTOMIZER_URL` in `src/data.js` to the real customiser URL.
+- **Product photos:** product tiles show an icon in the product's colourway. The category pages' share images from the live shop load where available.
+- **Logo:** a text wordmark stands in for the SSK logo.
 
 ## Editing
 
-Edit `src/`, then run `python3 build.py` to inline `glove.js` into each page in `concepts/`.
+Content lives in `src/data.js`. Edit `src/`, then run `python3 build.py` to rebuild the files in `concepts/`.
