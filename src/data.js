@@ -48,7 +48,7 @@
     ['Outlet', 'tag', '/Webwinkel-Category-10665083/Outlet.html', 'Tot 50% korting'],
     ['New Arrivals', 'star', '/New-Arrivals', 'Net binnen'],
     ['Zomer Korting', 'sun', '#', 'Zomerdeals'],
-    ['Hoofdklasse Holland Series 2026', 'trophy', '#', 'De officiële HHS-collectie']
+    ['Hoofdklasse Holland Series 2026', 'trophy', '#', 'De collectie van de Holland Series']
   ].map(([name, icon, url, sub]) => ({ name, icon, url: url.startsWith('/') ? BASE + url : url, sub }));
   NAV[16].sub = 'De collectie van de Holland Series';
 
@@ -61,8 +61,27 @@
   };
   NAV.forEach(n => n.img = CAT_IMG[n.name] || '');
 
+  // Product photos (og:image from each product page). Missing ones show a neutral placeholder.
+  const PH = BASE + '/Files/2/81000/81585/ProductPhotos/1200x630/';
+  const PHOTO = {
+  'Champro-CSB24Y-12-Slowpitch-Softball': PH + '2097276075.jpg',
+  'Baseball-Nordics-Weighted-Plyo-Ball-Set': PH + '2120016678.jpg',
+  'Champro-Contour-Fit-Body-Protector-14.5-Navy': PH + '274531413.jpg',
+  'Champro-Pro-Plus-Catcher-Helmet-Silver-Adult-Navy': PH + '2123885808.jpg',
+  'A121899-Easton-Adult-an-Youth-Walk-Off-Army-Camo-Batting-Gloves': PH + '641473022.jpg',
+  'Rawlings-Pro-Preferred-Vladimir-Guerrero-Jr-13-First-Base-Glove-Navy/Scarlet-RHT': PH + '2410112359.png',
+  'Rawlings-Heart-of-the-Hide-Fun-Burst-2.0-11.5-Infield-Glove-Navy/Mint-RHT': PH + '2410154631.png',
+  'Wilson-A2000-M23SS-33.5%E2%80%9D-Catcher-Glove-Seafoam/Black/Pink': PH + '2382787655.png',
+  'Rawlings-RX2-Matte-Batting-Helmet-Navy': PH + '2382794561.png',
+  'Rawlings-RX2-Gloss-Batting-Helmet-Black': PH + '2382805259.png',
+  'GDN200-SSK-Baseball': PH + '2417010134.png',
+    'GDN100-SSK-Baseball': PH + '2417010101.png',
+    'Rawlings-REV1X-34-Catcher-Glove-Columbia-blue/Black/Pink-RHT': PH + '2410122391.png',
+    'FP27-Louisville-Slugger-Air-Gold-Ultra-Light-Aluminium-Softbal-Knuppel-%2834/24%29': PH + '1034731165.jpg'
+  };
+  const LOGO = BASE + '/Files/2/81000/81585/Protom/3046376/Media/300x300/ssk%20logo_nl.jpg';
   // c = colourway used for the product tile when no photo is available
-  const P = (brand, name, price, was, icon, c, tag, url) => ({ brand, name, price, was, icon, c, tag, url: BASE + '/' + url });
+  const P = (brand, name, price, was, icon, c, tag, url) => ({ brand, name, price, was, icon, c, tag, url: BASE + '/' + url, photo: PHOTO[url] || '' });
   const PRODUCTS = {
     gloves: [
       P('Rawlings', 'Pro Preferred Vladimir Guerrero Jr 13" First Base Glove Navy/Scarlet RHT', 499.95, 0, 'glove', ['#1d2947', '#b3222b'], 'Nieuw', 'Rawlings-Pro-Preferred-Vladimir-Guerrero-Jr-13-First-Base-Glove-Navy/Scarlet-RHT'),
@@ -96,9 +115,9 @@
   const CONTACT = { name: 'SSK European Baseball Center', street: 'Heulweg 128B', city: '2295 KK Kwintsheul', phone: '+31 174 501 888', email: 'info@sskeurope.com', instagram: 'https://www.instagram.com/ssk_europe', facebook: 'https://www.facebook.com/SSK-Europe-1806900749536624/' };
   const LEAD = [['Op voorraad (webshop)', '3 – 5 werkdagen'], ['Bedrukken op voorraad', '+ 3 – 5 werkdagen'], ['Standaard wedstrijdkleding', '30 – 35 werkdagen'], ['Speciale broeken', '36 – 45 werkdagen'], ['Club- en studentenjassen', '36 – 45 werkdagen']];
 
-  const eur = n => '€' + n.toFixed(2).replace('.', ',');
+  const eur = n => '€ ' + n.toFixed(2).replace('.', ',');
   // Image with graceful fallback: if the shop image fails, the tile keeps its icon.
   const img = (src, alt) => src ? `<img src="${src}" alt="${alt}" loading="lazy" onerror="this.remove()">` : '';
 
-  window.SSK = { BASE, CUSTOMIZER_URL, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
+  window.SSK = { LOGO, BASE, CUSTOMIZER_URL, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
 })();

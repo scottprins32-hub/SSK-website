@@ -1,0 +1,68 @@
+SSK Europe · Versie 05 · Promoraster
+<style>
+.promo{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr;gap:16px;padding:24px 0 0}
+.promo>a{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:10px;padding:28px}
+.promo .cz{grid-row:span 2;min-height:520px;background:var(--navy-900);border-color:var(--navy-900);color:var(--navy-100)}
+.promo .cz .d-xl{color:#fff;max-width:12ch}
+.promo .cz p{max-width:40ch;font-size:17px}
+.promo .cz .ph{position:absolute;inset:0 0 45% 0;background:var(--navy-800)}
+.promo .cz .ph .phd{background:var(--navy-800);color:var(--navy-100)}.promo .cz .ph .phd svg{color:var(--navy-500);width:72px;height:72px}
+.promo .cz .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:24px;background:#fff}
+.promo .sm{min-height:252px}
+.promo .sm .ph{position:absolute;top:0;right:0;bottom:0;width:52%;border-left:1px solid var(--g100)}
+.promo .sm .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:12px}
+.promo .sm>*:not(.ph){position:relative;z-index:1;max-width:46%}
+.promo .sm .d-md{font-size:28px}
+.promo .sale .d-md{color:var(--red-600)}
+.stitch{margin:40px 0 0}
+.cat-list{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+@media (max-width:900px){
+  .promo{grid-template-columns:1fr;grid-template-rows:auto}
+  .promo .cz{grid-row:auto;min-height:440px}
+}
+@media (max-width:600px){.promo .cz{min-height:0;justify-content:flex-start}.promo .cz .ph{position:relative;inset:auto;height:200px;margin:-20px -20px 8px;align-self:stretch}.promo .sm .ph{width:44%}.promo .sm>*:not(.ph){max-width:54%}.promo>a{padding:20px}}
+</style>
+</head>
+<body>
+<div data-ui="header"></div>
+<main>
+  <div class="wrap">
+    <div class="promo">
+      <a class="card lift cz" id="customizer"><div class="ph" id="czvis"></div>
+        <div class="kick" style="color:var(--tan-200)">Nieuw · Glove Customizer</div>
+        <h1 class="d-xl">Ontwerp je eigen handschoen</h1>
+        <p>Kies je model, kleuren en details. Een handschoen die helemaal van jou is.</p>
+        <span class="btn btn-red">Start de customizer</span></a>
+      <a class="card lift sm" id="pn"><div class="ph" id="pnph"></div><div class="kick">Net binnen</div><div class="d-md">New arrivals</div><p class="muted" style="font-size:14px">De nieuwste handschoenen van Rawlings en Wilson.</p><span class="link">Bekijk alles</span></a>
+      <a class="card lift sm sale" id="po"><div class="ph" id="poph"></div><div class="kick">Outlet</div><div class="d-md">Tot 50% korting</div><p class="muted" style="font-size:14px">Knuppels, catcher gear en meer.</p><span class="link">Naar de outlet</span></a>
+    </div>
+    <div class="stitch"></div>
+  </div>
+  <section class="sec"><div class="wrap" id="s-cats"></div></section>
+  <section class="sec" style="padding-top:0"><div class="wrap" id="s-new"></div></section>
+  <section class="sec" style="padding-top:0"><div class="wrap" id="s-balls"></div></section>
+  <section class="sec" style="padding-top:0"><div class="wrap" id="s-outlet"></div></section>
+  <section class="sec" style="padding-top:0"><div class="wrap"><div data-ui="club"></div></div></section>
+  <section class="sec tight" style="padding-top:0"><div class="wrap"><div class="sec-h"><h2 class="d-md">Onze merken</h2></div><div data-ui="brands"></div></div></section>
+  <section class="sec tight"><div class="wrap"><div data-ui="showroom"></div></div></section>
+</main>
+<div data-ui="footer"></div>
+<script>
+/*DATA*/
+</script>
+<script>
+const S = SSK, U = UI, P = S.PRODUCTS;
+U.mount({ header: U.header(), club: U.club(), brands: U.brands(), showroom: U.showroom(), footer: U.footer() });
+document.getElementById('customizer').href = S.CUSTOMIZER_URL;
+document.getElementById('pn').href = U.nav('New Arrivals').url;
+document.getElementById('po').href = U.nav('Outlet').url;
+document.getElementById('czvis').innerHTML = U.photo('', 'Beeld uit de customizer', 'glove');
+document.getElementById('pnph').innerHTML = U.photo(P.gloves[1].photo, 'Productfoto', 'glove');
+document.getElementById('poph').innerHTML = U.photo(P.outlet[0].photo, 'Productfoto', 'bat');
+document.getElementById('s-cats').innerHTML = U.secHead('Assortiment', 'Shop per categorie', '', '') + U.cats(['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Slaghandschoenen', 'Schoenen', 'Kleding', 'Clubkleding', 'Tassen', 'Veld'], true);
+document.getElementById('s-new').innerHTML = U.secHead('Net binnen', 'New arrivals', 'Bekijk alles', U.nav('New Arrivals').url) + U.grid(P.gloves);
+document.getElementById('s-balls').innerHTML = U.secHead('Ballen', 'Honkballen en softballen', 'Alle ballen', U.nav('Ballen').url) + U.grid(P.balls);
+document.getElementById('s-outlet').innerHTML = U.secHead('Outlet', 'Tot 50% korting', 'Naar de outlet', U.nav('Outlet').url) + U.grid(P.outlet);
+</script>
+</body>
+</html>
