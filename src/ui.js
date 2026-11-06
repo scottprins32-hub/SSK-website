@@ -49,11 +49,11 @@
     <header class="hdr${o.light ? ' light' : ''}">
       <div class="wrap bar">
         <button class="burger" aria-label="Menu" data-open="drawer">${ui('menu')}</button>
-        <a class="logo" href="#" aria-label="SSK Europe"><b>SSK</b><i>Europe</i></a>
-        <label class="search">${ui('search')}<input type="search" placeholder="Zoek op product, merk of artikelnummer"></label>
+        <a class="logo" href="./" aria-label="SSK Europe, naar de homepage"><b>SSK</b><i>Europe</i></a>
+        <form class="search" role="search" action="${S.BASE}/website/index.php" method="get" data-search>${ui('search')}<input type="hidden" name="Show" value="Search"><input type="search" name="KeyWord" placeholder="Zoek op product, merk of artikelnummer" aria-label="Zoeken in de webshop" autocomplete="off" required><button type="submit" class="go" aria-label="Zoeken">${ui('arrow')}</button></form>
         <nav class="acts" aria-label="Account">
-          <a href="${S.BASE}/account">${ui('user')}<span class="lbl">Account</span></a>
-          <a href="${S.BASE}/cart">${ui('cart')}<span class="cnt">0</span><span class="lbl">Winkelwagen</span></a>
+          <a href="${S.SHOP.account}">${ui('user')}<span class="lbl">Account</span></a>
+          <a href="${S.SHOP.cart}">${ui('cart')}<span class="lbl">Winkelwagen</span></a>
         </nav>
       </div>
       <nav class="nav" aria-label="Categorieën"><div class="wrap">
@@ -62,7 +62,7 @@
       </div><div class="mega"><div class="wrap">${mega}</div></div></nav>
     </header>
     <div class="drawer"><div class="scrim" data-close></div><div class="dpanel">
-      <header><a class="logo" style="color:var(--navy-900)"><b>SSK</b><i>Europe</i></a><button data-close aria-label="Sluiten">${ui('x')}</button></header>
+      <header><a class="logo" href="./" style="color:var(--navy-900)"><b>SSK</b><i>Europe</i></a><button data-close aria-label="Sluiten">${ui('x')}</button></header>
       <a class="btn btn-red" href="${CZ}" style="width:100%;margin:4px 0 12px">Ontwerp je handschoen</a>
       ${S.NAV.map(n => `<a class="c" href="${n.url}">${ic(n.icon)}${n.name}</a>`).join('')}
     </div></div>`;
@@ -110,7 +110,7 @@
         <div class="steps"><span><i>1</i>Model</span><span><i>2</i>Kleuren</span><span><i>3</i>Details</span></div>
         <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-red" href="${CZ}">Start de customizer</a><a class="btn btn-ghost" href="${nav('Handschoenen').url}">Bekijk handschoenen</a></div>
       </div>
-      <div class="vis">${photo(o.img || '', 'Beeld uit de customizer', 'glove')}</div>
+      <div class="vis">${photo(o.img || S.CUSTOMIZER_IMG, 'De SSK Glove Customizer', 'glove')}</div>
     </div>`;
   }
 
@@ -120,36 +120,54 @@
       <div class="card panel"><div class="kick">Voor verenigingen</div><h2 class="d-md">Clubkleding en bedrukken</h2>
         <p>Wedstrijdjerseys, 3D-geborduurde caps, sublimatie en club- en studentenjassen. Met jullie logo, nummers en namen.</p>
         <ul>${L2}</ul>
-        <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-navy sm" href="${nav('Clubkleding').url}">Clubkleding bekijken</a><a class="btn btn-line sm" href="mailto:${S.CONTACT.email}">Offerte aanvragen</a></div></div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-navy sm" href="${nav('Clubkleding').url}">Clubkleding bekijken</a><a class="btn btn-line sm" href="mailto:${S.CONTACT.email}?subject=${encodeURIComponent('Offerte clubkleding')}">Offerte aanvragen</a></div></div>
       <div class="card panel navy"><div class="kick">Hoofdklasse</div><h2 class="d-md">Holland Series 2026</h2>
         <p>Bekijk de collectie van de Hoofdklasse Holland Series 2026 in de webshop.</p>
-        <a class="btn btn-red sm" href="#">Naar de collectie</a>
-        <div style="margin-top:auto;padding-top:24px;border-top:1px solid var(--navy-700);width:100%"><div class="kick">Voorverkoop</div><p style="color:#fff;margin-top:6px">Voorverkoop aanbieding ballen 2027. Bestel nu voor het nieuwe seizoen.</p><a class="link" style="color:#fff;margin-top:12px" href="${nav('Ballen').url}">Bekijk de aanbieding ${ui('arrow')}</a></div></div>
+        <a class="btn btn-red sm" href="${nav('Hoofdklasse Holland Series 2026').url}">Naar de collectie</a>
+        <div style="margin-top:auto;padding-top:24px;border-top:1px solid var(--navy-700);width:100%"><div class="kick">Voorverkoop</div><p style="color:#fff;margin-top:6px">Voorverkoop aanbieding ballen 2027. Bestel nu voor het nieuwe seizoen.</p><a class="link" style="color:#fff;margin-top:12px" href="${S.PAGE['Voorverkoop Aanbieding Ballen 2027']}">Bekijk de aanbieding ${ui('arrow')}</a></div></div>
     </div>`;
   }
 
   const brands = () => `<div class="brands">${S.BRANDS.map(b => `<span>${b}</span>`).join('')}</div>`;
 
+  // Open or closed right now, in Dutch time.
+  function openNow() {
+    const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Amsterdam', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
+    const get = t => parts.find(x => x.type === t).value;
+    const d = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(get('weekday'));
+    const now = +get('hour') * 60 + +get('minute');
+    const span = i => { const m = S.HOURS[i][1].match(/(\d+):(\d+)\D+(\d+):(\d+)/); return m ? [m[1] * 60 + +m[2], m[3] * 60 + +m[4], S.HOURS[i][1].split('–')] : null; };
+    const t = span(d);
+    if (t && now >= t[0] && now < t[1]) return { open: true, text: 'Nu open · tot ' + t[2][1].trim(), d };
+    for (let k = 0; k < 7; k++) {
+      const i = (d + k) % 7, x = span(i);
+      if (x && (k > 0 || now < x[0])) return { open: false, text: 'Gesloten · opent ' + (k === 0 ? 'vandaag' : k === 1 ? 'morgen' : S.HOURS[i][0].toLowerCase()) + ' om ' + x[2][0].trim(), d };
+    }
+    return { open: false, text: 'Gesloten', d };
+  }
+
   function showroom() {
-    const d = (new Date().getDay() + 6) % 7;
+    const o = openNow(), d = o.d;
     const h = S.HOURS.map(([a, b], i) => `<li class="${b === 'Gesloten' ? 'closed' : ''}${i === d ? ' today' : ''}"><span>${a}${i === d ? ' (vandaag)' : ''}</span><span class="mono">${b}</span></li>`).join('');
     const c = S.CONTACT;
     return `<div class="show">
       <div class="card"><div class="kick">Showroom</div><h2 class="d-md" style="margin-top:6px">Kom langs in Kwintsheul</h2>
         <p style="margin-top:8px">Handschoenen moet je passen. In de showroom van het ${c.name} vind je de complete collectie.</p>
-        <div class="addr"><span>${ui('pin')}${c.street}, ${c.city}</span><a href="tel:${c.phone.replace(/\s/g, '')}">${ui('phone')}${c.phone}</a><a href="mailto:${c.email}">${ui('mail')}${c.email}</a></div></div>
+        <span class="open-now${o.open ? ' yes' : ''}">${o.text}</span>
+        <div class="addr"><a href="${S.SHOP.maps}" target="_blank" rel="noopener">${ui('pin')}${c.street}, ${c.city}</a><a href="tel:${c.phone.replace(/\s/g, '')}">${ui('phone')}${c.phone}</a><a href="mailto:${c.email}">${ui('mail')}${c.email}</a></div>
+        <div class="btns"><a class="btn btn-navy sm" href="${S.SHOP.maps}" target="_blank" rel="noopener">Route plannen</a><a class="btn btn-line sm" href="tel:${c.phone.replace(/\s/g, '')}">Bel ons</a></div></div>
       <div class="card"><div class="kick">${ui('clock', 'ui')} Openingstijden</div><ul class="hours">${h}</ul></div>
-      <div class="card"><div class="kick">Klantenservice</div><ul class="hours">${['Maten', 'Retour Zenden', 'Garantie', 'Welke Bal Koopt U?', 'Was Voorschrift', 'Levertijden'].map(t => `<li><a href="#">${t}</a><span class="ui" style="color:var(--g400)">${ui('arrow')}</span></li>`).join('')}</ul></div>
+      <div class="card"><div class="kick">Klantenservice</div><ul class="hours">${['Maten', 'Retour Zenden', 'Garantie', 'Welke Bal Koopt U?', 'Was Voorschrift', 'Levertijden'].map(t => `<li><a href="${S.PAGE[t]}">${t}</a><span class="ui" style="color:var(--g400)">${ui('arrow')}</span></li>`).join('')}</ul></div>
     </div>`;
   }
 
   function footer() {
     const c = S.CONTACT;
     const half = Math.ceil(S.PAGES.length / 2);
-    const li = a => a.map(p => `<li><a href="#">${p}</a></li>`).join('');
+    const li = a => a.map(([p, u]) => `<li><a href="${S.BASE + u}">${p}</a></li>`).join('');
     return `<footer class="ftr"><div class="wrap">
       <div class="top">
-        <div><a class="logo"><b>SSK</b><i>Europe</i></a><p style="max-width:32ch">${c.name}. Honkbal en softbal voor spelers, teams en verenigingen.</p>
+        <div><a class="logo" href="./"><b>SSK</b><i>Europe</i></a><p style="max-width:32ch">${c.name}. Honkbal en softbal voor spelers, teams en verenigingen.</p>
           <div class="soc"><a href="${c.instagram}" aria-label="Instagram">${ui('ig')}</a><a href="${c.facebook}" aria-label="Facebook">${ui('fb')}</a></div></div>
         <div><h4>Klantenservice</h4><ul>${li(S.PAGES.slice(0, half))}</ul></div>
         <div><h4>Informatie</h4><ul>${li(S.PAGES.slice(half))}</ul></div>

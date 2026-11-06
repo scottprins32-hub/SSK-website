@@ -16,19 +16,35 @@ Open `concepts/index.html` for an overview of the five earlier versions, or open
 
 ## Homepage versie 2 (gekozen richting)
 
-`index.html` (online via GitHub Pages: https://scottprins32-hub.github.io/SSK-website/) is version 02 "Customizer voorop" worked out as a complete homepage: the customiser as the hero, then gloves, the 2026 bats, outlet and balls, a short SSK heritage strip, club apparel and Holland Series, the showroom with opening hours, brands and the footer. Every product shown is a real product from the shop with its real name, price, link and product photo (the `og:image` of its product page). The heritage line "Baseball, it's our game." comes from SSK's US site, sskbaseballshop.com.
+`index.html` is version 02 "Customizer voorop" worked out as a complete homepage:
 
-Product photos are copies in `assets/products/`, fetched from the shop by the *Product photos* GitHub Action whenever `src/data.js` changes. If a copy is missing, the page loads the photo from the live shop instead.
+- **Hero:** the glove customiser, shown with real renders taken from it. Nine starter colourways crossfade on their own; the swatches switch them, and "Open met deze kleuren" opens the customiser with that glove already loaded. The glove tilts towards the pointer.
+- **Shop per categorie:** a photo grid with real product photos, plus buttons for the other categories.
+- **Nieuw binnen:** a drag-to-scroll rail with eleven new gloves and a customiser card at the end.
+- **In zeven stappen:** a walkthrough of the customiser with a real screenshot of each step. On a computer the screenshot stays in place while you scroll through the steps.
+- **Uitgelicht:** tabs for 2026 bats, helmets, balls and outlet.
+- **Heritage, club apparel, Holland Series, showroom** (with a live open/closed label, route and call buttons), **brands** and the footer.
 
-Still to fill in: `CUSTOMIZER_URL` (the customiser link) and `CUSTOMIZER_IMG` (a customiser screenshot for the hero) in `src/data.js`.
+Motion: line-by-line title reveal, scroll reveals, a red stitch scroll bar, marquees, magnetic buttons and a sticky "Ontwerp je handschoen" button on phones. Everything respects *reduce motion*.
+
+Every product shown is a real product from the shop, with its real name, price, link and photo. Every button and link goes somewhere real: shop categories, shop pages, search (it searches the shop), account, cart, Google Maps, phone, e-mail and the customiser. The heritage line "Baseball, it's our game." comes from SSK's US site, sskbaseballshop.com.
+
+### Customiser
+
+The customiser is `scottprins32-hub/ssk-glove-demo`, live at https://scottprins32-hub.github.io/ssk-glove-demo/ (`CUSTOMIZER_URL` in `src/data.js`). `assets/customizer/` holds what was captured from it: `glove-*.webp` (a transparent render of each starter glove), `step-1.webp` … `step-7.webp` (a screenshot of each step, in Dutch) and `og.jpg` (the share image). The share link for each starter (`CZ_LINKS` in `src/data.js`) was made with the customiser's own Share button.
+
+### Product photos
+
+Copies live in `assets/products/`. `scripts/fetch_photos.py` downloads any that are missing; the *Product photos* GitHub Action runs it whenever `src/data.js` changes. If a copy is missing, the page loads the photo from the live shop instead.
+
+### GitHub Pages
+
+Turn it on once in the repository: **Settings → Pages → Build and deployment → Source: Deploy from a branch → `main` / `(root)`**. The site is then at https://scottprins32-hub.github.io/SSK-website/. On a free GitHub plan, Pages only works for public repositories.
 
 ## Placeholders
 
-- **Customiser link:** set `CUSTOMIZER_URL` in `src/data.js` to the real customiser URL.
-- **Customiser image:** the customiser blocks show a grey placeholder labelled "Beeld uit de customizer". Drop in a screenshot of the customiser.
-- **Product photos:** product photos load from the live shop. Three products have no product page URL yet and show a grey "Productfoto" placeholder.
 - **Logo:** the design system uses a text wordmark ("SSK EUROPE"), so the pages do too.
 
 ## Editing
 
-`src/base.css` holds the design tokens and components, `src/ui.js` the shared header, cards, customiser block, showroom and footer, and `src/data.js` the content. Edit `src/`, then run `python3 build.py` to rebuild `index.html` and the files in `concepts/`.
+`src/base.css` holds the design tokens and components, `src/ui.js` the shared header, cards, customiser block, showroom and footer, `src/data.js` the content, and `src/home.css` / `src/home.js` the layout and motion of the version 2 homepage. Edit `src/`, then run `python3 build.py` to rebuild `index.html` and the files in `concepts/`.

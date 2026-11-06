@@ -55,7 +55,7 @@ const S = SSK, U = UI, P = S.PRODUCTS;
 U.mount({ header: U.header(), club: U.club(), brands: U.brands(), showroom: U.showroom(), footer: U.footer() });
 document.getElementById('cz1').href = S.CUSTOMIZER_URL;
 document.getElementById('shop1').href = U.nav('Handschoenen').url;
-document.getElementById('czvis').innerHTML = U.photo('', 'Beeld uit de customizer', 'glove');
+document.getElementById('czvis').innerHTML = U.photo(S.CUSTOMIZER_IMG, 'De SSK Glove Customizer', 'glove');
 document.getElementById('chips').innerHTML = '<div class="stitch"></div>' + U.chips(['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Slaghandschoenen', 'Schoenen', 'Kleding', 'Clubkleding', 'Tassen', 'Veld', 'Scheidsrechter', 'Accessoires', 'New Arrivals', 'Outlet', 'Zomer Korting', 'Hoofdklasse Holland Series 2026']);
 document.getElementById('s-new').innerHTML = U.secHead('Net binnen', 'New arrivals', 'Bekijk alles', U.nav('New Arrivals').url) + U.grid(P.gloves);
 document.getElementById('s-outlet').innerHTML = U.secHead('Outlet', 'Tot 50% korting', 'Naar de outlet', U.nav('Outlet').url) + U.grid(P.outlet);

@@ -67,7 +67,7 @@ const S = SSK, U = UI, P = S.PRODUCTS;
 U.mount({ header: U.header(), club: U.club(), brands: U.brands(), showroom: U.showroom(), footer: U.footer() });
 ['cz2', 'customizer'].forEach(id => document.getElementById(id).href = S.CUSTOMIZER_URL);
 document.getElementById('outl').href = U.nav('Outlet').url;
-document.getElementById('czvis').innerHTML = U.photo('', 'Beeld uit de customizer', 'glove');
+document.getElementById('czvis').innerHTML = U.photo(S.CUSTOMIZER_IMG, 'De SSK Glove Customizer', 'glove');
 document.getElementById('catlist').innerHTML = '<h3>Categorieën</h3>' + S.NAV.map(n => `<a class="c${['Outlet', 'Zomer Korting'].includes(n.name) ? ' hot' : ''}" href="${n.url}">${U.ic(n.icon)}${n.name}</a>`).join('');
 const sh = (k, t, l, u) => `<div class="sec-h"><div><div class="kick">${k}</div><h2 class="d-lg">${t}</h2></div><a class="link" href="${u}">${l} ${U.ui('arrow')}</a></div>`;
 document.getElementById('s-new').innerHTML = sh('Net binnen', 'New arrivals', 'Bekijk alles', U.nav('New Arrivals').url) + U.grid(P.gloves.concat([P.more[3], P.more[0]]), 3);
