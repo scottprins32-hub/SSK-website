@@ -71,9 +71,39 @@ img{display:block;max-width:100%}
 .logo i{font-style:normal;font-size:16px;letter-spacing:.14em}
 .search{flex:1;max-width:520px;display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border-radius:var(--r1);background:#fff;color:var(--g700)}
 .search input{flex:1;border:0;outline:0;background:none;min-width:0;font-size:15px}
+.search input:focus-visible{box-shadow:none}
+.search input::-webkit-search-cancel-button{cursor:pointer}
 .search .ui{color:var(--g500)}
 .search .go{display:grid;place-items:center;width:28px;height:28px;margin-right:-6px;border-radius:var(--r1);background:var(--red-600);color:#fff;opacity:0;transform:scale(.8);transition:opacity .2s,transform .2s}
 .search .go .ui{width:16px;height:16px}
+.search.open{border-radius:var(--r1) var(--r1) 0 0}
+.sugg{position:absolute;left:0;right:0;top:100%;z-index:90;max-height:min(70vh,560px);overflow:auto;background:#fff;color:var(--g700);border-radius:0 0 var(--r2) var(--r2);box-shadow:var(--sh-overlay);padding:8px;border-top:1px solid var(--g100);animation:sg .18s var(--ease)}
+@keyframes sg{from{opacity:0;transform:translateY(-4px)}}
+.sugg[hidden]{display:none}
+.sg-h{font:600 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--g500);padding:10px 8px 6px}
+.sugg a{display:flex;align-items:center;gap:12px;padding:8px;border-radius:var(--r1);color:var(--g900)}
+.sugg a:hover,.sugg a[aria-selected=true]{background:var(--g50)}
+.sugg a[aria-selected=true]{box-shadow:inset 3px 0 0 var(--red-600)}
+.sugg mark{background:none;color:var(--red-600);font-weight:700}
+.sg-chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 8px 6px}
+.sugg .sg-chip{display:inline-flex;padding:7px 12px;border:1px solid var(--g200);font:700 13px/1 var(--display);letter-spacing:.08em;text-transform:uppercase}
+.sugg .sg-chip:hover,.sugg .sg-chip[aria-selected=true]{background:var(--navy-900);color:#fff;border-color:var(--navy-900);box-shadow:none}
+.sg-cz .ui{color:var(--red-600)}
+.sg-cz b,.sg-cat span{display:block;font:700 15px/1.1 var(--display);letter-spacing:.06em;text-transform:uppercase}
+.sg-cz small{font-size:13px;color:var(--g500)}
+.sg-cat svg{width:26px;height:26px;flex:none;color:var(--navy-900)}
+.sg-im{width:52px;height:40px;flex:none;display:grid;place-items:center;border:1px solid var(--g100);border-radius:var(--r1);background:#fff;overflow:hidden}
+.sg-im img{width:100%;height:100%;object-fit:contain}
+.sg-im svg{width:24px;height:24px;color:var(--g400)}
+.sg-tx{flex:1;min-width:0}
+.sg-tx small{display:block;font:700 10px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--g500)}
+.sg-tx b{display:block;margin-top:3px;font-weight:600;font-size:14px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sg-pr{font:600 13px/1 var(--mono);color:var(--navy-900);white-space:nowrap}
+.sg-pr.sale{color:var(--red-600)}
+.sg-none{padding:10px 8px;font-size:14px;color:var(--g500)}
+.sugg .sg-all{margin-top:6px;border-top:1px solid var(--g100);border-radius:0;padding-top:12px;font-weight:600;font-size:14px}
+.sg-all span{flex:1}
+.sg-all .ui{width:18px;height:18px;color:var(--g500)}
 .search:focus-within .go,.search input[type=search]:not(:placeholder-shown)~.go{opacity:1;transform:none}
 .hdr .acts{margin-left:auto;display:flex;gap:4px}
 .hdr .acts a,.hdr .burger{display:flex;align-items:center;gap:8px;height:40px;padding:0 10px;border-radius:var(--r1);font:600 14px/1 var(--body);position:relative}
@@ -253,7 +283,10 @@ img{display:block;max-width:100%}
   .nav{display:none}
   .hdr .burger{display:flex}
   .hdr .acts .lbl{display:none}
-  .topbar .wrap span:nth-child(n+2){display:none}
+  .topbar .wrap{position:relative}
+  .topbar .wrap span{position:absolute;left:0;right:0;justify-content:center;opacity:0;animation:tb 12s infinite}
+  .topbar .wrap span:nth-child(2){animation-delay:4s}
+  .topbar .wrap span:nth-child(3){animation-delay:8s}
 }
 @media (max-width:600px){
   .sec{padding:48px 0}
@@ -275,5 +308,6 @@ img{display:block;max-width:100%}
   .panel{padding:24px}
   .cz-band .tx{padding:24px}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@keyframes tb{0%,2%{opacity:0;transform:translateY(6px)}5%,30%{opacity:1;transform:none}33%,100%{opacity:0;transform:translateY(-6px)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}.topbar .wrap span{animation:none!important}.topbar .wrap span:first-child{opacity:1}}
 .phd~img{background:#fff}

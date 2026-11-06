@@ -16,13 +16,17 @@
   /* ---------- hero: colourways from the customiser ---------- */
   const CW = S.COLOURWAYS;
   const gl = $('#gloves'), sw = $('#swatches'), hx = $('.hx');
-  gl.innerHTML = CW.map((c, i) => `<img src="${c.img}" alt="SSK Pro Custom handschoen in ${c.name}, gemaakt in de customizer" width="845" height="1000"${i ? ' loading="lazy"' : ' fetchpriority="high"'} class="${i ? '' : 'on'}">`).join('');
+  // Only the first glove loads up front; the other eight follow once the page has loaded.
+  gl.innerHTML = CW.map((c, i) => `<img ${i ? 'data-src' : 'src'}="${c.img}" alt="SSK Pro Custom handschoen in ${c.name}, gemaakt in de customizer" width="845" height="1000"${i ? '' : ' fetchpriority="high"'} class="${i ? '' : 'on'}">`).join('');
+  const loadAll = () => $$('img[data-src]', gl).forEach(im => { im.src = im.dataset.src; im.removeAttribute('data-src'); });
+  if (document.readyState === 'complete') setTimeout(loadAll, 300); else addEventListener('load', () => setTimeout(loadAll, 300));
   sw.innerHTML = CW.map((c, i) => `<button type="button" style="--a:${c.a};--b:${c.b}" aria-label="${c.name}" aria-pressed="${i === 0}" data-i="${i}"><i></i></button>`).join('');
   let cur = 0, timer = null;
   const imgs = $$('img', gl), btns = $$('button', sw);
   function show(i, user) {
     if (i === cur) return;
     const prev = cur; cur = (i + CW.length) % CW.length;
+    const nx = imgs[cur]; if (nx.dataset.src) { nx.src = nx.dataset.src; nx.removeAttribute('data-src'); }
     imgs.forEach((im, k) => { im.classList.toggle('on', k === cur); im.classList.toggle('out', k === prev); });
     btns.forEach((b, k) => b.setAttribute('aria-pressed', k === cur));
     $('#cw-name').textContent = CW[cur].name;
@@ -122,7 +126,8 @@
 
   /* ---------- customiser walkthrough ---------- */
   const ST = S.CZ_STEPS;
-  $('#czw-shots').innerHTML = ST.map((s, i) => `<img src="${s.img}" alt="Customizer, stap ${i + 1}: ${s.t}" width="1600" height="1000" loading="lazy" class="${i ? '' : 'on'}">`).join('');
+  $('#czw-shots').innerHTML = ST.map((s, i) => `<img src="${s.img}" alt="Customizer, stap ${i + 1}: ${s.t}" width="1600" height="1000" loading="lazy" class="${i ? '' : 'on'}">`).join('') + `<span class="czw-try">Probeer het zelf ${arrow}</span>`;
+  $('#czw-shots').href = S.CUSTOMIZER_URL;
   $('#czw-prog').innerHTML = ST.map(() => '<i></i>').join('');
   $('#czw-steps').innerHTML = ST.map((s, i) => `<li data-i="${i}"${i ? '' : ' class="on"'}>
       <span class="n">${String(i + 1).padStart(2, '0')}</span><div><h3>${s.t}</h3><p>${s.d}</p>

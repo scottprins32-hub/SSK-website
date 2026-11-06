@@ -50,7 +50,7 @@
       <div class="wrap bar">
         <button class="burger" aria-label="Menu" data-open="drawer">${ui('menu')}</button>
         <a class="logo" href="./" aria-label="SSK Europe, naar de homepage"><b>SSK</b><i>Europe</i></a>
-        <form class="search" role="search" action="${S.BASE}/website/index.php" method="get" data-search>${ui('search')}<input type="hidden" name="Show" value="Search"><input type="search" name="KeyWord" placeholder="Zoek op product, merk of artikelnummer" aria-label="Zoeken in de webshop" autocomplete="off" required><button type="submit" class="go" aria-label="Zoeken">${ui('arrow')}</button></form>
+        <form class="search" role="search" action="${S.BASE}/website/index.php" method="get" data-search>${ui('search')}<input type="hidden" name="Show" value="Search"><input type="search" name="KeyWord" placeholder="Zoek op product, merk of artikelnummer" aria-label="Zoeken in de webshop" autocomplete="off" required role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugg"><button type="submit" class="go" aria-label="Zoeken">${ui('arrow')}</button><div class="sugg" id="sugg" role="listbox" aria-label="Suggesties" hidden></div></form>
         <nav class="acts" aria-label="Account">
           <a href="${S.SHOP.account}">${ui('user')}<span class="lbl">Account</span></a>
           <a href="${S.SHOP.cart}">${ui('cart')}<span class="lbl">Winkelwagen</span></a>
@@ -189,7 +189,59 @@
     });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.querySelector('.drawer')?.classList.remove('open'); document.querySelector('.mega')?.classList.remove('open'); } });
   }
-  function mount(map) { for (const k in map) document.querySelectorAll(`[data-ui="${k}"]`).forEach(el => el.outerHTML = map[k]); wire(); }
+  // Instant search: products and categories from data.js as you type; Enter on free text searches the shop.
+  function search() {
+    const form = document.querySelector('[data-search]'); if (!form) return;
+    const inp = form.querySelector('input[type=search]'), box = form.querySelector('.sugg');
+    const seen = new Set(), items = [];
+    Object.values(S.PRODUCTS).flat().forEach(p => { if (!seen.has(p.url)) { seen.add(p.url); items.push(p); } });
+    const norm = t => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9.]+/g, ' ');
+    const hay = items.map(p => norm(p.brand + ' ' + p.name));
+    const POP = ['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Outlet'];
+    let opts = [], act = -1;
+    const mark = (t, q) => { let h = esc(t); q.forEach(w => { if (w) h = h.replace(new RegExp('(' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig'), '<mark>$1</mark>'); }); return h; };
+    function render() {
+      const raw = inp.value.trim(), q = norm(raw).split(' ').filter(Boolean);
+      let html = '';
+      if (!q.length) {
+        html = `<div class="sg-h">Populair</div><div class="sg-chips">${POP.map(n => `<a role="option" class="sg-chip" href="${nav(n).url}">${n}</a>`).join('')}</div>
+          <a role="option" class="sg-cz" href="${CZ}">${ui('pen')}<span><b>Glove Customizer</b><small>Ontwerp je eigen handschoen</small></span></a>`;
+      } else {
+        const cats = S.NAV.filter(n => q.every(w => norm(n.name + ' ' + n.sub).includes(w))).slice(0, 3);
+        const prods = items.filter((p, i) => q.every(w => hay[i].includes(w))).slice(0, 6);
+        if (cats.length) html += `<div class="sg-h">Categorieën</div>` + cats.map(n => `<a role="option" class="sg-cat" href="${n.url}">${ic(n.icon)}<span>${mark(n.name, q)}</span></a>`).join('');
+        if (prods.length) html += `<div class="sg-h">Producten</div>` + prods.map(p => `<a role="option" class="sg-p" href="${p.url}"><span class="sg-im">${p.photo ? `<img src="${p.photo}" alt="" loading="lazy" onerror="this.remove()">` : ic(p.icon)}</span><span class="sg-tx"><small>${p.brand}</small><b>${mark(p.name, q)}</b></span><span class="sg-pr${p.was ? ' sale' : ''}">${S.eur(p.price)}</span></a>`).join('');
+        if (!cats.length && !prods.length) html += `<div class="sg-none">Geen directe treffers hier. De webshop zoekt verder.</div>`;
+        html += `<a role="option" class="sg-all" href="${S.SHOP.search + encodeURIComponent(raw)}">${ui('search')}<span>Zoek “${esc(raw)}” in de hele webshop</span>${ui('arrow')}</a>`;
+      }
+      box.innerHTML = html;
+      opts = [...box.querySelectorAll('[role=option]')];
+      opts.forEach((o, i) => { o.id = 'sg-' + i; o.tabIndex = -1; });
+      act = -1; inp.removeAttribute('aria-activedescendant');
+      open(true);
+    }
+    function open(on) { box.hidden = !on; inp.setAttribute('aria-expanded', on); form.classList.toggle('open', on); }
+    function move(d) {
+      if (!opts.length) return;
+      act = (act + d + opts.length) % opts.length;
+      opts.forEach((o, i) => o.setAttribute('aria-selected', i === act));
+      inp.setAttribute('aria-activedescendant', opts[act].id);
+      opts[act].scrollIntoView({ block: 'nearest' });
+    }
+    inp.addEventListener('input', render);
+    inp.addEventListener('focus', render);
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); if (box.hidden) render(); move(1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+      else if (e.key === 'Enter' && act >= 0) { e.preventDefault(); opts[act].click(); }
+      else if (e.key === 'Escape') { e.preventDefault(); open(false); }
+    });
+    document.addEventListener('pointerdown', e => { if (!form.contains(e.target)) open(false); });
+    form.addEventListener('focusout', () => setTimeout(() => { if (!form.contains(document.activeElement)) open(false); }, 0));
+    // "/" focuses the search, like most shops.
+    document.addEventListener('keydown', e => { if (e.key === '/' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); inp.focus(); } });
+  }
+  function mount(map) { for (const k in map) document.querySelectorAll(`[data-ui="${k}"]`).forEach(el => el.outerHTML = map[k]); wire(); search(); }
 
   window.UI = { ui, ic, photo, header, card, grid, secHead, cats, chips, usp, customizer, club, brands, showroom, footer, mount, nav };
 })();
