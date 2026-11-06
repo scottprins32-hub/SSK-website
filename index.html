@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SSK Europe · Homepage versie 2 · Customizer voorop</title>
+<title>SSK Europe · Honkbal en softbal · Ontwerp je eigen handschoen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -81,6 +81,9 @@ img{display:block;max-width:100%}
 .search{flex:1;max-width:520px;display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border-radius:var(--r1);background:#fff;color:var(--g700)}
 .search input{flex:1;border:0;outline:0;background:none;min-width:0;font-size:15px}
 .search .ui{color:var(--g500)}
+.search .go{display:grid;place-items:center;width:28px;height:28px;margin-right:-6px;border-radius:var(--r1);background:var(--red-600);color:#fff;opacity:0;transform:scale(.8);transition:opacity .2s,transform .2s}
+.search .go .ui{width:16px;height:16px}
+.search:focus-within .go,.search input[type=search]:not(:placeholder-shown)~.go{opacity:1;transform:none}
 .hdr .acts{margin-left:auto;display:flex;gap:4px}
 .hdr .acts a,.hdr .burger{display:flex;align-items:center;gap:8px;height:40px;padding:0 10px;border-radius:var(--r1);font:600 14px/1 var(--body);position:relative}
 .hdr .acts a:hover,.hdr .burger:hover{background:var(--navy-800)}
@@ -171,7 +174,7 @@ img{display:block;max-width:100%}
 /* USP strip */
 .usp{background:#fff;border-bottom:1px solid var(--g200)}
 .usp .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
-.usp div{display:flex;gap:12px;align-items:center;padding:16px 16px 16px 0}
+.usp .wrap>div{display:flex;gap:12px;align-items:center;padding:16px 16px 16px 0}
 .usp svg{width:28px;height:28px;flex:none;color:var(--navy-900)}
 .usp b{display:block;font:700 15px/1.1 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--navy-900)}
 .usp small{font-size:13px;color:var(--g500)}
@@ -274,8 +277,8 @@ img{display:block;max-width:100%}
   .pc .info{padding:12px}
   .pc .name{font-size:14px}
   .usp .wrap{grid-template-columns:1fr}
-  .usp div{padding:12px 0;border-bottom:1px solid var(--g100)}
-  .usp div:last-child{border-bottom:0}
+  .usp .wrap>div{padding:12px 0;border-bottom:1px solid var(--g100)}
+  .usp .wrap>div:last-child{border-bottom:0}
   .ftr .top{grid-template-columns:1fr}
   .sec-h{flex-direction:column;align-items:flex-start}
   .panel{padding:24px}
@@ -285,82 +288,503 @@ img{display:block;max-width:100%}
 .phd~img{background:#fff}
 
 </style>
+<meta name="description" content="SSK European Baseball Center in Kwintsheul: handschoenen, knuppels, ballen, helmen en clubkleding. Ontwerp je eigen SSK Pro Custom handschoen in de Glove Customizer.">
+<meta property="og:title" content="SSK Europe · Ontwerp je eigen handschoen">
+<meta property="og:description" content="Honkbal en softbal in Kwintsheul. Ontwerp je eigen SSK Pro Custom handschoen.">
+<meta property="og:image" content="assets/customizer/og.jpg">
+<meta name="theme-color" content="#000000">
 <style>
-/* Hero: the customiser is the first thing you see */
-.hero{background:var(--navy-950);color:var(--navy-100)}
-.hero .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:center;padding-top:64px;padding-bottom:64px}
-.hero .d-xl{color:#fff;margin:14px 0 18px}
-.hero .d-xl em{font-style:normal;color:var(--red-600)}
-.hero p{font-size:17px;max-width:46ch}
-.hero .steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:28px 0 32px}
-.hero .steps li{border-top:2px solid var(--navy-700);padding-top:12px}
-.hero .steps li:first-child{border-top-color:var(--red-600)}
-.hero .steps i{font:600 12px/1 var(--mono);font-style:normal;color:var(--g400)}
-.hero .steps b{display:block;margin-top:6px;font:700 18px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;color:#fff}
-.hero .steps small{color:var(--g400);font-size:13px}
-.hero .btns{display:flex;gap:12px;flex-wrap:wrap}
-.hero .btn-ghost{color:#fff}
-/* customiser screenshot slot */
-.shot{position:relative;aspect-ratio:16/11;border-radius:var(--r2);background:var(--navy-900);border:1px dashed var(--navy-500);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:24px;overflow:hidden}
-.shot svg{width:64px;height:64px;color:var(--navy-500)}
-.shot b{font:700 18px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;color:#fff}
-.shot small{font:600 11px/1.5 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--g400);max-width:34ch}
-.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.catbar{background:#fff;border-bottom:1px solid var(--g200);padding:20px 0}
-/* customiser reminder under the gloves */
-.czline{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:16px;padding:18px 24px;background:#fff;border:1px solid var(--g200);border-left:3px solid var(--red-600);border-radius:var(--r2)}
-.czline b{font:700 20px/1.1 var(--display);letter-spacing:.04em;text-transform:uppercase;color:var(--navy-900)}
+/* Homepage version 2: layout, graphics and motion on top of base.css. */
+@property --accent{syntax:'<color>';inherits:true;initial-value:#C8102E}
+html{scroll-behavior:smooth;scroll-padding-top:140px}
+body.home{background:var(--chalk)}
+::selection{background:var(--red-600);color:#fff}
+.skip{position:fixed;left:16px;top:-60px;z-index:200;background:var(--red-600);color:#fff;padding:12px 16px;font:700 14px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;border-radius:var(--r1);transition:top .2s var(--ease)}
+.skip:focus{top:12px}
+.btn-xl{height:56px;padding:0 28px;font-size:17px}
+.btn .ui{width:18px;height:18px;transition:transform .25s var(--ease)}
+.btn:hover .ui{transform:translateX(4px)}
+.mag{transition:transform .35s cubic-bezier(.2,.9,.3,1.3),background-color .15s var(--ease)}
+.btn-red{position:relative;overflow:hidden;isolation:isolate}
+.btn-red:after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.28) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s var(--ease);z-index:-1}
+.btn-red:hover:after{transform:translateX(120%)}
+
+/* scroll progress: the red stitch */
+.sprog{position:fixed;left:0;right:0;top:0;height:3px;z-index:120;pointer-events:none}
+.sprog i{display:block;height:100%;background:repeating-linear-gradient(90deg,var(--red-600) 0 10px,transparent 10px 16px);transform-origin:0 50%;transform:scaleX(0)}
+
+/* header polish */
+.hdr{transition:box-shadow .25s var(--ease),background-color .25s var(--ease)}
+.hdr.scrolled{box-shadow:0 8px 30px rgba(0,0,0,.35)}
+.hdr .bar{transition:height .25s var(--ease)}
+.hdr.scrolled .bar{height:60px}
+.search{position:relative;transition:box-shadow .2s var(--ease)}
+.search:focus-within{box-shadow:0 0 0 3px rgba(200,16,46,.55)}
+.nav>.wrap>a{position:relative;border-bottom:0}
+.nav>.wrap>a:after{content:'';position:absolute;left:12px;right:12px;bottom:0;height:3px;background:var(--red-600);transform:scaleX(0);transform-origin:0 50%;transition:transform .3s var(--ease)}
+.nav>.wrap>a:hover:after{transform:scaleX(1)}
+.nav>.wrap>.all:after{left:0}
+.nav .cz{background:var(--red-600);height:34px!important;padding:0 14px!important;border-radius:var(--r1);align-self:center}
+.nav .cz:after{display:none}
+.nav .cz:hover{background:var(--red-700)}
+.mega.open{animation:drop .28s var(--ease)}
+@keyframes drop{from{opacity:0;transform:translateY(-8px)}}
+
+/* ---------- HERO ---------- */
+.hx{--accent:#C8102E;--gx:50%;--gy:50%;position:relative;overflow:hidden;background:#000;color:var(--navy-100);isolation:isolate;transition:--accent 1.2s var(--ease)}
+.hx-glow{position:absolute;z-index:-1;width:1100px;height:1100px;left:calc(var(--gx) + 8%);top:var(--gy);transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--accent) 60%,transparent),transparent 72%);opacity:.5;transition:background 1.2s var(--ease)}
+.hx-grain{position:absolute;inset:0;z-index:-1;opacity:.09;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.hx:before{content:'';position:absolute;inset:0;z-index:-1;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse at 70% 50%,#000 20%,transparent 75%)}
+.hx-ghost{position:absolute;left:0;bottom:-2vw;z-index:-1;display:flex;white-space:nowrap;font:800 clamp(90px,14vw,220px)/.9 var(--display);text-transform:uppercase;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.06);animation:mq 60s linear infinite}
+.hx-ghost span{padding-right:.3em}
+.hx-in{display:grid;grid-template-columns:1.05fr 1fr;gap:32px;align-items:center;min-height:min(820px,calc(100svh - 156px));padding-top:40px;padding-bottom:72px}
+.hx-kick{display:inline-flex;align-items:center;gap:10px;color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:99px;padding:8px 14px 8px 12px;font-size:12px;background:rgba(255,255,255,.04);backdrop-filter:blur(6px)}
+.hx-kick .dot{width:8px;height:8px;border-radius:50%;background:var(--red-600);box-shadow:0 0 0 0 rgba(200,16,46,.7);animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 10px rgba(200,16,46,0)}100%{box-shadow:0 0 0 0 rgba(200,16,46,0)}}
+.hx-title{margin:20px 0 20px;font:800 clamp(56px,min(8.4vw,12.5vh),128px)/.86 var(--display);text-transform:uppercase;letter-spacing:-.005em;color:#fff}
+.hx-title .ln{display:block;overflow:hidden;padding-bottom:.04em}
+.hx-title .ln>span{display:inline-block}
+.hx-title em{font-style:normal;color:var(--red-600)}
+.hx-lead{font-size:18px;line-height:1.55;max-width:44ch;color:var(--navy-100)}
+.hx-btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.hx-stats{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;gap:0;margin-top:32px;border-top:1px solid rgba(255,255,255,.12)}
+.hx-stats div{padding:16px 28px 0 0;margin-right:28px;border-right:1px solid rgba(255,255,255,.12)}
+.hx-stats div:last-child{border-right:0;margin-right:0}
+.hx-stats dt{font:600 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--g400)}
+.hx-stats dd{margin-top:8px;font:800 30px/1 var(--display);color:#fff;font-variant-numeric:tabular-nums}
+.hx-stats dd.mono{font:600 22px/30px var(--mono)}
+.hx-vis{position:relative;display:flex;flex-direction:column;align-items:center}
+.hx-stage{position:relative;width:min(100%,480px,calc((100svh - 360px) * .845));min-width:280px;aspect-ratio:845/1000;perspective:1200px;cursor:pointer}
+.hx-tilt{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
+.hx-float{position:absolute;inset:0;animation:float 7s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-14px) rotate(-1.2deg)}}
+.hx-float img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transform:translateX(14%) rotate(10deg) scale(.86);filter:blur(6px) drop-shadow(0 30px 40px rgba(0,0,0,.55));transition:opacity .8s var(--ease),transform 1s cubic-bezier(.2,.8,.2,1),filter .8s var(--ease)}
+.hx-float img.on{opacity:1;transform:none;filter:blur(0) drop-shadow(0 30px 40px rgba(0,0,0,.55))}
+.hx-float img.out{transform:translateX(-14%) rotate(-10deg) scale(.86)}
+.hx-shadow{position:absolute;left:18%;right:18%;bottom:-3%;height:8%;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.9),transparent);filter:blur(6px);animation:shadow 7s ease-in-out infinite;z-index:-1}
+@keyframes shadow{50%{transform:scale(.88);opacity:.7}}
+.hx-badge{position:absolute;left:-10%;bottom:10%;width:124px;height:124px;z-index:2;animation:spin 22s linear infinite;pointer-events:none}
+.hx-badge text{font:700 14px var(--display);fill:#fff}
+.hx-badge circle{fill:var(--red-600)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hx-pick{position:relative;z-index:3;margin-top:18px;display:grid;grid-template-columns:auto 1fr;grid-template-areas:'now open' 'sw sw';gap:14px 24px;align-items:end;width:min(100%,500px);padding:16px 18px;border:1px solid rgba(255,255,255,.12);border-radius:var(--r2);background:rgba(10,10,10,.6);backdrop-filter:blur(12px)}
+.hx-now{grid-area:now}
+.hx-now small{display:block;font:600 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--g400)}
+.hx-now b{display:block;margin-top:6px;font:800 22px/1 var(--display);text-transform:uppercase;letter-spacing:.03em;color:#fff}
+.hx-open{grid-area:open;justify-self:end;color:#fff}
+.hx-sw{grid-area:sw;display:flex;gap:8px;flex-wrap:wrap}
+.hx-sw button{position:relative;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--a) 50%,var(--b) 50%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);transition:transform .2s var(--ease)}
+.hx-sw button:hover{transform:scale(1.12)}
+.hx-sw button i{position:absolute;inset:-5px;border-radius:50%;border:2px solid transparent}
+.hx-sw button[aria-pressed=true] i{border-color:#fff}
+.hx-sw.run button[aria-pressed=true] i{border-color:rgba(255,255,255,.25);background:conic-gradient(#fff var(--p,0%),transparent 0) border-box;-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 2px));mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 2px));border:0;animation:ring 3.6s linear infinite}
+@property --p{syntax:'<percentage>';inherits:false;initial-value:0%}
+@keyframes ring{to{--p:100%}}
+.hx-cue{position:absolute;left:50%;bottom:22px;width:26px;height:42px;margin-left:-13px;border:1.5px solid rgba(255,255,255,.35);border-radius:14px}
+.hx-cue span{position:absolute;left:50%;top:8px;width:3px;height:8px;margin-left:-1.5px;border-radius:2px;background:#fff;animation:cue 1.8s var(--ease) infinite}
+@keyframes cue{60%{transform:translateY(12px);opacity:0}100%{opacity:0}}
+
+/* intro motion for the title */
+.js .hx-title .ln>span{transform:translateY(105%)}
+.ready .hx-title .ln>span{transform:none;transition:transform 1s cubic-bezier(.2,.8,.15,1)}
+.ready .hx-title .ln:nth-child(2)>span{transition-delay:.08s}
+.ready .hx-title .ln:nth-child(3)>span{transition-delay:.16s}
+.js .hx-stage{opacity:0;transform:translateY(30px) scale(.96)}
+.ready .hx-stage{opacity:1;transform:none;transition:opacity 1.2s var(--ease) .25s,transform 1.4s cubic-bezier(.2,.8,.15,1) .25s}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(28px)}
+.js .rv.in{opacity:1;transform:none;transition:opacity .8s var(--ease) calc(var(--i,0) * 80ms),transform .9s cubic-bezier(.2,.8,.2,1) calc(var(--i,0) * 80ms)}
+.js .hx .rv{transition-delay:calc(.35s + var(--i,0) * 90ms)!important}
+
+/* ---------- marquee ---------- */
+.mq{background:var(--red-600);color:#fff;overflow:hidden;border-block:1px solid #000}
+.mq-in{display:flex;width:max-content;animation:mq 38s linear infinite}
+.mq-in>div{display:flex;align-items:center;flex:none}
+.mq span{font:800 22px/56px var(--display);text-transform:uppercase;letter-spacing:.06em;padding:0 22px}
+.mq i{font-style:normal;font-size:16px;opacity:.7}
+@keyframes mq{to{transform:translateX(-50%)}}
+.mq:hover .mq-in,.brandmq:hover .mq-in{animation-play-state:paused}
+
+/* ---------- section head ---------- */
+.sec-h .d-lg{font-size:clamp(36px,5vw,60px);line-height:.95}
+.sec-h .kick{margin-bottom:8px}
+
+/* ---------- bento categories ---------- */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:14px}
+.bt{position:relative;display:block;overflow:hidden;border-radius:var(--r2);background:#fff;border:1px solid var(--g200);isolation:isolate}
+.bt.big{grid-column:span 2;grid-row:span 2}
+.bt.wide{grid-column:span 2}
+.bt.tall{grid-row:span 2}
+.bt-img{position:absolute;inset:0;z-index:-1}
+.bt-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:18px 18px 64px;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.bt.big .bt-img img{padding:40px 40px 90px}
+.bt:hover .bt-img img{transform:scale(1.07) rotate(-2deg)}
+.bt-tx{position:absolute;z-index:2;left:18px;bottom:16px;right:64px}
+.bt-tx small{display:block;font:600 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--g500)}
+.bt-tx b{display:block;margin-top:6px;font:800 clamp(18px,1.75vw,26px)/1 var(--display);hyphens:auto;-webkit-hyphens:auto;text-transform:uppercase;letter-spacing:.02em;color:var(--navy-900)}
+.bt.big .bt-tx b{font-size:clamp(36px,4vw,52px)}
+.bt-go{position:absolute;z-index:2;right:16px;bottom:16px;width:40px;height:40px;display:grid;place-items:center;border-radius:50%;background:var(--navy-900);color:#fff;transition:background-color .2s var(--ease),transform .3s var(--ease)}
+.bt-go .ui{width:18px;height:18px}
+.bt:hover .bt-go{background:var(--red-600);transform:rotate(-45deg)}
+.bt:after{content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 2px var(--red-600);opacity:0;transition:opacity .2s var(--ease)}
+.bt:hover:after{opacity:1}
+.bt.sale .bt-tx b{color:var(--red-600)}
+.bt.sale:before{content:'Sale';position:absolute;top:16px;left:16px;background:var(--red-600);color:#fff;font:700 12px/1 var(--display);letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:var(--r1)}
+.more-cats{margin-top:20px}
+.chip{transition:border-color .15s var(--ease),background-color .15s var(--ease),color .15s var(--ease)}
+.chip:hover{background:var(--navy-900);color:#fff;border-color:var(--navy-900)}
+
+/* ---------- product cards ---------- */
+.pc{transition:box-shadow .3s var(--ease),transform .3s var(--ease),border-color .3s var(--ease)}
+.pc:hover{transform:translateY(-4px);border-color:var(--g300)}
+.pc .ph{overflow:hidden}
+.pc .ph img{transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.pc:hover .ph img{transform:scale(1.08)}
+.pc .ph:after{content:'Bekijk product';position:absolute;left:12px;right:12px;bottom:12px;height:36px;display:grid;place-items:center;border-radius:var(--r1);background:var(--navy-900);color:#fff;font:700 13px/1 var(--display);letter-spacing:.1em;text-transform:uppercase;transform:translateY(160%);transition:transform .35s var(--ease)}
+.pc:hover .ph:after,.pc:focus-visible .ph:after{transform:none}
+.pc.pop{animation:pop .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * 60ms)}
+@keyframes pop{from{opacity:0;transform:translateY(20px) scale(.98)}}
+
+/* ---------- rail ---------- */
+.rail-sec{overflow:hidden}
+.rail-ctl{display:flex;align-items:center;gap:8px}
+.rail-ctl .link{margin-right:12px}
+.rbtn{width:48px;height:48px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--g300);background:#fff;color:var(--navy-900);transition:background-color .2s,color .2s,border-color .2s,opacity .2s}
+.rbtn:hover:not(:disabled){background:var(--navy-900);color:#fff;border-color:var(--navy-900)}
+.rbtn:disabled{opacity:.35;cursor:default}
+.rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px 0 18px;cursor:grab;outline:0}
+.rail::-webkit-scrollbar{display:none}
+.rail.dragging{cursor:grabbing;scroll-snap-type:none}
+.rail.dragging a{pointer-events:none}
+.rail-pad{flex:0 0 max(4px,calc((100vw - 1200px) / 2 + 4px))}
+.rail .pc{flex:0 0 288px;scroll-snap-align:start;scroll-margin-left:max(20px,calc((100vw - 1200px) / 2 + 20px))}
+.js .rail .pc{opacity:0;transform:translateX(40px)}
+.js .rail .pc.in{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .8s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+.rail .pc.in:hover{transform:translateY(-4px)}
+.cz-card{flex:0 0 288px;scroll-snap-align:start;position:relative;overflow:hidden;background:#000;border-color:#000;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;gap:16px;padding:22px;min-height:360px}
+.cz-card img{position:absolute;right:-24%;top:-6%;width:92%;transform:rotate(14deg);transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.cz-card:hover img{transform:rotate(4deg) scale(1.05)}
+.cz-card b{position:relative;font:800 38px/.9 var(--display);text-transform:uppercase}
+.cz-card .btn{position:relative;align-self:flex-start}
+.rail-bar{height:2px;background:var(--g200);border-radius:2px;overflow:hidden;margin:4px 0 0}
+.rail-bar i{display:block;height:100%;background:var(--navy-900);transform-origin:0 50%;transition:transform .2s linear}
+.czline{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:28px;padding:22px 26px;background:#fff;border:1px solid var(--g200);border-left:4px solid var(--red-600);border-radius:var(--r2)}
+.czline b{display:block;font:800 24px/1.05 var(--display);letter-spacing:.02em;text-transform:uppercase;color:var(--navy-900)}
 .czline span{color:var(--g600);font-size:15px}
-/* heritage strip, wording from SSK's own US site */
-.heri{background:var(--navy-950);color:var(--navy-100);border-radius:var(--r2);padding:40px 48px;display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center}
-.heri .tag{font:800 clamp(28px,3.4vw,40px)/1 var(--display);text-transform:uppercase;color:#fff;letter-spacing:.01em}
-.heri .tag em{font-style:normal;color:var(--red-600)}
-.heri p{max-width:60ch;font-size:16px}
-@media (max-width:900px){.hero .wrap{grid-template-columns:1fr;gap:32px;padding-top:40px;padding-bottom:40px}.heri{grid-template-columns:1fr;padding:32px;gap:12px}}
-@media (max-width:600px){.hero .steps{gap:12px}.hero .steps small{display:none}.hero .steps b{font-size:16px}.heri{padding:24px}}
+
+/* ---------- customiser walkthrough ---------- */
+.czw{position:relative;background:#0A0A0A;color:var(--navy-100);padding:110px 0 100px;overflow:clip}
+.czw:before{content:'';position:absolute;left:0;right:0;top:0;height:0;border-top:3px dashed var(--red-600);opacity:.9}
+.czw-h{display:grid;grid-template-columns:1.1fr .9fr;gap:24px 48px;align-items:end;margin-bottom:56px}
+.czw-h .kick{grid-column:1/-1}
+.czw-h .d-lg{color:#fff;font-size:clamp(40px,5.6vw,76px);line-height:.9}
+.czw-h .d-lg em{font-style:normal;color:var(--red-600)}
+.czw-h p{font-size:17px;max-width:46ch}
+.czw-grid{display:grid;grid-template-columns:1.45fr .8fr;gap:56px;align-items:start}
+.czw-frame-wrap{position:sticky;top:150px}
+.czw-frame{border-radius:10px;overflow:hidden;background:#1A1A1A;border:1px solid #2A2A2A;box-shadow:0 40px 80px -20px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.03)}
+.czw-bar{display:flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-bottom:1px solid #2A2A2A;font:600 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--g400)}
+.czw-bar i{width:10px;height:10px;border-radius:50%;background:#333}
+.czw-bar i:first-child{background:var(--red-600)}
+.czw-bar span{margin-left:10px}
+.czw-bar b{margin-left:auto;color:#fff;font-weight:600}
+.czw-shots{position:relative;aspect-ratio:16/10;background:#e9e9e9}
+.czw-shots img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.03);transition:opacity .6s var(--ease),transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.czw-shots img.on{opacity:1;transform:none}
+.czw-prog{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:10px 14px}
+.czw-prog i{height:3px;border-radius:2px;background:#2A2A2A;transition:background-color .4s var(--ease)}
+.czw-prog i.on{background:var(--red-600)}
+.czw-steps{list-style:none;padding:12vh 0 18vh}
+.czw-steps li{display:grid;grid-template-columns:56px 1fr;gap:12px;min-height:40vh;align-items:center;cursor:pointer;opacity:.28;transition:opacity .5s var(--ease)}
+.czw-steps li.on{opacity:1}
+.czw-steps li.done{opacity:.45}
+.czw-steps .n{align-self:center;font:600 14px/1 var(--mono);color:var(--g400);padding-top:6px}
+.czw-steps li.on .n{color:var(--red-600)}
+.czw-steps h3{font:800 clamp(30px,3vw,42px)/.95 var(--display);text-transform:uppercase;color:#fff;letter-spacing:.01em}
+.czw-steps p{margin-top:12px;font-size:16px;max-width:34ch}
+.czw-steps .m-shot{display:none}
+.czw-end{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:24px;padding-top:40px;border-top:1px solid #2A2A2A}
+.czw-end>span{color:var(--g400);font-size:15px}
+
+/* ---------- tabs ---------- */
+.tabs{position:relative;display:flex;gap:4px;border-bottom:1px solid var(--g200);margin-bottom:24px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{position:relative;height:52px;padding:0 18px;font:800 20px/1 var(--display);text-transform:uppercase;letter-spacing:.04em;color:var(--g500);white-space:nowrap;transition:color .2s var(--ease)}
+.tabs button:hover,.tabs button[aria-selected=true]{color:var(--navy-900)}
+.tabs sup{font:700 11px/1 var(--mono);color:var(--red-600);margin-left:4px;vertical-align:super}
+.tab-ink{position:absolute;left:0;bottom:-1px;height:3px;background:var(--red-600);transition:transform .45s cubic-bezier(.2,.8,.2,1),width .45s cubic-bezier(.2,.8,.2,1)}
+
+/* ---------- heritage ---------- */
+.heri2{position:relative;background:#000;color:var(--navy-100);padding:90px 0 80px;overflow:hidden}
+.heri2-type{font:800 clamp(80px,15vw,240px)/.86 var(--display);text-transform:uppercase;white-space:nowrap;color:#fff;letter-spacing:-.01em}
+.heri2-type div{will-change:transform}
+.heri2-type .l2{text-align:right;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.6)}
+.heri2-type em{font-style:normal;color:var(--red-600);-webkit-text-stroke:0}
+.heri2-in{margin-top:56px}
+.stitch-draw svg{width:100%;height:20px;display:block}
+.stitch-draw path{stroke:var(--red-600);stroke-width:3;stroke-dasharray:10 7;fill:none}
+.js .stitch-draw{clip-path:inset(0 100% 0 0)}
+.js .stitch-draw.in{clip-path:inset(0 0 0 0);transition:clip-path 1.6s cubic-bezier(.6,0,.2,1)}
+.heri2-cols{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:36px}
+.heri2-cols p{font-size:17px;max-width:52ch}
+.heri2-cols .big{font:700 clamp(26px,2.6vw,36px)/1.1 var(--display);text-transform:uppercase;color:#fff;letter-spacing:.01em}
+
+/* ---------- club, showroom ---------- */
+.split .panel{transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.split .panel:hover{transform:translateY(-3px);box-shadow:var(--sh-raised)}
+.open-now{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:6px 12px 6px 10px;border-radius:99px;font:600 12px/1 var(--mono);letter-spacing:.04em;background:var(--g100);color:var(--g700)}
+.open-now:before{content:'';width:8px;height:8px;border-radius:50%;background:var(--g400)}
+.open-now.yes{background:#E7F6EC;color:#14532D}
+.open-now.yes:before{background:#16A34A;animation:ping2 2s infinite}
+@keyframes ping2{70%{box-shadow:0 0 0 8px rgba(22,163,74,0)}0%{box-shadow:0 0 0 0 rgba(22,163,74,.6)}}
+.show .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+/* ---------- brands ---------- */
+.brandmq{overflow:hidden;border-block:1px solid var(--g200);background:#fff;margin-top:24px}
+.brandmq .mq-in{animation-duration:30s}
+.brandmq span{font:800 clamp(34px,4.4vw,56px)/110px var(--display);text-transform:uppercase;letter-spacing:.01em;color:transparent;-webkit-text-stroke:1px var(--g400);padding:0 34px;transition:color .25s var(--ease),-webkit-text-stroke-color .25s}
+.brandmq span:hover{color:var(--navy-900);-webkit-text-stroke-color:var(--navy-900)}
+.brandmq i{width:10px;height:10px;background:var(--red-600);transform:rotate(45deg);flex:none}
+.ftr{margin-top:0}
+.ftr a{transition:color .15s var(--ease)}
+
+/* ---------- floating helpers ---------- */
+.m-cta{position:fixed;left:16px;right:16px;bottom:16px;z-index:70;display:none;align-items:center;justify-content:center;gap:10px;height:54px;border-radius:var(--r2);background:var(--red-600);color:#fff;font:800 17px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;box-shadow:0 14px 34px rgba(200,16,46,.45);transform:translateY(130%);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.m-cta.show{transform:none}
+.totop{position:fixed;right:22px;bottom:22px;z-index:70;width:48px;height:48px;display:grid;place-items:center;border-radius:50%;background:var(--navy-900);color:#fff;box-shadow:var(--sh-raised);opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .3s,transform .3s,background-color .2s}
+.totop.show{opacity:1;transform:none;pointer-events:auto}
+.totop:hover{background:var(--red-600)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1080px){
+  .hx-title{font-size:clamp(52px,8vw,100px)}
+  .hx-stats div{padding-right:18px;margin-right:18px}
+  .czw-grid{grid-template-columns:1.2fr .8fr;gap:36px}
+}
+@media (max-width:900px){
+  html{scroll-padding-top:80px}
+  .hx-in{grid-template-columns:1fr;min-height:0;padding-top:36px;padding-bottom:72px;gap:12px}
+  .hx-copy{display:contents}
+  .hx-kick{order:1;justify-self:start}
+  .hx-title{order:2;margin:8px 0 0}
+  .hx-vis{order:3;margin:8px 0}
+  .hx-lead{order:4}
+  .hx-btns{order:5;margin-top:16px}
+  .hx-stats{order:6;margin-top:20px}
+  .czw-steps .n{align-self:start}
+  .hx-stage{width:min(76%,380px)}
+  .hx-badge{width:88px;height:88px;left:-14%;bottom:6%}
+  .hx-pick{width:100%}
+  .hx-cue{display:none}
+  .bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:190px}
+  .bt.tall{grid-row:span 1}
+  .czw{padding:80px 0}
+  .czw-h{grid-template-columns:1fr;margin-bottom:24px}
+  .czw-grid{grid-template-columns:1fr}
+  .czw-frame-wrap{display:none}
+  .czw-steps{padding:0}
+  .czw-steps li{min-height:0;opacity:1;padding:28px 0;border-bottom:1px solid #2A2A2A;align-items:start}
+  .czw-steps li.done{opacity:1}
+  .czw-steps .m-shot{display:block;width:100%;height:auto;margin-top:18px;border-radius:8px;border:1px solid #2A2A2A}
+  .heri2-cols{grid-template-columns:1fr;gap:16px}
+  .m-cta{display:flex}
+  .totop{bottom:84px}
+}
+@media (max-width:600px){
+  .hx-title{font-size:clamp(46px,15vw,72px)}
+  .hx-lead{font-size:16px}
+  .hx-btns .btn{flex:1 1 100%}
+  .bt:not(.big):not(.wide) .bt-tx small{display:none}
+  .bt-tx{right:58px;left:14px;bottom:14px}
+  .bt-go{width:34px;height:34px;right:12px;bottom:12px}
+  .czw-steps li{grid-template-columns:36px 1fr}
+  .hx-stats{grid-template-columns:repeat(2,1fr);gap:0}
+  .hx-stats div{border-right:0;margin-right:0;padding:14px 0 0}
+  .hx-stats dd{font-size:26px}
+  .hx-pick{grid-template-areas:'now' 'sw' 'open';grid-template-columns:1fr}
+  .hx-open{justify-self:start}
+  .hx-sw{gap:6px}
+  .hx-sw button{width:28px;height:28px}
+  .mq span{font-size:18px;line-height:46px;padding:0 14px}
+  .bento{grid-auto-rows:170px;gap:10px}
+  .bt.big{grid-row:span 2}
+  .bt.wide{grid-column:span 2}
+  .bt-tx b{font-size:20px}
+  .bt-img img{padding:12px 12px 54px}
+  .rail .pc,.cz-card{flex-basis:76vw}
+  .rail-ctl .rbtn{display:none}
+  .rail-ctl .link{margin-right:0}
+  .czline{padding:18px}
+  .tabs button{font-size:17px;padding:0 12px}
+  .brandmq span{line-height:84px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .hx-ghost,.mq-in,.hx-float,.hx-shadow,.hx-badge,.hx-cue span,.hx-kick .dot{animation:none!important}
+  .js .rv,.js .rail .pc,.js .hx-title .ln>span,.js .hx-stage{opacity:1!important;transform:none!important}
+  .js .stitch-draw{clip-path:none}
+  .hx-float img{transition:opacity .3s!important}
+}
+
 </style>
 </head>
-<body>
+<body class="home">
+<a class="skip" href="#main">Naar de inhoud</a>
+<div class="sprog" aria-hidden="true"><i></i></div>
 <div data-ui="header"></div>
-<main>
-  <section class="hero" id="customizer"><div class="wrap">
-    <div>
-      <div class="kick">Glove Customizer</div>
-      <h1 class="d-xl">Ontwerp je eigen <em>handschoen</em></h1>
-      <p>Kies het model dat bij jouw positie past, bepaal de kleuren van leer, veters en stiksels en maak hem af met jouw details.</p>
-      <ol class="steps">
-        <li><i>01</i><b>Model</b><small>Positie en maat</small></li>
-        <li><i>02</i><b>Kleuren</b><small>Leer, veters, stiksels</small></li>
-        <li><i>03</i><b>Details</b><small>Naam en afwerking</small></li>
-      </ol>
-      <div class="btns"><a class="btn btn-red" id="cz1">Start de customizer</a><a class="btn btn-ghost" id="shop1">Bekijk handschoenen</a></div>
-    </div>
-    <div class="shot" id="czshot"></div>
-  </div></section>
-  <div data-ui="usp"></div>
-  <div class="catbar"><div class="wrap" id="chips"></div></div>
+<main id="main">
 
-  <section class="sec"><div class="wrap" id="s-gloves"></div></section>
-  <section class="sec" style="padding-top:0"><div class="wrap" id="s-bats"></div></section>
-  <section class="sec" style="padding-top:0"><div class="wrap" id="s-outlet"></div></section>
-  <section class="sec" style="padding-top:0"><div class="wrap" id="s-balls"></div></section>
-  <section class="sec tight" style="padding-top:0"><div class="wrap"><div class="heri">
-    <div class="tag">Baseball,<br><em>it's our game.</em></div>
-    <p>SSK begon als een kleine winkel in Kyoto, Japan. Vandaag maakt SSK handschoenen met de hand, van premium leer, voor spelers over de hele wereld. In Kwintsheul vind je SSK Europe, samen met de andere topmerken in honkbal en softbal.</p>
-  </div></div></section>
-  <section class="sec tight" style="padding-top:16px"><div class="wrap"><div data-ui="club"></div></div></section>
-  <section class="sec tight" style="padding-top:0"><div class="wrap"><div data-ui="showroom"></div></div></section>
-  <section class="sec tight" style="padding-top:0"><div class="wrap"><div data-ui="brands"></div></div></section>
+  <!-- HERO: the customiser, with the real renders from it -->
+  <section class="hx" id="customizer" aria-labelledby="hx-title">
+    <div class="hx-glow" aria-hidden="true"></div>
+    <div class="hx-grain" aria-hidden="true"></div>
+    <div class="hx-ghost" aria-hidden="true"><span>Pro Custom · Made to order · Pro Custom · Made to order · </span><span>Pro Custom · Made to order · Pro Custom · Made to order · </span></div>
+    <div class="wrap hx-in">
+      <div class="hx-copy">
+        <div class="kick hx-kick rv"><span class="dot"></span>SSK Pro Custom · Glove Customizer</div>
+        <h1 class="hx-title" id="hx-title">
+          <span class="ln"><span>Ontwerp je</span></span>
+          <span class="ln"><span>eigen <em>hand-</em></span></span>
+          <span class="ln"><span><em>schoen.</em></span></span>
+        </h1>
+        <p class="hx-lead rv" style="--i:3">Kies je web, leer en veters, kleur twintig onderdelen en zet je naam op de duim. Elke keuze zie je meteen op de handschoen, van vier kanten.</p>
+        <div class="hx-btns rv" style="--i:4">
+          <a class="btn btn-red btn-xl mag" id="cz-main"><span>Start de customizer</span><svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-ghost btn-xl" href="#hoe-het-werkt">Zo werkt het</a>
+        </div>
+        <dl class="hx-stats rv" style="--i:5">
+          <div><dt>Vanaf</dt><dd class="mono">€ 374,95</dd></div>
+          <div><dt>Onderdelen</dt><dd><span data-count="20">20</span></dd></div>
+          <div><dt>Zijden</dt><dd><span data-count="4">4</span></dd></div>
+          <div><dt>Per bestelling</dt><dd>tot <span data-count="5">5</span></dd></div>
+        </dl>
+      </div>
+
+      <div class="hx-vis">
+        <div class="hx-stage" id="stage" aria-live="polite">
+          <svg class="hx-badge" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="circ" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs><text><textPath href="#circ" textLength="486" lengthAdjust="spacing">SSK PRO CUSTOM · MADE TO ORDER · HANDGEMAAKT · </textPath></text><circle cx="100" cy="100" r="7"/></svg>
+          <div class="hx-tilt" id="tilt"><div class="hx-float" id="gloves"></div></div>
+          <div class="hx-shadow" aria-hidden="true"></div>
+        </div>
+        <div class="hx-pick">
+          <div class="hx-now"><small>Startkleur uit de customizer</small><b id="cw-name">Cardinal / Wit</b></div>
+          <div class="hx-sw" id="swatches" role="group" aria-label="Kies een startkleur"></div>
+          <a class="link hx-open" id="cw-open">Open met deze kleuren <svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <a class="hx-cue" href="#shop" aria-label="Scroll naar de webshop"><span></span></a>
+  </section>
+
+  <div class="mq" aria-hidden="true"><div class="mq-in" id="mq"></div></div>
+  <div data-ui="usp"></div>
+
+  <!-- CATEGORIES -->
+  <section class="sec" id="shop" aria-labelledby="cat-title"><div class="wrap">
+    <div class="sec-h rv"><div><div class="kick">Webshop</div><h2 class="d-lg" id="cat-title">Shop per categorie</h2></div>
+      <a class="link" href="#" data-open="mega">Alle 17 categorieën <svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    <div class="bento" id="bento"></div>
+    <div class="more-cats rv" id="morecats"></div>
+  </div></section>
+
+  <!-- NEW GLOVES RAIL -->
+  <section class="sec rail-sec" aria-labelledby="rail-title"><div class="wrap">
+    <div class="sec-h rv"><div><div class="kick">Handschoenen</div><h2 class="d-lg" id="rail-title">Nieuw binnen</h2></div>
+      <div class="rail-ctl"><a class="link" id="all-gloves">Alle handschoenen <svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <button class="rbtn" data-rail="-1" aria-label="Vorige handschoenen"><svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <button class="rbtn" data-rail="1" aria-label="Volgende handschoenen"><svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div></div>
+  </div>
+  <div class="rail" id="rail" tabindex="0" aria-label="Nieuwe handschoenen, scroll horizontaal"></div>
+  <div class="wrap"><div class="rail-bar" aria-hidden="true"><i id="railbar"></i></div>
+    <div class="czline rv"><div><b>Staat jouw handschoen er niet tussen?</b><span>Ontwerp hem zelf, van web tot naam op de duim.</span></div><a class="btn btn-red sm mag" id="cz-line">Start de customizer</a></div>
+  </div></section>
+
+  <!-- CUSTOMISER WALKTHROUGH -->
+  <section class="czw" id="hoe-het-werkt" aria-labelledby="czw-title">
+    <div class="wrap">
+      <div class="czw-h rv"><div class="kick">Glove Customizer</div><h2 class="d-lg" id="czw-title">In zeven stappen<br>van idee naar <em>handschoen</em></h2>
+        <p>Dit is de customizer zelf. Je bouwt de handschoen stap voor stap, ziet hem van vier kanten en stuurt je ontwerp in één keer naar SSK Europe.</p></div>
+      <div class="czw-grid">
+        <div class="czw-frame-wrap"><div class="czw-frame">
+          <div class="czw-bar"><i></i><i></i><i></i><span>SSK Glove Customizer</span><b id="czw-n">01 / 07</b></div>
+          <div class="czw-shots" id="czw-shots"></div>
+          <div class="czw-prog" id="czw-prog"></div>
+        </div></div>
+        <ol class="czw-steps" id="czw-steps"></ol>
+      </div>
+      <div class="czw-end rv"><a class="btn btn-red btn-xl mag" id="cz-end"><span>Ontwerp je handschoen</span></a><span>Gratis ontwerpen. Je betaalt pas als je bestelt.</span></div>
+    </div>
+  </section>
+
+  <!-- SHOP TABS -->
+  <section class="sec" aria-labelledby="tabs-title"><div class="wrap">
+    <div class="sec-h rv"><div><div class="kick">Collectie</div><h2 class="d-lg" id="tabs-title">Uitgelicht</h2></div><a class="link" id="tab-all">Bekijk alles <svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    <div class="tabs rv" role="tablist" aria-label="Productgroepen" id="tabs"></div>
+    <div class="tabpanel" id="tabpanel" role="tabpanel" tabindex="0"></div>
+  </div></section>
+
+  <!-- HERITAGE -->
+  <section class="heri2" aria-label="Over SSK">
+    <div class="heri2-type" aria-hidden="true"><div class="l1" id="h1">Baseball, it's</div><div class="l2" id="h2">our <em>game.</em></div></div>
+    <div class="wrap heri2-in">
+      <div class="stitch-draw" aria-hidden="true"><svg viewBox="0 0 600 20" preserveAspectRatio="none"><path d="M0 10 H600" /></svg></div>
+      <div class="heri2-cols">
+        <p class="big rv">SSK begon als een kleine winkel in Kyoto, Japan.</p>
+        <p class="rv" style="--i:1">Vandaag maakt SSK handschoenen met de hand, van premium leer, voor spelers over de hele wereld. In Kwintsheul vind je SSK Europe, samen met de andere topmerken in honkbal en softbal.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec tight"><div class="wrap rv"><div data-ui="club"></div></div></section>
+  <section class="sec tight" style="padding-top:0" id="showroom"><div class="wrap rv"><div data-ui="showroom"></div></div></section>
+  <section class="brandmq" aria-label="Merken"><div class="mq-in" id="brands"></div></section>
 </main>
 <div data-ui="footer"></div>
+<a class="m-cta" id="m-cta" aria-label="Start de Glove Customizer">Ontwerp je handschoen <svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+<button class="totop" id="totop" aria-label="Terug naar boven"><svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
 <script>
 /* SSK Europe shop content, taken from sskeurope.ccvshop.nl (Nov 2026). Shared by all five homepage concepts. */
 (function () {
   const BASE = 'https://sskeurope.ccvshop.nl';
-  // Link for the existing glove customiser. Replace with the real URL.
-  const CUSTOMIZER_URL = '#customizer';
-  // Screenshot of the existing customiser for the version 2 hero. Leave empty to show the placeholder.
-  const CUSTOMIZER_IMG = '';
+  // Share links made by the customiser's own Share button, one per starter.
+  const CZ_LINKS = {
+      "cardinal": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0Ijo1LCJ2aWV3IjoiYmFjayIsImNvbG9ycyI6eyJ3ZWIiOiIyMCIsImJhY2sxIjoiMjAiLCJiYWNrMiI6IjIwIiwiYmFjazMiOiIyMCIsImJhY2s0IjoiMjAiLCJiYWNrNSI6IjIwIiwiYmFjazYiOiIyMCIsImJhY2s3IjoiMjAiLCJiYWNrOCI6IjIwIiwiYmFjazkiOiIyMCIsInBhbG0iOiIyMCIsImJlbHQiOiIyMCIsImxpbmluZyI6IjIwIiwiYmluZGluZyI6IjIwIiwid2VsdGluZyI6IjEwIiwibGFjZXMiOiIxMCIsInRodW1iX2xvb3BzIjoiMTAiLCJwaW5reV9sb29wcyI6IjEwIiwic3RpdGNoaW5nIjoiMTAiLCJyaW5nX2VtYiI6IjEwIiwicGFkX2NvbG9yIjoiMjAifSwibWF0ZXJpYWxzIjp7fSwiaGFuZCI6bnVsbCwic2l6ZSI6IjExLjc1XCIiLCJwb3NpdGlvbiI6bnVsbCwicGFkIjoiTm9uZSIsIndlYlR5cGUiOiJILVdlYiIsInRodW1iVGV4dCI6IiIsInRodW1iRm9udCI6bnVsbCwidGh1bWJNYWluIjpudWxsLCJ0aHVtYk91dGxpbmUiOm51bGwsInRodW1iTnVtYmVyIjoiIiwiY2lyY2xlIjpudWxsLCJudW1iZXJDb2xvciI6bnVsbCwiZmxhZyI6bnVsbCwiZmxhZ1Bvc2l0aW9uIjoiaW5kZXgiLCJmbGFnT3RoZXIiOiIiLCJwaW5reVRleHQiOiIiLCJ3aXRoZHJhd25XZWIiOm51bGwsInN0YXJ0SWQiOiJzaWcyIiwicGlja2VkIjp7fSwic2NoZW1hVmVyc2lvbiI6MX0",
+      "zwart-goud": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0Ijo3LCJ2aWV3IjoiYmFjayIsImNvbG9ycyI6eyJ3ZWIiOiI5MCIsImJhY2sxIjoiOTAiLCJiYWNrMiI6IjkwIiwiYmFjazMiOiI5MCIsImJhY2s0IjoiOTAiLCJiYWNrNSI6IjkwIiwiYmFjazYiOiI5MCIsImJhY2s3IjoiOTAiLCJiYWNrOCI6IjkwIiwiYmFjazkiOiI5MCIsInBhbG0iOiI5MCIsImJlbHQiOiI5MCIsImxpbmluZyI6IjQwIiwiYmluZGluZyI6IjkwIiwid2VsdGluZyI6IkdGIiwibGFjZXMiOiI5MCIsInRodW1iX2xvb3BzIjoiOTAiLCJwaW5reV9sb29wcyI6IjkwIiwic3RpdGNoaW5nIjoiOTAiLCJyaW5nX2VtYiI6IjM5IiwicGFkX2NvbG9yIjoiOTAifSwibWF0ZXJpYWxzIjp7fSwiaGFuZCI6bnVsbCwic2l6ZSI6IjExLjc1XCIiLCJwb3NpdGlvbiI6bnVsbCwicGFkIjoiTm9uZSIsIndlYlR5cGUiOiJILVdlYiIsInRodW1iVGV4dCI6IiIsInRodW1iRm9udCI6bnVsbCwidGh1bWJNYWluIjpudWxsLCJ0aHVtYk91dGxpbmUiOm51bGwsInRodW1iTnVtYmVyIjoiIiwiY2lyY2xlIjpudWxsLCJudW1iZXJDb2xvciI6bnVsbCwiZmxhZyI6bnVsbCwiZmxhZ1Bvc2l0aW9uIjoiaW5kZXgiLCJmbGFnT3RoZXIiOiIiLCJwaW5reVRleHQiOiIiLCJ3aXRoZHJhd25XZWIiOm51bGwsInN0YXJ0SWQiOiJwcm8iLCJwaWNrZWQiOnt9LCJzY2hlbWFWZXJzaW9uIjoxfQ",
+      "navy-columbia": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0IjoxNCwidmlldyI6ImJhY2siLCJjb2xvcnMiOnsid2ViIjoiNzAiLCJiYWNrMSI6IjcwIiwiYmFjazIiOiI3MCIsImJhY2szIjoiNzAiLCJiYWNrNCI6IjcwIiwiYmFjazUiOiI3MCIsImJhY2s2IjoiNzAiLCJiYWNrNyI6IjcwIiwiYmFjazgiOiI3MCIsImJhY2s5IjoiNzAiLCJwYWxtIjoiNzAiLCJiZWx0IjoiNzAiLCJsaW5pbmciOiI3MCIsImJpbmRpbmciOiI2NSIsIndlbHRpbmciOiI2NSIsImxhY2VzIjoiNjUiLCJ0aHVtYl9sb29wcyI6IjY1IiwicGlua3lfbG9vcHMiOiI2NSIsInN0aXRjaGluZyI6IjEwIiwicmluZ19lbWIiOiI5NSIsInBhZF9jb2xvciI6IjcwIn0sIm1hdGVyaWFscyI6e30sImhhbmQiOm51bGwsInNpemUiOiIxMS43NVwiIiwicG9zaXRpb24iOm51bGwsInBhZCI6Ik5vbmUiLCJ3ZWJUeXBlIjoiSC1XZWIiLCJ0aHVtYlRleHQiOiIiLCJ0aHVtYkZvbnQiOm51bGwsInRodW1iTWFpbiI6bnVsbCwidGh1bWJPdXRsaW5lIjpudWxsLCJ0aHVtYk51bWJlciI6IiIsImNpcmNsZSI6bnVsbCwibnVtYmVyQ29sb3IiOm51bGwsImZsYWciOm51bGwsImZsYWdQb3NpdGlvbiI6ImluZGV4IiwiZmxhZ090aGVyIjoiIiwicGlua3lUZXh0IjoiIiwid2l0aGRyYXduV2ViIjpudWxsLCJzdGFydElkIjoiTmF2eSAvIENvbHVtYmlhIiwicGlja2VkIjp7fSwic2NoZW1hVmVyc2lvbiI6MX0",
+      "japan": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0Ijo3LCJ2aWV3IjoiYmFjayIsImNvbG9ycyI6eyJ3ZWIiOiI3MSIsImJhY2sxIjoiMzIiLCJiYWNrMiI6IjMyIiwiYmFjazMiOiI3MSIsImJhY2s0IjoiNzEiLCJiYWNrNSI6IjcxIiwiYmFjazYiOiI3MSIsImJhY2s3IjoiNzEiLCJiYWNrOCI6IjcxIiwiYmFjazkiOiI3MSIsInBhbG0iOiI3MSIsImJlbHQiOiIzMiIsImxpbmluZyI6IjcxIiwiYmluZGluZyI6IjQ1Iiwid2VsdGluZyI6IjQ1IiwibGFjZXMiOiI0NSIsInRodW1iX2xvb3BzIjoiNDUiLCJwaW5reV9sb29wcyI6IjQ1Iiwic3RpdGNoaW5nIjoiNDUiLCJyaW5nX2VtYiI6IjM5IiwicGFkX2NvbG9yIjoiNzEifSwibWF0ZXJpYWxzIjp7fSwiaGFuZCI6bnVsbCwic2l6ZSI6IjExLjc1XCIiLCJwb3NpdGlvbiI6bnVsbCwicGFkIjoiTm9uZSIsIndlYlR5cGUiOiJILVdlYiIsInRodW1iVGV4dCI6IiIsInRodW1iRm9udCI6bnVsbCwidGh1bWJNYWluIjpudWxsLCJ0aHVtYk91dGxpbmUiOm51bGwsInRodW1iTnVtYmVyIjoiIiwiY2lyY2xlIjpudWxsLCJudW1iZXJDb2xvciI6bnVsbCwiZmxhZyI6IkphcGFuIiwiZmxhZ1Bvc2l0aW9uIjoiaW5kZXgiLCJmbGFnT3RoZXIiOiIiLCJwaW5reVRleHQiOiIiLCJ3aXRoZHJhd25XZWIiOm51bGwsInN0YXJ0SWQiOiJqcCIsInBpY2tlZCI6e30sInNjaGVtYVZlcnNpb24iOjF9",
+      "nederland": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0IjoxNCwidmlldyI6ImJhY2siLCJjb2xvcnMiOnsid2ViIjoiMzUiLCJiYWNrMSI6IjM1IiwiYmFjazIiOiIzNSIsImJhY2szIjoiMzUiLCJiYWNrNCI6IjM1IiwiYmFjazUiOiIzNSIsImJhY2s2IjoiMzUiLCJiYWNrNyI6IjM1IiwiYmFjazgiOiIzNSIsImJhY2s5IjoiMzUiLCJwYWxtIjoiMzUiLCJiZWx0IjoiMzUiLCJsaW5pbmciOiI3MCIsImJpbmRpbmciOiI3MCIsIndlbHRpbmciOiI3MCIsImxhY2VzIjoiNzAiLCJ0aHVtYl9sb29wcyI6IjcwIiwicGlua3lfbG9vcHMiOiI3MCIsInN0aXRjaGluZyI6IjcwIiwicmluZ19lbWIiOiIxMCIsInBhZF9jb2xvciI6IjM1In0sIm1hdGVyaWFscyI6e30sImhhbmQiOm51bGwsInNpemUiOiIxMS43NVwiIiwicG9zaXRpb24iOm51bGwsInBhZCI6Ik5vbmUiLCJ3ZWJUeXBlIjoiSC1XZWIiLCJ0aHVtYlRleHQiOiIiLCJ0aHVtYkZvbnQiOm51bGwsInRodW1iTWFpbiI6bnVsbCwidGh1bWJPdXRsaW5lIjpudWxsLCJ0aHVtYk51bWJlciI6IiIsImNpcmNsZSI6bnVsbCwibnVtYmVyQ29sb3IiOm51bGwsImZsYWciOiJOZXRoZXJsYW5kcyIsImZsYWdQb3NpdGlvbiI6ImluZGV4IiwiZmxhZ090aGVyIjoiIiwicGlua3lUZXh0IjoiIiwid2l0aGRyYXduV2ViIjpudWxsLCJzdGFydElkIjoibmwiLCJwaWNrZWQiOnt9LCJzY2hlbWFWZXJzaW9uIjoxfQ",
+      "zwart-grijs": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0IjoxMCwidmlldyI6ImJhY2siLCJjb2xvcnMiOnsid2ViIjoiOTAiLCJiYWNrMSI6IjkwIiwiYmFjazIiOiI5MCIsImJhY2szIjoiOTAiLCJiYWNrNCI6IjkwIiwiYmFjazUiOiI5MCIsImJhY2s2IjoiOTAiLCJiYWNrNyI6IjkwIiwiYmFjazgiOiI5MCIsImJhY2s5IjoiOTAiLCJwYWxtIjoiOTAiLCJiZWx0IjoiOTAiLCJsaW5pbmciOiI5MCIsImJpbmRpbmciOiI5MyIsIndlbHRpbmciOiI5MyIsImxhY2VzIjoiOTMiLCJ0aHVtYl9sb29wcyI6IjkzIiwicGlua3lfbG9vcHMiOiI5MyIsInN0aXRjaGluZyI6IjkzIiwicmluZ19lbWIiOiI5NSIsInBhZF9jb2xvciI6IjkwIn0sIm1hdGVyaWFscyI6e30sImhhbmQiOm51bGwsInNpemUiOiIxMS43NVwiIiwicG9zaXRpb24iOm51bGwsInBhZCI6Ik5vbmUiLCJ3ZWJUeXBlIjoiSC1XZWIiLCJ0aHVtYlRleHQiOiIiLCJ0aHVtYkZvbnQiOm51bGwsInRodW1iTWFpbiI6bnVsbCwidGh1bWJPdXRsaW5lIjpudWxsLCJ0aHVtYk51bWJlciI6IiIsImNpcmNsZSI6bnVsbCwibnVtYmVyQ29sb3IiOm51bGwsImZsYWciOm51bGwsImZsYWdQb3NpdGlvbiI6ImluZGV4IiwiZmxhZ090aGVyIjoiIiwicGlua3lUZXh0IjoiIiwid2l0aGRyYXduV2ViIjpudWxsLCJzdGFydElkIjoiQmxhY2sgLyBHcmV5IiwicGlja2VkIjp7fSwic2NoZW1hVmVyc2lvbiI6MX0",
+      "roze-wit": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0IjoxMCwidmlldyI6ImJhY2siLCJjb2xvcnMiOnsid2ViIjoiMjUiLCJiYWNrMSI6IjI1IiwiYmFjazIiOiIyNSIsImJhY2szIjoiMjUiLCJiYWNrNCI6IjI1IiwiYmFjazUiOiIyNSIsImJhY2s2IjoiMjUiLCJiYWNrNyI6IjI1IiwiYmFjazgiOiIyNSIsImJhY2s5IjoiMjUiLCJwYWxtIjoiMjUiLCJiZWx0IjoiMjUiLCJsaW5pbmciOiIyNSIsImJpbmRpbmciOiIxMCIsIndlbHRpbmciOiIxMCIsImxhY2VzIjoiMTAiLCJ0aHVtYl9sb29wcyI6IjEwIiwicGlua3lfbG9vcHMiOiIxMCIsInN0aXRjaGluZyI6IjEwIiwicmluZ19lbWIiOiIxMCIsInBhZF9jb2xvciI6IjI1In0sIm1hdGVyaWFscyI6e30sImhhbmQiOm51bGwsInNpemUiOiIxMS43NVwiIiwicG9zaXRpb24iOm51bGwsInBhZCI6Ik5vbmUiLCJ3ZWJUeXBlIjoiSC1XZWIiLCJ0aHVtYlRleHQiOiIiLCJ0aHVtYkZvbnQiOm51bGwsInRodW1iTWFpbiI6bnVsbCwidGh1bWJPdXRsaW5lIjpudWxsLCJ0aHVtYk51bWJlciI6IiIsImNpcmNsZSI6bnVsbCwibnVtYmVyQ29sb3IiOm51bGwsImZsYWciOm51bGwsImZsYWdQb3NpdGlvbiI6ImluZGV4IiwiZmxhZ090aGVyIjoiIiwicGlua3lUZXh0IjoiIiwid2l0aGRyYXduV2ViIjpudWxsLCJzdGFydElkIjoiUGluayAvIFdoaXRlIiwicGlja2VkIjp7fSwic2NoZW1hVmVyc2lvbiI6MX0",
+      "zalm-mint": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0IjoxMCwidmlldyI6ImJhY2siLCJjb2xvcnMiOnsid2ViIjoiNDkiLCJiYWNrMSI6IjQ5IiwiYmFjazIiOiI0OSIsImJhY2szIjoiNDkiLCJiYWNrNCI6IjQ5IiwiYmFjazUiOiI0OSIsImJhY2s2IjoiNDkiLCJiYWNrNyI6IjQ5IiwiYmFjazgiOiI0OSIsImJhY2s5IjoiNDkiLCJwYWxtIjoiNDkiLCJiZWx0IjoiNDkiLCJsaW5pbmciOiI0OSIsImJpbmRpbmciOiI1MiIsIndlbHRpbmciOiI1MiIsImxhY2VzIjoiNTIiLCJ0aHVtYl9sb29wcyI6IjUyIiwicGlua3lfbG9vcHMiOiI1MiIsInN0aXRjaGluZyI6IjEwIiwicmluZ19lbWIiOiI1MiIsInBhZF9jb2xvciI6IjQ5In0sIm1hdGVyaWFscyI6e30sImhhbmQiOm51bGwsInNpemUiOiIxMS43NVwiIiwicG9zaXRpb24iOm51bGwsInBhZCI6Ik5vbmUiLCJ3ZWJUeXBlIjoiSC1XZWIiLCJ0aHVtYlRleHQiOiIiLCJ0aHVtYkZvbnQiOm51bGwsInRodW1iTWFpbiI6bnVsbCwidGh1bWJPdXRsaW5lIjpudWxsLCJ0aHVtYk51bWJlciI6IiIsImNpcmNsZSI6bnVsbCwibnVtYmVyQ29sb3IiOm51bGwsImZsYWciOm51bGwsImZsYWdQb3NpdGlvbiI6ImluZGV4IiwiZmxhZ090aGVyIjoiIiwicGlua3lUZXh0IjoiIiwid2l0aGRyYXduV2ViIjpudWxsLCJzdGFydElkIjoiU2FsbW9uIC8gTWludCIsInBpY2tlZCI6e30sInNjaGVtYVZlcnNpb24iOjF9",
+      "curacao": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0IjoxMywidmlldyI6ImJhY2siLCJjb2xvcnMiOnsid2ViIjoiNjAiLCJiYWNrMSI6IjYwIiwiYmFjazIiOiI2MCIsImJhY2szIjoiNjAiLCJiYWNrNCI6IjYwIiwiYmFjazUiOiI2MCIsImJhY2s2IjoiNjAiLCJiYWNrNyI6IjYwIiwiYmFjazgiOiI2MCIsImJhY2s5IjoiNjAiLCJwYWxtIjoiNjAiLCJiZWx0IjoiNjAiLCJsaW5pbmciOiI2MCIsImJpbmRpbmciOiI0NSIsIndlbHRpbmciOiI0NSIsImxhY2VzIjoiNDUiLCJ0aHVtYl9sb29wcyI6IjQ1IiwicGlua3lfbG9vcHMiOiI0NSIsInN0aXRjaGluZyI6IjQ1IiwicmluZ19lbWIiOiIxMCIsInBhZF9jb2xvciI6IjYwIn0sIm1hdGVyaWFscyI6e30sImhhbmQiOm51bGwsInNpemUiOiIxMS43NVwiIiwicG9zaXRpb24iOm51bGwsInBhZCI6Ik5vbmUiLCJ3ZWJUeXBlIjoiSC1XZWIiLCJ0aHVtYlRleHQiOiIiLCJ0aHVtYkZvbnQiOm51bGwsInRodW1iTWFpbiI6bnVsbCwidGh1bWJPdXRsaW5lIjpudWxsLCJ0aHVtYk51bWJlciI6IiIsImNpcmNsZSI6bnVsbCwibnVtYmVyQ29sb3IiOm51bGwsImZsYWciOiJDdXJhw6dhbyIsImZsYWdQb3NpdGlvbiI6ImluZGV4IiwiZmxhZ090aGVyIjoiIiwicGlua3lUZXh0IjoiIiwid2l0aGRyYXduV2ViIjpudWxsLCJzdGFydElkIjoiY3ciLCJwaWNrZWQiOnt9LCJzY2hlbWFWZXJzaW9uIjoxfQ"
+  };
+  // The SSK Pro Custom glove customiser (repo scottprins32-hub/ssk-glove-demo).
+  const CUSTOMIZER_URL = 'https://scottprins32-hub.github.io/ssk-glove-demo/';
+  // Screenshot of the customiser for the hero and walkthrough (assets/customizer/, captured from the live customiser).
+  const CUSTOMIZER_IMG = 'assets/customizer/step-4.webp';
+  const CZ_DIR = 'assets/customizer/';
+  // Starter colourways from the customiser. Each link opens the customiser with that glove loaded.
+  const COLOURWAYS = [
+    ['cardinal', 'Cardinal / Wit', '#C8102E', '#FFFFFF'],
+    ['zwart-goud', 'Zwart / Goud', '#1A1A1A', '#E3AE27'],
+    ['navy-columbia', 'Navy / Columbia', '#1D2947', '#8DB8E0'],
+    ['nederland', 'Nederland', '#F26A21', '#1D2947'],
+    ['japan', 'Japan', '#1D2947', '#E3AE27'],
+    ['curacao', 'Curaçao', '#1F4FD8', '#F2C230'],
+    ['roze-wit', 'Roze / Wit', '#D56A9E', '#FFFFFF'],
+    ['zalm-mint', 'Zalm / Mint', '#F0A58A', '#6FD3B5'],
+    ['zwart-grijs', 'Zwart / Grijs', '#1A1A1A', '#9A9A9A']
+  ].map(([key, name, a, b]) => ({ key, name, a, b, img: CZ_DIR + 'glove-' + key + '.webp', url: CZ_LINKS[key] || CUSTOMIZER_URL }));
+  const CZ_STEPS = [
+    ['Start', 'Kies een startpunt: blanco of een van de kleurinspiraties.'],
+    ['Hand, maat & vingerbescherming', 'Werphand, positie, maat van 11.5" tot 12.75" en een vingerpad.'],
+    ['Type web', 'H-Web, Spiral I-Web, Standard I-Web, Cross-web of Spilce-web.'],
+    ['Kleuren', '20 onderdelen, elk in een eigen kleur. Ook crocodile pattern.'],
+    ['Logo\'s', 'Kies het bullet logo op de pols, van Edge Gold tot Rainbow.'],
+    ['Naam op de handschoen', 'Borduur je naam op de duim en initialen of nummer in de cirkel.'],
+    ['Controleren', 'Je handschoen van vier kanten, alle keuzes op een rij, en bestellen.']
+  ].map(([t, d], i) => ({ t, d, img: CZ_DIR + 'step-' + (i + 1) + '.webp' }));
 
   const I = {
     glove: '<path d="M21 56C12 52 7 44 7 34c0-8 3-14 8-16l5 10c2-10 6-17 14-19 9-2 18 2 21 10 3 9 1 21-3 28-4 6-11 9-19 9z"/><path d="M29 12c2 9 2 20 0 30M39 10c2 10 2 22 0 34M48 14c2 9 2 20-1 30" stroke-dasharray="3 3.5"/><path d="M15 18l-3 6 5 6 3-2"/><path d="M24 47c6 4 15 4 21-2"/><path d="M9 40c4 8 10 13 18 14"/>',
@@ -391,22 +815,22 @@ img{display:block;max-width:100%}
 
   const NAV = [
     ['Clubkleding', 'shirt', '/Webwinkel-Category-5743459/Clubkleding.html', 'Teamkleding voor jouw vereniging'],
-    ['Kleding', 'shirt', '#', 'Jerseys, broeken, jassen, petten'],
+    ['Kleding', 'shirt', '/Webwinkel-Category-5784653/Kleding.html', 'Jerseys, broeken, jassen, petten'],
     ['Ballen', 'ball', '/Webwinkel-Category-5758263/Ballen.html', 'Honkballen en softballen'],
     ['Knuppels', 'bat', '/Webwinkel-Category-5784631/Knuppels.html', 'BB-COR, composite, hout, fastpitch'],
     ['Handschoenen', 'glove', '/Webwinkel-Category-5784651/Handschoenen.html', 'Veld, catcher, eerste honk, training'],
     ['Schoenen', 'shoe', '/Webwinkel-Category-5725725/Schoenen.html', 'Spikes en turfs'],
     ['Helmen', 'helmet', '/Webwinkel-Category-5725835/Helmen.html', 'Slag- en coachhelmen'],
-    ['Slaghandschoenen', 'bglove', '#', 'Grip aan de knuppel'],
-    ['Catcher', 'mask', '#', 'Masker, bodyprotector, scheenbeschermers'],
-    ['Veld', 'base', '#', 'Bases, netten, onderhoud'],
-    ['Scheidsrechter', 'whistle', '#', 'Umpire gear'],
-    ['Tassen', 'bag', '#', 'Bat bags en backpacks'],
-    ['Accessoires', 'cap', '#', 'Alles voor de dugout'],
+    ['Slaghandschoenen', 'bglove', '/Webwinkel-Category-5784991/Slaghandschoenen.html', 'Grip aan de knuppel'],
+    ['Catcher', 'mask', '/Webwinkel-Category-5784701/Catcher.html', 'Masker, bodyprotector, scheenbeschermers'],
+    ['Veld', 'base', '/Webwinkel-Category-5784707/Veld.html', 'Bases, netten, onderhoud'],
+    ['Scheidsrechter', 'whistle', '/Webwinkel-Category-5784989/Scheidsrechter.html', 'Umpire gear'],
+    ['Tassen', 'bag', '/Tassen', 'Bat bags en backpacks'],
+    ['Accessoires', 'cap', '/Webwinkel-Category-5856307/Accessoires.html', 'Alles voor de dugout'],
     ['Outlet', 'tag', '/Webwinkel-Category-10665083/Outlet.html', 'Tot 50% korting'],
     ['New Arrivals', 'star', '/New-Arrivals', 'Net binnen'],
-    ['Zomer Korting', 'sun', '#', 'Zomerdeals'],
-    ['Hoofdklasse Holland Series 2026', 'trophy', '#', 'De collectie van de Holland Series']
+    ['Zomer Korting', 'sun', '/Zomer-Korting', 'Zomerdeals'],
+    ['Hoofdklasse Holland Series 2026', 'trophy', '/Hoofdklasse-Holland-Series', 'De collectie van de Holland Series']
   ].map(([name, icon, url, sub]) => ({ name, icon, url: url.startsWith('/') ? BASE + url : url, sub }));
   NAV[16].sub = 'De collectie van de Holland Series';
 
@@ -448,6 +872,11 @@ img{display:block;max-width:100%}
   'GDN200-SSK-Baseball': PH + '2417010134.png',
     'GDN100-SSK-Baseball': PH + '2417010101.png',
     'Rawlings-REV1X-34-Catcher-Glove-Columbia-blue/Black/Pink-RHT': PH + '2410122391.png',
+    'Rawlings-RX2-Gloss-Batting-Helmet-Scarlet': PH + '2382805112.png',
+    'Rawlings-RX2-Matte-Batting-Helmet-Dark-Green': PH + '2382795494.png',
+    'Rawlings-REV1X-12.75-Outfield-Glove-Columbia-Blue/Purple/Pink-RHT': PH + '2410115931.png',
+    'Rawlings-Heart-Of-The-Hide-13-First-Base-Glove-Mint/Hot-Pink/Pink/Columbia-Blue': PH + '2382824876.png',
+    'Rawlings-Heart-of-the-Hide-Fun-Burst-2.0-11.5-Infield-Glove-Camel/Columbia-Blue/Pink-RHT': PH + '2410156659.png',
     'FP27-Louisville-Slugger-Air-Gold-Ultra-Light-Aluminium-Softbal-Knuppel-%2834/24%29': PH + '1034731165.jpg'
   };
   const LOGO = BASE + '/Files/2/81000/81585/Protom/3046376/Media/300x300/ssk%20logo_nl.jpg';
@@ -458,7 +887,16 @@ img{display:block;max-width:100%}
       P('Rawlings', 'Pro Preferred Vladimir Guerrero Jr 13" First Base Glove Navy/Scarlet RHT', 499.95, 0, 'glove', ['#1d2947', '#b3222b'], 'Nieuw', 'Rawlings-Pro-Preferred-Vladimir-Guerrero-Jr-13-First-Base-Glove-Navy/Scarlet-RHT'),
       P('Rawlings', 'Heart of the Hide Fun Burst 2.0 11.5" Infield Glove Navy/Mint RHT', 449.95, 0, 'glove', ['#1d2947', '#8fd9c0'], 'Nieuw', 'Rawlings-Heart-of-the-Hide-Fun-Burst-2.0-11.5-Infield-Glove-Navy/Mint-RHT'),
       P('Wilson', 'A2000 M23SS 33.5" Catcher Glove Seafoam/Black/Pink', 379.95, 0, 'glove', ['#9fd6c8', '#e58fa6'], 'Nieuw', 'Wilson-A2000-M23SS-33.5%E2%80%9D-Catcher-Glove-Seafoam/Black/Pink'),
-      P('Rawlings', 'REV1X 34" Catcher Glove Columbia blue/Black/Pink RHT', 494.95, 0, 'glove', ['#8db8e0', '#1b1a19'], 'Nieuw', 'Rawlings-REV1X-34-Catcher-Glove-Columbia-blue/Black/Pink-RHT')
+      P('Rawlings', 'REV1X 34" Catcher Glove Columbia blue/Black/Pink RHT', 494.95, 0, 'glove', ['#8db8e0', '#1b1a19'], 'Nieuw', 'Rawlings-REV1X-34-Catcher-Glove-Columbia-blue/Black/Pink-RHT'),
+      P('Rawlings', 'REV1X 12.75" Outfield Glove Columbia Blue/Purple/Pink RHT', 494.95, 0, 'glove', ['#8db8e0', '#6b4fa0'], 'Nieuw', 'Rawlings-REV1X-12.75-Outfield-Glove-Columbia-Blue/Purple/Pink-RHT'),
+      P('Rawlings', 'Heart Of The Hide 13" First Base Glove Mint/Hot Pink/Pink/Columbia Blue', 429.95, 0, 'glove', ['#8fd9c0', '#e58fa6'], 'Nieuw', 'Rawlings-Heart-Of-The-Hide-13-First-Base-Glove-Mint/Hot-Pink/Pink/Columbia-Blue'),
+      P('Rawlings', 'Heart of the Hide Fun Burst 2.0 11.5" Infield Glove Camel/Columbia Blue/Pink RHT', 449.95, 0, 'glove', ['#c9935b', '#8db8e0'], 'Nieuw', 'Rawlings-Heart-of-the-Hide-Fun-Burst-2.0-11.5-Infield-Glove-Camel/Columbia-Blue/Pink-RHT')
+    ],
+    helmets: [
+      P('Rawlings', 'RX2 Gloss Batting Helmet Black', 64.95, 0, 'helmet', ['#1b1a19', '#80827f'], 'Nieuw', 'Rawlings-RX2-Gloss-Batting-Helmet-Black'),
+      P('Rawlings', 'RX2 Gloss Batting Helmet Scarlet', 64.95, 0, 'helmet', ['#b3222b', '#1b1a19'], 'Nieuw', 'Rawlings-RX2-Gloss-Batting-Helmet-Scarlet'),
+      P('Rawlings', 'RX2 Matte Batting Helmet Navy', 69.95, 0, 'helmet', ['#1d2947', '#80827f'], 'Nieuw', 'Rawlings-RX2-Matte-Batting-Helmet-Navy'),
+      P('Rawlings', 'RX2 Matte Batting Helmet Dark Green', 69.95, 0, 'helmet', ['#24452f', '#80827f'], 'Nieuw', 'Rawlings-RX2-Matte-Batting-Helmet-Dark-Green')
     ],
     more: [
       P('Rawlings', 'Pro Preferred Mike Trout 12.75" Outfield Glove Black/Gray RHT', 499.95, 0, 'glove', ['#1b1a19', '#80827f'], '', 'Rawlings-Pro-Preferred-Mike-Trout-12.75-Outfield-Glove-Black/Gray-RHT'),
@@ -488,7 +926,18 @@ img{display:block;max-width:100%}
 
   const BRANDS = ['SSK', 'Rawlings', 'Wilson', 'Easton', 'DeMarini', 'Louisville Slugger', 'Champro', 'Evoshield'];
   const HOURS = [['Maandag', 'Gesloten'], ['Dinsdag', '12:00 – 16:30'], ['Woensdag', '10:00 – 17:30'], ['Donderdag', '12:00 – 16:30'], ['Vrijdag', '12:00 – 20:30'], ['Zaterdag', '10:00 – 16:00'], ['Zondag', 'Gesloten']];
-  const PAGES = ['Openingstijden', 'Algemene voorwaarden', 'Privacy Verklaring', 'Prijslijst', 'Levertijden', 'Retour Zenden', 'Niet Te Ruilen', 'Maten', 'Garantie', '3D Geborduurde Caps en Sublimatie Jerseys', 'Was Voorschrift', 'Welke Bal Koopt U?', 'Bedrukken Kleding / Caps', 'Voorverkoop Aanbieding Ballen 2027'];
+  // Information pages of the shop, with their real URLs.
+  const PAGES = [
+    ['Openingstijden', '/Openingstijden'], ['Algemene voorwaarden', '/Webwinkel-Page-944655/Algemene-voorwaarden.html'],
+    ['Privacy Verklaring', '/Privacy-Verklaring'], ['Prijslijst', '/Webwinkel-Page-1008707/Prijslijst.html'],
+    ['Levertijden', '/Webwinkel-Page-1182239/Levertijden.html'], ['Retour Zenden', '/Webwinkel-Page-1182445/Retour-Zenden.html'],
+    ['Niet Te Ruilen', '/Webwinkel-Page-1164549/Niet-Te-Ruilen.html'], ['Maten', '/Maten'], ['Garantie', '/Garantie'],
+    ['3D Geborduurde Caps en Sublimatie Jerseys', '/3d-borduring'], ['Was Voorschrift', '/Webwinkel-Page-4237210/Was-Voorschrift.html'],
+    ['Welke Bal Koopt U?', '/Welke-bal-koopt-U-'], ['Bedrukken Kleding / Caps', '/SSK-HQ-Gloves'],
+    ['Voorverkoop Aanbieding Ballen 2027', '/Voorverkoop-Aanbieding-Ballen-2027']
+  ];
+  const PAGE = Object.fromEntries(PAGES.map(([n, u]) => [n, BASE + u]));
+  const SHOP = { search: BASE + '/website/index.php?Show=Search&KeyWord=', cart: BASE + '/website/index.php?Show=WebShopBasket', account: BASE + '/website/index.php?Show=WebShopUserLogin', maps: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Heulweg 128B, 2295 KK Kwintsheul') };
   const CONTACT = { name: 'SSK European Baseball Center', street: 'Heulweg 128B', city: '2295 KK Kwintsheul', phone: '+31 174 501 888', email: 'info@sskeurope.com', instagram: 'https://www.instagram.com/ssk_europe', facebook: 'https://www.facebook.com/SSK-Europe-1806900749536624/' };
   const LEAD = [['Op voorraad (webshop)', '3 – 5 werkdagen'], ['Bedrukken op voorraad', '+ 3 – 5 werkdagen'], ['Standaard wedstrijdkleding', '30 – 35 werkdagen'], ['Speciale broeken', '36 – 45 werkdagen'], ['Club- en studentenjassen', '36 – 45 werkdagen']];
 
@@ -496,7 +945,7 @@ img{display:block;max-width:100%}
   // Image with graceful fallback: if the shop image fails, the tile keeps its icon.
   const img = (src, alt) => src ? `<img src="${src}" alt="${alt}" loading="lazy" onerror="this.remove()">` : '';
 
-  window.SSK = { LOGO, BASE, CUSTOMIZER_URL, CUSTOMIZER_IMG, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
+  window.SSK = { LOGO, BASE, CUSTOMIZER_URL, CUSTOMIZER_IMG, COLOURWAYS, CZ_STEPS, PAGE, SHOP, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
 })();
 
 /* Shared render helpers for the five versions. Uses window.SSK from data.js. */
@@ -550,11 +999,11 @@ img{display:block;max-width:100%}
     <header class="hdr${o.light ? ' light' : ''}">
       <div class="wrap bar">
         <button class="burger" aria-label="Menu" data-open="drawer">${ui('menu')}</button>
-        <a class="logo" href="#" aria-label="SSK Europe"><b>SSK</b><i>Europe</i></a>
-        <label class="search">${ui('search')}<input type="search" placeholder="Zoek op product, merk of artikelnummer"></label>
+        <a class="logo" href="./" aria-label="SSK Europe, naar de homepage"><b>SSK</b><i>Europe</i></a>
+        <form class="search" role="search" action="${S.BASE}/website/index.php" method="get" data-search>${ui('search')}<input type="hidden" name="Show" value="Search"><input type="search" name="KeyWord" placeholder="Zoek op product, merk of artikelnummer" aria-label="Zoeken in de webshop" autocomplete="off" required><button type="submit" class="go" aria-label="Zoeken">${ui('arrow')}</button></form>
         <nav class="acts" aria-label="Account">
-          <a href="${S.BASE}/account">${ui('user')}<span class="lbl">Account</span></a>
-          <a href="${S.BASE}/cart">${ui('cart')}<span class="cnt">0</span><span class="lbl">Winkelwagen</span></a>
+          <a href="${S.SHOP.account}">${ui('user')}<span class="lbl">Account</span></a>
+          <a href="${S.SHOP.cart}">${ui('cart')}<span class="lbl">Winkelwagen</span></a>
         </nav>
       </div>
       <nav class="nav" aria-label="Categorieën"><div class="wrap">
@@ -563,7 +1012,7 @@ img{display:block;max-width:100%}
       </div><div class="mega"><div class="wrap">${mega}</div></div></nav>
     </header>
     <div class="drawer"><div class="scrim" data-close></div><div class="dpanel">
-      <header><a class="logo" style="color:var(--navy-900)"><b>SSK</b><i>Europe</i></a><button data-close aria-label="Sluiten">${ui('x')}</button></header>
+      <header><a class="logo" href="./" style="color:var(--navy-900)"><b>SSK</b><i>Europe</i></a><button data-close aria-label="Sluiten">${ui('x')}</button></header>
       <a class="btn btn-red" href="${CZ}" style="width:100%;margin:4px 0 12px">Ontwerp je handschoen</a>
       ${S.NAV.map(n => `<a class="c" href="${n.url}">${ic(n.icon)}${n.name}</a>`).join('')}
     </div></div>`;
@@ -611,7 +1060,7 @@ img{display:block;max-width:100%}
         <div class="steps"><span><i>1</i>Model</span><span><i>2</i>Kleuren</span><span><i>3</i>Details</span></div>
         <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-red" href="${CZ}">Start de customizer</a><a class="btn btn-ghost" href="${nav('Handschoenen').url}">Bekijk handschoenen</a></div>
       </div>
-      <div class="vis">${photo(o.img || '', 'Beeld uit de customizer', 'glove')}</div>
+      <div class="vis">${photo(o.img || S.CUSTOMIZER_IMG, 'De SSK Glove Customizer', 'glove')}</div>
     </div>`;
   }
 
@@ -621,36 +1070,54 @@ img{display:block;max-width:100%}
       <div class="card panel"><div class="kick">Voor verenigingen</div><h2 class="d-md">Clubkleding en bedrukken</h2>
         <p>Wedstrijdjerseys, 3D-geborduurde caps, sublimatie en club- en studentenjassen. Met jullie logo, nummers en namen.</p>
         <ul>${L2}</ul>
-        <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-navy sm" href="${nav('Clubkleding').url}">Clubkleding bekijken</a><a class="btn btn-line sm" href="mailto:${S.CONTACT.email}">Offerte aanvragen</a></div></div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-navy sm" href="${nav('Clubkleding').url}">Clubkleding bekijken</a><a class="btn btn-line sm" href="mailto:${S.CONTACT.email}?subject=${encodeURIComponent('Offerte clubkleding')}">Offerte aanvragen</a></div></div>
       <div class="card panel navy"><div class="kick">Hoofdklasse</div><h2 class="d-md">Holland Series 2026</h2>
         <p>Bekijk de collectie van de Hoofdklasse Holland Series 2026 in de webshop.</p>
-        <a class="btn btn-red sm" href="#">Naar de collectie</a>
-        <div style="margin-top:auto;padding-top:24px;border-top:1px solid var(--navy-700);width:100%"><div class="kick">Voorverkoop</div><p style="color:#fff;margin-top:6px">Voorverkoop aanbieding ballen 2027. Bestel nu voor het nieuwe seizoen.</p><a class="link" style="color:#fff;margin-top:12px" href="${nav('Ballen').url}">Bekijk de aanbieding ${ui('arrow')}</a></div></div>
+        <a class="btn btn-red sm" href="${nav('Hoofdklasse Holland Series 2026').url}">Naar de collectie</a>
+        <div style="margin-top:auto;padding-top:24px;border-top:1px solid var(--navy-700);width:100%"><div class="kick">Voorverkoop</div><p style="color:#fff;margin-top:6px">Voorverkoop aanbieding ballen 2027. Bestel nu voor het nieuwe seizoen.</p><a class="link" style="color:#fff;margin-top:12px" href="${S.PAGE['Voorverkoop Aanbieding Ballen 2027']}">Bekijk de aanbieding ${ui('arrow')}</a></div></div>
     </div>`;
   }
 
   const brands = () => `<div class="brands">${S.BRANDS.map(b => `<span>${b}</span>`).join('')}</div>`;
 
+  // Open or closed right now, in Dutch time.
+  function openNow() {
+    const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Amsterdam', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
+    const get = t => parts.find(x => x.type === t).value;
+    const d = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(get('weekday'));
+    const now = +get('hour') * 60 + +get('minute');
+    const span = i => { const m = S.HOURS[i][1].match(/(\d+):(\d+)\D+(\d+):(\d+)/); return m ? [m[1] * 60 + +m[2], m[3] * 60 + +m[4], S.HOURS[i][1].split('–')] : null; };
+    const t = span(d);
+    if (t && now >= t[0] && now < t[1]) return { open: true, text: 'Nu open · tot ' + t[2][1].trim(), d };
+    for (let k = 0; k < 7; k++) {
+      const i = (d + k) % 7, x = span(i);
+      if (x && (k > 0 || now < x[0])) return { open: false, text: 'Gesloten · opent ' + (k === 0 ? 'vandaag' : k === 1 ? 'morgen' : S.HOURS[i][0].toLowerCase()) + ' om ' + x[2][0].trim(), d };
+    }
+    return { open: false, text: 'Gesloten', d };
+  }
+
   function showroom() {
-    const d = (new Date().getDay() + 6) % 7;
+    const o = openNow(), d = o.d;
     const h = S.HOURS.map(([a, b], i) => `<li class="${b === 'Gesloten' ? 'closed' : ''}${i === d ? ' today' : ''}"><span>${a}${i === d ? ' (vandaag)' : ''}</span><span class="mono">${b}</span></li>`).join('');
     const c = S.CONTACT;
     return `<div class="show">
       <div class="card"><div class="kick">Showroom</div><h2 class="d-md" style="margin-top:6px">Kom langs in Kwintsheul</h2>
         <p style="margin-top:8px">Handschoenen moet je passen. In de showroom van het ${c.name} vind je de complete collectie.</p>
-        <div class="addr"><span>${ui('pin')}${c.street}, ${c.city}</span><a href="tel:${c.phone.replace(/\s/g, '')}">${ui('phone')}${c.phone}</a><a href="mailto:${c.email}">${ui('mail')}${c.email}</a></div></div>
+        <span class="open-now${o.open ? ' yes' : ''}">${o.text}</span>
+        <div class="addr"><a href="${S.SHOP.maps}" target="_blank" rel="noopener">${ui('pin')}${c.street}, ${c.city}</a><a href="tel:${c.phone.replace(/\s/g, '')}">${ui('phone')}${c.phone}</a><a href="mailto:${c.email}">${ui('mail')}${c.email}</a></div>
+        <div class="btns"><a class="btn btn-navy sm" href="${S.SHOP.maps}" target="_blank" rel="noopener">Route plannen</a><a class="btn btn-line sm" href="tel:${c.phone.replace(/\s/g, '')}">Bel ons</a></div></div>
       <div class="card"><div class="kick">${ui('clock', 'ui')} Openingstijden</div><ul class="hours">${h}</ul></div>
-      <div class="card"><div class="kick">Klantenservice</div><ul class="hours">${['Maten', 'Retour Zenden', 'Garantie', 'Welke Bal Koopt U?', 'Was Voorschrift', 'Levertijden'].map(t => `<li><a href="#">${t}</a><span class="ui" style="color:var(--g400)">${ui('arrow')}</span></li>`).join('')}</ul></div>
+      <div class="card"><div class="kick">Klantenservice</div><ul class="hours">${['Maten', 'Retour Zenden', 'Garantie', 'Welke Bal Koopt U?', 'Was Voorschrift', 'Levertijden'].map(t => `<li><a href="${S.PAGE[t]}">${t}</a><span class="ui" style="color:var(--g400)">${ui('arrow')}</span></li>`).join('')}</ul></div>
     </div>`;
   }
 
   function footer() {
     const c = S.CONTACT;
     const half = Math.ceil(S.PAGES.length / 2);
-    const li = a => a.map(p => `<li><a href="#">${p}</a></li>`).join('');
+    const li = a => a.map(([p, u]) => `<li><a href="${S.BASE + u}">${p}</a></li>`).join('');
     return `<footer class="ftr"><div class="wrap">
       <div class="top">
-        <div><a class="logo"><b>SSK</b><i>Europe</i></a><p style="max-width:32ch">${c.name}. Honkbal en softbal voor spelers, teams en verenigingen.</p>
+        <div><a class="logo" href="./"><b>SSK</b><i>Europe</i></a><p style="max-width:32ch">${c.name}. Honkbal en softbal voor spelers, teams en verenigingen.</p>
           <div class="soc"><a href="${c.instagram}" aria-label="Instagram">${ui('ig')}</a><a href="${c.facebook}" aria-label="Facebook">${ui('fb')}</a></div></div>
         <div><h4>Klantenservice</h4><ul>${li(S.PAGES.slice(0, half))}</ul></div>
         <div><h4>Informatie</h4><ul>${li(S.PAGES.slice(half))}</ul></div>
@@ -679,18 +1146,216 @@ img{display:block;max-width:100%}
 
 </script>
 <script>
-const S = SSK, U = UI, P = S.PRODUCTS;
-U.mount({ header: U.header(), usp: U.usp(), club: U.club(), brands: U.brands(), showroom: U.showroom(), footer: U.footer() });
-document.getElementById('cz1').href = S.CUSTOMIZER_URL;
-document.getElementById('shop1').href = U.nav('Handschoenen').url;
-// Customiser screenshot: set CUSTOMIZER_IMG in data.js and it replaces the placeholder.
-document.getElementById('czshot').innerHTML = U.ic('glove') + '<b>Screenshot van de customizer</b><small>Plaatshouder: hier komt een beeld uit de bestaande glove customizer</small>' + (S.CUSTOMIZER_IMG ? `<img src="${S.CUSTOMIZER_IMG}" alt="De SSK Glove Customizer">` : '');
-document.getElementById('chips').innerHTML = U.chips(['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Slaghandschoenen', 'Schoenen', 'Kleding', 'Clubkleding', 'Tassen', 'Veld', 'Scheidsrechter', 'Accessoires', 'New Arrivals', 'Outlet', 'Zomer Korting', 'Hoofdklasse Holland Series 2026']);
-document.getElementById('s-gloves').innerHTML = U.secHead('Handschoenen', 'Nieuw binnen', 'Alle handschoenen', U.nav('Handschoenen').url) + U.grid(P.gloves.concat(P.more)) +
-  `<div class="czline"><div><b>Staat jouw handschoen er niet tussen?</b><br><span>Ontwerp hem zelf in de Glove Customizer.</span></div><a class="btn btn-red sm" href="${S.CUSTOMIZER_URL}">Start de customizer</a></div>`;
-document.getElementById('s-bats').innerHTML = U.secHead('Knuppels', 'De 2026 modellen', 'Alle knuppels', U.nav('Knuppels').url) + U.grid(P.bats);
-document.getElementById('s-outlet').innerHTML = U.secHead('Outlet', 'Tot 50% korting', 'Naar de outlet', U.nav('Outlet').url) + U.grid(P.outlet);
-document.getElementById('s-balls').innerHTML = U.secHead('Ballen', 'Honkballen en softballen', 'Alle ballen', U.nav('Ballen').url) + U.grid(P.balls);
+/* Homepage version 2: content, interactions and motion. Uses window.SSK (data.js) and window.UI (ui.js). */
+(function () {
+  const S = window.SSK, U = window.UI, P = S.PRODUCTS;
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => [...(r || document).querySelectorAll(s)];
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(pointer: fine)').matches;
+  const arrow = U.ui('arrow');
+
+  U.mount({ header: U.header(), usp: U.usp(), club: U.club(), showroom: U.showroom(), footer: U.footer() });
+
+  /* ---------- links ---------- */
+  ['cz-main', 'cz-line', 'cz-end', 'm-cta'].forEach(id => { const a = document.getElementById(id); if (a) a.href = S.CUSTOMIZER_URL; });
+  $('#all-gloves').href = U.nav('Handschoenen').url;
+
+  /* ---------- hero: colourways from the customiser ---------- */
+  const CW = S.COLOURWAYS;
+  const gl = $('#gloves'), sw = $('#swatches'), hx = $('.hx');
+  gl.innerHTML = CW.map((c, i) => `<img src="${c.img}" alt="SSK Pro Custom handschoen in ${c.name}, gemaakt in de customizer" width="845" height="1000"${i ? ' loading="lazy"' : ' fetchpriority="high"'} class="${i ? '' : 'on'}">`).join('');
+  sw.innerHTML = CW.map((c, i) => `<button type="button" style="--a:${c.a};--b:${c.b}" aria-label="${c.name}" aria-pressed="${i === 0}" data-i="${i}"><i></i></button>`).join('');
+  let cur = 0, timer = null;
+  const imgs = $$('img', gl), btns = $$('button', sw);
+  function show(i, user) {
+    if (i === cur) return;
+    const prev = cur; cur = (i + CW.length) % CW.length;
+    imgs.forEach((im, k) => { im.classList.toggle('on', k === cur); im.classList.toggle('out', k === prev); });
+    btns.forEach((b, k) => b.setAttribute('aria-pressed', k === cur));
+    $('#cw-name').textContent = CW[cur].name;
+    $('#cw-open').href = CW[cur].url;
+    hx.style.setProperty('--accent', CW[cur].a === '#1A1A1A' ? CW[cur].b : CW[cur].a);
+    if (user) restart();
+  }
+  function restart() {
+    clearInterval(timer); sw.classList.remove('run'); void sw.offsetWidth;
+    if (RM) return;
+    sw.classList.add('run');
+    timer = setInterval(() => show(cur + 1), 3600);
+  }
+  $('#cw-open').href = CW[0].url;
+  hx.style.setProperty('--accent', CW[0].a);
+  sw.addEventListener('click', e => { const b = e.target.closest('button'); if (b) show(+b.dataset.i, true); });
+  sw.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault(); show(cur + (e.key === 'ArrowRight' ? 1 : -1), true); btns[cur].focus();
+  });
+  const stage = $('#stage');
+  stage.addEventListener('click', () => { location.href = CW[cur].url; });
+  stage.title = 'Open deze handschoen in de customizer';
+  // Pause the carousel while the visitor is looking at it.
+  $('.hx-vis').addEventListener('pointerenter', () => { clearInterval(timer); sw.classList.remove('run'); });
+  $('.hx-vis').addEventListener('pointerleave', restart);
+  restart();
+  // Tilt the glove towards the pointer.
+  if (fine && !RM) {
+    const tilt = $('#tilt');
+    let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+    hx.addEventListener('pointermove', e => {
+      const r = hx.getBoundingClientRect();
+      tx = (e.clientX - r.left) / r.width - .5; ty = (e.clientY - r.top) / r.height - .5;
+      if (!raf) raf = requestAnimationFrame(loop);
+    });
+    hx.addEventListener('pointerleave', () => { tx = 0; ty = 0; if (!raf) raf = requestAnimationFrame(loop); });
+    function loop() {
+      cx += (tx - cx) * .08; cy += (ty - cy) * .08;
+      tilt.style.transform = `rotateY(${cx * 16}deg) rotateX(${-cy * 10}deg) translate3d(${cx * 18}px,${cy * 12}px,0)`;
+      hx.style.setProperty('--gx', (50 + cx * 30) + '%'); hx.style.setProperty('--gy', (50 + cy * 30) + '%');
+      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > .001 ? requestAnimationFrame(loop) : 0;
+    }
+  }
+
+  /* ---------- marquee ---------- */
+  const mqItems = ['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Slaghandschoenen', 'Clubkleding', 'Glove Customizer', 'Showroom Kwintsheul'];
+  const mqRow = mqItems.map(t => `<span>${t}</span><i>✶</i>`).join('');
+  $('#mq').innerHTML = `<div>${mqRow}</div><div>${mqRow}</div>`;
+  const brRow = S.BRANDS.map(b => `<span>${b}</span><i></i>`).join('');
+  $('#brands').innerHTML = `<div>${brRow}</div><div>${brRow}</div>`;
+
+  /* ---------- categories: real product photos ---------- */
+  const find = (list, w) => list.find(p => p.name.includes(w));
+  const tiles = [
+    ['Handschoenen', find(P.gloves, 'Fun Burst 2.0 11.5" Infield Glove Navy'), 'big', 'Veld, catcher, eerste honk'],
+    ['Knuppels', P.bats[0], 'wide', 'BBCOR, USA, fastpitch, hout'],
+    ['Ballen', P.balls[0], '', 'SSK GDN100 en meer'],
+    ['Helmen', P.helmets[1], '', 'Rawlings RX2'],
+    ['Catcher', find(P.more, 'Catcher'), '', 'Handschoenen en gear'],
+    ['Slaghandschoenen', P.outlet[3], '', 'Grip aan de knuppel'],
+    ['New Arrivals', find(P.gloves, 'REV1X 12.75'), '', 'Net binnen'],
+    ['Outlet', P.outlet[1], 'sale', 'Tot 50% korting']
+  ];
+  $('#bento').innerHTML = tiles.map(([n, p, cls, sub], i) => {
+    const c = U.nav(n);
+    return `<a class="bt ${cls} rv" style="--i:${i % 4}" href="${c.url}">
+      <span class="bt-img">${U.photo(p.photo, n, c.icon, p.remote)}</span>
+      <span class="bt-tx"><small>${sub}</small><b>${n}</b></span><span class="bt-go">${arrow}</span></a>`;
+  }).join('');
+  const rest = S.NAV.filter(n => !tiles.some(t => t[0] === n.name));
+  $('#morecats').innerHTML = U.chips(rest.map(n => n.name));
+
+  /* ---------- glove rail ---------- */
+  const rail = $('#rail');
+  rail.innerHTML = '<div class="rail-pad"></div>' + P.gloves.concat(P.more).map(U.card).join('') + `<a class="card cz-card" href="${S.CUSTOMIZER_URL}"><img src="${CW[1].img}" alt="" loading="lazy"><b>Of ontwerp<br>je eigen</b><span class="btn btn-red sm">Start de customizer</span></a><div class="rail-pad"></div>`;
+  const step = () => Math.min(rail.clientWidth * .8, 900);
+  $$('[data-rail]').forEach(b => b.addEventListener('click', () => rail.scrollBy({ left: step() * b.dataset.rail, behavior: RM ? 'auto' : 'smooth' })));
+  function railState() {
+    const max = rail.scrollWidth - rail.clientWidth;
+    const f = max > 0 ? rail.scrollLeft / max : 0;
+    $('#railbar').style.transform = `scaleX(${.15 + f * .85})`;
+    $$('[data-rail]').forEach(b => b.disabled = b.dataset.rail < 0 ? rail.scrollLeft < 4 : rail.scrollLeft > max - 4);
+  }
+  rail.addEventListener('scroll', railState, { passive: true }); addEventListener('resize', railState); railState();
+  // Drag to scroll with a mouse. Touch keeps native scrolling.
+  let drag = null;
+  rail.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse' || e.button) return; drag = { x: e.clientX, l: rail.scrollLeft, moved: false }; });
+  addEventListener('pointermove', e => {
+    if (!drag) return; const dx = e.clientX - drag.x;
+    if (Math.abs(dx) > 5) { drag.moved = true; rail.classList.add('dragging'); }
+    rail.scrollLeft = drag.l - dx;
+  });
+  addEventListener('pointerup', () => { if (!drag) return; setTimeout(() => rail.classList.remove('dragging'), 0); const m = drag.moved; drag = null; if (m) rail.addEventListener('click', ev => ev.preventDefault(), { once: true, capture: true }); });
+  rail.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); rail.scrollBy({ left: (e.key === 'ArrowRight' ? 1 : -1) * 300, behavior: RM ? 'auto' : 'smooth' }); } });
+  rail.addEventListener('dragstart', e => e.preventDefault());
+
+  /* ---------- customiser walkthrough ---------- */
+  const ST = S.CZ_STEPS;
+  $('#czw-shots').innerHTML = ST.map((s, i) => `<img src="${s.img}" alt="Customizer, stap ${i + 1}: ${s.t}" width="1600" height="1000" loading="lazy" class="${i ? '' : 'on'}">`).join('');
+  $('#czw-prog').innerHTML = ST.map(() => '<i></i>').join('');
+  $('#czw-steps').innerHTML = ST.map((s, i) => `<li data-i="${i}"${i ? '' : ' class="on"'}>
+      <span class="n">${String(i + 1).padStart(2, '0')}</span><div><h3>${s.t}</h3><p>${s.d}</p>
+      <img class="m-shot" src="${s.img}" alt="Customizer, stap ${i + 1}: ${s.t}" loading="lazy" width="1600" height="1000"></div></li>`).join('');
+  const shots = $$('#czw-shots img'), segs = $$('#czw-prog i'), lis = $$('#czw-steps li');
+  function setStep(i) {
+    shots.forEach((im, k) => im.classList.toggle('on', k === i));
+    lis.forEach((li, k) => { li.classList.toggle('on', k === i); li.classList.toggle('done', k < i); });
+    segs.forEach((s, k) => s.classList.toggle('on', k <= i));
+    $('#czw-n').textContent = String(i + 1).padStart(2, '0') + ' / ' + String(ST.length).padStart(2, '0');
+  }
+  const stepIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) setStep(+e.target.dataset.i); }), { rootMargin: '-45% 0px -45% 0px' });
+  lis.forEach(li => { stepIO.observe(li); li.addEventListener('click', () => li.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'center' })); });
+
+  /* ---------- tabs ---------- */
+  const TABS = [
+    ['Knuppels 2026', P.bats, 'Knuppels'], ['Helmen', P.helmets, 'Helmen'],
+    ['Ballen', P.balls, 'Ballen'], ['Outlet', P.outlet, 'Outlet']
+  ];
+  const tl = $('#tabs'), tp = $('#tabpanel');
+  tl.innerHTML = TABS.map(([t], i) => `<button role="tab" id="tab-${i}" aria-controls="tabpanel" aria-selected="${i === 0}" tabindex="${i ? -1 : 0}">${t}${t === 'Outlet' ? '<sup>−50%</sup>' : ''}</button>`).join('') + '<span class="tab-ink" aria-hidden="true"></span>';
+  const tbs = $$('[role=tab]', tl);
+  function tab(i, focus) {
+    tbs.forEach((b, k) => { b.setAttribute('aria-selected', k === i); b.tabIndex = k === i ? 0 : -1; });
+    if (focus) tbs[i].focus();
+    tp.setAttribute('aria-labelledby', 'tab-' + i);
+    tp.innerHTML = U.grid(TABS[i][1]);
+    $$('.pc', tp).forEach((c, k) => { c.style.setProperty('--i', k); c.classList.add('pop'); });
+    $('#tab-all').href = U.nav(TABS[i][2]).url;
+    $('#tab-all').firstChild.textContent = 'Alle ' + TABS[i][2].toLowerCase() + ' ';
+    const ink = $('.tab-ink', tl), b = tbs[i];
+    ink.style.width = b.offsetWidth + 'px'; ink.style.transform = `translateX(${b.offsetLeft}px)`;
+  }
+  tl.addEventListener('click', e => { const b = e.target.closest('[role=tab]'); if (b) tab(tbs.indexOf(b)); });
+  tl.addEventListener('keydown', e => {
+    const i = tbs.findIndex(b => b.getAttribute('aria-selected') === 'true');
+    const n = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tbs.length - 1 }[e.key];
+    if (n === undefined) return; e.preventDefault(); tab((n + tbs.length) % tbs.length, true);
+  });
+  tab(0);
+  addEventListener('resize', () => { const i = tbs.findIndex(b => b.getAttribute('aria-selected') === 'true'); const ink = $('.tab-ink', tl); ink.style.width = tbs[i].offsetWidth + 'px'; ink.style.transform = `translateX(${tbs[i].offsetLeft}px)`; });
+
+  /* ---------- reveal on scroll ---------- */
+  document.documentElement.classList.add('js');
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  $$('.rv, .stitch-draw, .rail .pc').forEach(el => io.observe(el));
+  // Count-ups in the hero stats.
+  if (!RM) $$('[data-count]').forEach(el => {
+    const to = +el.dataset.count; let t0 = 0; el.textContent = '0';
+    const go = t => { t0 = t0 || t; const f = Math.min(1, (t - t0) / 1200); el.textContent = Math.round(to * (1 - Math.pow(1 - f, 3))); if (f < 1) requestAnimationFrame(go); };
+    setTimeout(() => requestAnimationFrame(go), 900);
+  });
+
+  /* ---------- scroll: progress, header, heritage type, mobile CTA ---------- */
+  const bar = $('.sprog i'), hdr = $('.hdr'), h1 = $('#h1'), h2 = $('#h2'), heri = $('.heri2'), mcta = $('#m-cta'), top = $('#totop');
+  let ticking = false;
+  function onScroll() {
+    ticking = false;
+    const y = scrollY, H = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = `scaleX(${H > 0 ? y / H : 0})`;
+    hdr.classList.toggle('scrolled', y > 40);
+    const pastHero = y > hx.offsetTop + hx.offsetHeight - 80;
+    mcta.classList.toggle('show', pastHero && !nearEnd());
+    top.classList.toggle('show', y > innerHeight * 1.5);
+    if (!RM) {
+      const r = heri.getBoundingClientRect(), f = (innerHeight - r.top) / (innerHeight + r.height);
+      if (f > -0.1 && f < 1.1) { h1.style.transform = `translateX(${(-f * 22 + 6).toFixed(2)}%)`; h2.style.transform = `translateX(${(f * 22 - 14).toFixed(2)}%)`; }
+    }
+  }
+  const ftr = $('.ftr');
+  const nearEnd = () => ftr && ftr.getBoundingClientRect().top < innerHeight;
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  onScroll();
+  top.addEventListener('click', () => scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' }));
+
+  /* ---------- magnetic buttons ---------- */
+  if (fine && !RM) $$('.mag').forEach(b => {
+    b.addEventListener('pointermove', e => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .18}px,${(e.clientY - r.top - r.height / 2) * .28}px)`; });
+    b.addEventListener('pointerleave', () => { b.style.transform = ''; });
+  });
+
+  /* ---------- intro: title lines rise in ---------- */
+  requestAnimationFrame(() => document.body.classList.add('ready'));
+})();
+
 </script>
 </body>
 </html>

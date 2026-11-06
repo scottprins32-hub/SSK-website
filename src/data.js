@@ -1,10 +1,44 @@
 /* SSK Europe shop content, taken from sskeurope.ccvshop.nl (Nov 2026). Shared by all five homepage concepts. */
 (function () {
   const BASE = 'https://sskeurope.ccvshop.nl';
-  // Link for the existing glove customiser. Replace with the real URL.
-  const CUSTOMIZER_URL = '#customizer';
-  // Screenshot of the existing customiser for the version 2 hero. Leave empty to show the placeholder.
-  const CUSTOMIZER_IMG = '';
+  // Share links made by the customiser's own Share button, one per starter.
+  const CZ_LINKS = {
+      "cardinal": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0Ijo1LCJ2aWV3IjoiYmFjayIsImNvbG9ycyI6eyJ3ZWIiOiIyMCIsImJhY2sxIjoiMjAiLCJiYWNrMiI6IjIwIiwiYmFjazMiOiIyMCIsImJhY2s0IjoiMjAiLCJiYWNrNSI6IjIwIiwiYmFjazYiOiIyMCIsImJhY2s3IjoiMjAiLCJiYWNrOCI6IjIwIiwiYmFjazkiOiIyMCIsInBhbG0iOiIyMCIsImJlbHQiOiIyMCIsImxpbmluZyI6IjIwIiwiYmluZGluZyI6IjIwIiwid2VsdGluZyI6IjEwIiwibGFjZXMiOiIxMCIsInRodW1iX2xvb3BzIjoiMTAiLCJwaW5reV9sb29wcyI6IjEwIiwic3RpdGNoaW5nIjoiMTAiLCJyaW5nX2VtYiI6IjEwIiwicGFkX2NvbG9yIjoiMjAifSwibWF0ZXJpYWxzIjp7fSwiaGFuZCI6bnVsbCwic2l6ZSI6IjExLjc1XCIiLCJwb3NpdGlvbiI6bnVsbCwicGFkIjoiTm9uZSIsIndlYlR5cGUiOiJILVdlYiIsInRodW1iVGV4dCI6IiIsInRodW1iRm9udCI6bnVsbCwidGh1bWJNYWluIjpudWxsLCJ0aHVtYk91dGxpbmUiOm51bGwsInRodW1iTnVtYmVyIjoiIiwiY2lyY2xlIjpudWxsLCJudW1iZXJDb2xvciI6bnVsbCwiZmxhZyI6bnVsbCwiZmxhZ1Bvc2l0aW9uIjoiaW5kZXgiLCJmbGFnT3RoZXIiOiIiLCJwaW5reVRleHQiOiIiLCJ3aXRoZHJhd25XZWIiOm51bGwsInN0YXJ0SWQiOiJzaWcyIiwicGlja2VkIjp7fSwic2NoZW1hVmVyc2lvbiI6MX0",
+      "zwart-goud": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0Ijo3LCJ2aWV3IjoiYmFjayIsImNvbG9ycyI6eyJ3ZWIiOiI5MCIsImJhY2sxIjoiOTAiLCJiYWNrMiI6IjkwIiwiYmFjazMiOiI5MCIsImJhY2s0IjoiOTAiLCJiYWNrNSI6IjkwIiwiYmFjazYiOiI5MCIsImJhY2s3IjoiOTAiLCJiYWNrOCI6IjkwIiwiYmFjazkiOiI5MCIsInBhbG0iOiI5MCIsImJlbHQiOiI5MCIsImxpbmluZyI6IjQwIiwiYmluZGluZyI6IjkwIiwid2VsdGluZyI6IkdGIiwibGFjZXMiOiI5MCIsInRodW1iX2xvb3BzIjoiOTAiLCJwaW5reV9sb29wcyI6IjkwIiwic3RpdGNoaW5nIjoiOTAiLCJyaW5nX2VtYiI6IjM5IiwicGFkX2NvbG9yIjoiOTAifSwibWF0ZXJpYWxzIjp7fSwiaGFuZCI6bnVsbCwic2l6ZSI6IjExLjc1XCIiLCJwb3NpdGlvbiI6bnVsbCwicGFkIjoiTm9uZSIsIndlYlR5cGUiOiJILVdlYiIsInRodW1iVGV4dCI6IiIsInRodW1iRm9udCI6bnVsbCwidGh1bWJNYWluIjpudWxsLCJ0aHVtYk91dGxpbmUiOm51bGwsInRodW1iTnVtYmVyIjoiIiwiY2lyY2xlIjpudWxsLCJudW1iZXJDb2xvciI6bnVsbCwiZmxhZyI6bnVsbCwiZmxhZ1Bvc2l0aW9uIjoiaW5kZXgiLCJmbGFnT3RoZXIiOiIiLCJwaW5reVRleHQiOiIiLCJ3aXRoZHJhd25XZWIiOm51bGwsInN0YXJ0SWQiOiJwcm8iLCJwaWNrZWQiOnt9LCJzY2hlbWFWZXJzaW9uIjoxfQ",
+      "navy-columbia": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0IjoxNCwidmlldyI6ImJhY2siLCJjb2xvcnMiOnsid2ViIjoiNzAiLCJiYWNrMSI6IjcwIiwiYmFjazIiOiI3MCIsImJhY2szIjoiNzAiLCJiYWNrNCI6IjcwIiwiYmFjazUiOiI3MCIsImJhY2s2IjoiNzAiLCJiYWNrNyI6IjcwIiwiYmFjazgiOiI3MCIsImJhY2s5IjoiNzAiLCJwYWxtIjoiNzAiLCJiZWx0IjoiNzAiLCJsaW5pbmciOiI3MCIsImJpbmRpbmciOiI2NSIsIndlbHRpbmciOiI2NSIsImxhY2VzIjoiNjUiLCJ0aHVtYl9sb29wcyI6IjY1IiwicGlua3lfbG9vcHMiOiI2NSIsInN0aXRjaGluZyI6IjEwIiwicmluZ19lbWIiOiI5NSIsInBhZF9jb2xvciI6IjcwIn0sIm1hdGVyaWFscyI6e30sImhhbmQiOm51bGwsInNpemUiOiIxMS43NVwiIiwicG9zaXRpb24iOm51bGwsInBhZCI6Ik5vbmUiLCJ3ZWJUeXBlIjoiSC1XZWIiLCJ0aHVtYlRleHQiOiIiLCJ0aHVtYkZvbnQiOm51bGwsInRodW1iTWFpbiI6bnVsbCwidGh1bWJPdXRsaW5lIjpudWxsLCJ0aHVtYk51bWJlciI6IiIsImNpcmNsZSI6bnVsbCwibnVtYmVyQ29sb3IiOm51bGwsImZsYWciOm51bGwsImZsYWdQb3NpdGlvbiI6ImluZGV4IiwiZmxhZ090aGVyIjoiIiwicGlua3lUZXh0IjoiIiwid2l0aGRyYXduV2ViIjpudWxsLCJzdGFydElkIjoiTmF2eSAvIENvbHVtYmlhIiwicGlja2VkIjp7fSwic2NoZW1hVmVyc2lvbiI6MX0",
+      "japan": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0Ijo3LCJ2aWV3IjoiYmFjayIsImNvbG9ycyI6eyJ3ZWIiOiI3MSIsImJhY2sxIjoiMzIiLCJiYWNrMiI6IjMyIiwiYmFjazMiOiI3MSIsImJhY2s0IjoiNzEiLCJiYWNrNSI6IjcxIiwiYmFjazYiOiI3MSIsImJhY2s3IjoiNzEiLCJiYWNrOCI6IjcxIiwiYmFjazkiOiI3MSIsInBhbG0iOiI3MSIsImJlbHQiOiIzMiIsImxpbmluZyI6IjcxIiwiYmluZGluZyI6IjQ1Iiwid2VsdGluZyI6IjQ1IiwibGFjZXMiOiI0NSIsInRodW1iX2xvb3BzIjoiNDUiLCJwaW5reV9sb29wcyI6IjQ1Iiwic3RpdGNoaW5nIjoiNDUiLCJyaW5nX2VtYiI6IjM5IiwicGFkX2NvbG9yIjoiNzEifSwibWF0ZXJpYWxzIjp7fSwiaGFuZCI6bnVsbCwic2l6ZSI6IjExLjc1XCIiLCJwb3NpdGlvbiI6bnVsbCwicGFkIjoiTm9uZSIsIndlYlR5cGUiOiJILVdlYiIsInRodW1iVGV4dCI6IiIsInRodW1iRm9udCI6bnVsbCwidGh1bWJNYWluIjpudWxsLCJ0aHVtYk91dGxpbmUiOm51bGwsInRodW1iTnVtYmVyIjoiIiwiY2lyY2xlIjpudWxsLCJudW1iZXJDb2xvciI6bnVsbCwiZmxhZyI6IkphcGFuIiwiZmxhZ1Bvc2l0aW9uIjoiaW5kZXgiLCJmbGFnT3RoZXIiOiIiLCJwaW5reVRleHQiOiIiLCJ3aXRoZHJhd25XZWIiOm51bGwsInN0YXJ0SWQiOiJqcCIsInBpY2tlZCI6e30sInNjaGVtYVZlcnNpb24iOjF9",
+      "nederland": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0IjoxNCwidmlldyI6ImJhY2siLCJjb2xvcnMiOnsid2ViIjoiMzUiLCJiYWNrMSI6IjM1IiwiYmFjazIiOiIzNSIsImJhY2szIjoiMzUiLCJiYWNrNCI6IjM1IiwiYmFjazUiOiIzNSIsImJhY2s2IjoiMzUiLCJiYWNrNyI6IjM1IiwiYmFjazgiOiIzNSIsImJhY2s5IjoiMzUiLCJwYWxtIjoiMzUiLCJiZWx0IjoiMzUiLCJsaW5pbmciOiI3MCIsImJpbmRpbmciOiI3MCIsIndlbHRpbmciOiI3MCIsImxhY2VzIjoiNzAiLCJ0aHVtYl9sb29wcyI6IjcwIiwicGlua3lfbG9vcHMiOiI3MCIsInN0aXRjaGluZyI6IjcwIiwicmluZ19lbWIiOiIxMCIsInBhZF9jb2xvciI6IjM1In0sIm1hdGVyaWFscyI6e30sImhhbmQiOm51bGwsInNpemUiOiIxMS43NVwiIiwicG9zaXRpb24iOm51bGwsInBhZCI6Ik5vbmUiLCJ3ZWJUeXBlIjoiSC1XZWIiLCJ0aHVtYlRleHQiOiIiLCJ0aHVtYkZvbnQiOm51bGwsInRodW1iTWFpbiI6bnVsbCwidGh1bWJPdXRsaW5lIjpudWxsLCJ0aHVtYk51bWJlciI6IiIsImNpcmNsZSI6bnVsbCwibnVtYmVyQ29sb3IiOm51bGwsImZsYWciOiJOZXRoZXJsYW5kcyIsImZsYWdQb3NpdGlvbiI6ImluZGV4IiwiZmxhZ090aGVyIjoiIiwicGlua3lUZXh0IjoiIiwid2l0aGRyYXduV2ViIjpudWxsLCJzdGFydElkIjoibmwiLCJwaWNrZWQiOnt9LCJzY2hlbWFWZXJzaW9uIjoxfQ",
+      "zwart-grijs": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0IjoxMCwidmlldyI6ImJhY2siLCJjb2xvcnMiOnsid2ViIjoiOTAiLCJiYWNrMSI6IjkwIiwiYmFjazIiOiI5MCIsImJhY2szIjoiOTAiLCJiYWNrNCI6IjkwIiwiYmFjazUiOiI5MCIsImJhY2s2IjoiOTAiLCJiYWNrNyI6IjkwIiwiYmFjazgiOiI5MCIsImJhY2s5IjoiOTAiLCJwYWxtIjoiOTAiLCJiZWx0IjoiOTAiLCJsaW5pbmciOiI5MCIsImJpbmRpbmciOiI5MyIsIndlbHRpbmciOiI5MyIsImxhY2VzIjoiOTMiLCJ0aHVtYl9sb29wcyI6IjkzIiwicGlua3lfbG9vcHMiOiI5MyIsInN0aXRjaGluZyI6IjkzIiwicmluZ19lbWIiOiI5NSIsInBhZF9jb2xvciI6IjkwIn0sIm1hdGVyaWFscyI6e30sImhhbmQiOm51bGwsInNpemUiOiIxMS43NVwiIiwicG9zaXRpb24iOm51bGwsInBhZCI6Ik5vbmUiLCJ3ZWJUeXBlIjoiSC1XZWIiLCJ0aHVtYlRleHQiOiIiLCJ0aHVtYkZvbnQiOm51bGwsInRodW1iTWFpbiI6bnVsbCwidGh1bWJPdXRsaW5lIjpudWxsLCJ0aHVtYk51bWJlciI6IiIsImNpcmNsZSI6bnVsbCwibnVtYmVyQ29sb3IiOm51bGwsImZsYWciOm51bGwsImZsYWdQb3NpdGlvbiI6ImluZGV4IiwiZmxhZ090aGVyIjoiIiwicGlua3lUZXh0IjoiIiwid2l0aGRyYXduV2ViIjpudWxsLCJzdGFydElkIjoiQmxhY2sgLyBHcmV5IiwicGlja2VkIjp7fSwic2NoZW1hVmVyc2lvbiI6MX0",
+      "roze-wit": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0IjoxMCwidmlldyI6ImJhY2siLCJjb2xvcnMiOnsid2ViIjoiMjUiLCJiYWNrMSI6IjI1IiwiYmFjazIiOiIyNSIsImJhY2szIjoiMjUiLCJiYWNrNCI6IjI1IiwiYmFjazUiOiIyNSIsImJhY2s2IjoiMjUiLCJiYWNrNyI6IjI1IiwiYmFjazgiOiIyNSIsImJhY2s5IjoiMjUiLCJwYWxtIjoiMjUiLCJiZWx0IjoiMjUiLCJsaW5pbmciOiIyNSIsImJpbmRpbmciOiIxMCIsIndlbHRpbmciOiIxMCIsImxhY2VzIjoiMTAiLCJ0aHVtYl9sb29wcyI6IjEwIiwicGlua3lfbG9vcHMiOiIxMCIsInN0aXRjaGluZyI6IjEwIiwicmluZ19lbWIiOiIxMCIsInBhZF9jb2xvciI6IjI1In0sIm1hdGVyaWFscyI6e30sImhhbmQiOm51bGwsInNpemUiOiIxMS43NVwiIiwicG9zaXRpb24iOm51bGwsInBhZCI6Ik5vbmUiLCJ3ZWJUeXBlIjoiSC1XZWIiLCJ0aHVtYlRleHQiOiIiLCJ0aHVtYkZvbnQiOm51bGwsInRodW1iTWFpbiI6bnVsbCwidGh1bWJPdXRsaW5lIjpudWxsLCJ0aHVtYk51bWJlciI6IiIsImNpcmNsZSI6bnVsbCwibnVtYmVyQ29sb3IiOm51bGwsImZsYWciOm51bGwsImZsYWdQb3NpdGlvbiI6ImluZGV4IiwiZmxhZ090aGVyIjoiIiwicGlua3lUZXh0IjoiIiwid2l0aGRyYXduV2ViIjpudWxsLCJzdGFydElkIjoiUGluayAvIFdoaXRlIiwicGlja2VkIjp7fSwic2NoZW1hVmVyc2lvbiI6MX0",
+      "zalm-mint": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0IjoxMCwidmlldyI6ImJhY2siLCJjb2xvcnMiOnsid2ViIjoiNDkiLCJiYWNrMSI6IjQ5IiwiYmFjazIiOiI0OSIsImJhY2szIjoiNDkiLCJiYWNrNCI6IjQ5IiwiYmFjazUiOiI0OSIsImJhY2s2IjoiNDkiLCJiYWNrNyI6IjQ5IiwiYmFjazgiOiI0OSIsImJhY2s5IjoiNDkiLCJwYWxtIjoiNDkiLCJiZWx0IjoiNDkiLCJsaW5pbmciOiI0OSIsImJpbmRpbmciOiI1MiIsIndlbHRpbmciOiI1MiIsImxhY2VzIjoiNTIiLCJ0aHVtYl9sb29wcyI6IjUyIiwicGlua3lfbG9vcHMiOiI1MiIsInN0aXRjaGluZyI6IjEwIiwicmluZ19lbWIiOiI1MiIsInBhZF9jb2xvciI6IjQ5In0sIm1hdGVyaWFscyI6e30sImhhbmQiOm51bGwsInNpemUiOiIxMS43NVwiIiwicG9zaXRpb24iOm51bGwsInBhZCI6Ik5vbmUiLCJ3ZWJUeXBlIjoiSC1XZWIiLCJ0aHVtYlRleHQiOiIiLCJ0aHVtYkZvbnQiOm51bGwsInRodW1iTWFpbiI6bnVsbCwidGh1bWJPdXRsaW5lIjpudWxsLCJ0aHVtYk51bWJlciI6IiIsImNpcmNsZSI6bnVsbCwibnVtYmVyQ29sb3IiOm51bGwsImZsYWciOm51bGwsImZsYWdQb3NpdGlvbiI6ImluZGV4IiwiZmxhZ090aGVyIjoiIiwicGlua3lUZXh0IjoiIiwid2l0aGRyYXduV2ViIjpudWxsLCJzdGFydElkIjoiU2FsbW9uIC8gTWludCIsInBpY2tlZCI6e30sInNjaGVtYVZlcnNpb24iOjF9",
+      "curacao": "https://scottprins32-hub.github.io/ssk-glove-demo/#eyJsYW5nIjoibmwiLCJwYXJ0Ijoid2ViIiwiYnVsbGV0IjoxMywidmlldyI6ImJhY2siLCJjb2xvcnMiOnsid2ViIjoiNjAiLCJiYWNrMSI6IjYwIiwiYmFjazIiOiI2MCIsImJhY2szIjoiNjAiLCJiYWNrNCI6IjYwIiwiYmFjazUiOiI2MCIsImJhY2s2IjoiNjAiLCJiYWNrNyI6IjYwIiwiYmFjazgiOiI2MCIsImJhY2s5IjoiNjAiLCJwYWxtIjoiNjAiLCJiZWx0IjoiNjAiLCJsaW5pbmciOiI2MCIsImJpbmRpbmciOiI0NSIsIndlbHRpbmciOiI0NSIsImxhY2VzIjoiNDUiLCJ0aHVtYl9sb29wcyI6IjQ1IiwicGlua3lfbG9vcHMiOiI0NSIsInN0aXRjaGluZyI6IjQ1IiwicmluZ19lbWIiOiIxMCIsInBhZF9jb2xvciI6IjYwIn0sIm1hdGVyaWFscyI6e30sImhhbmQiOm51bGwsInNpemUiOiIxMS43NVwiIiwicG9zaXRpb24iOm51bGwsInBhZCI6Ik5vbmUiLCJ3ZWJUeXBlIjoiSC1XZWIiLCJ0aHVtYlRleHQiOiIiLCJ0aHVtYkZvbnQiOm51bGwsInRodW1iTWFpbiI6bnVsbCwidGh1bWJPdXRsaW5lIjpudWxsLCJ0aHVtYk51bWJlciI6IiIsImNpcmNsZSI6bnVsbCwibnVtYmVyQ29sb3IiOm51bGwsImZsYWciOiJDdXJhw6dhbyIsImZsYWdQb3NpdGlvbiI6ImluZGV4IiwiZmxhZ090aGVyIjoiIiwicGlua3lUZXh0IjoiIiwid2l0aGRyYXduV2ViIjpudWxsLCJzdGFydElkIjoiY3ciLCJwaWNrZWQiOnt9LCJzY2hlbWFWZXJzaW9uIjoxfQ"
+  };
+  // The SSK Pro Custom glove customiser (repo scottprins32-hub/ssk-glove-demo).
+  const CUSTOMIZER_URL = 'https://scottprins32-hub.github.io/ssk-glove-demo/';
+  // Screenshot of the customiser for the hero and walkthrough (assets/customizer/, captured from the live customiser).
+  const CUSTOMIZER_IMG = '/*ASSETS*/assets/customizer/step-4.webp';
+  const CZ_DIR = '/*ASSETS*/assets/customizer/';
+  // Starter colourways from the customiser. Each link opens the customiser with that glove loaded.
+  const COLOURWAYS = [
+    ['cardinal', 'Cardinal / Wit', '#C8102E', '#FFFFFF'],
+    ['zwart-goud', 'Zwart / Goud', '#1A1A1A', '#E3AE27'],
+    ['navy-columbia', 'Navy / Columbia', '#1D2947', '#8DB8E0'],
+    ['nederland', 'Nederland', '#F26A21', '#1D2947'],
+    ['japan', 'Japan', '#1D2947', '#E3AE27'],
+    ['curacao', 'Curaçao', '#1F4FD8', '#F2C230'],
+    ['roze-wit', 'Roze / Wit', '#D56A9E', '#FFFFFF'],
+    ['zalm-mint', 'Zalm / Mint', '#F0A58A', '#6FD3B5'],
+    ['zwart-grijs', 'Zwart / Grijs', '#1A1A1A', '#9A9A9A']
+  ].map(([key, name, a, b]) => ({ key, name, a, b, img: CZ_DIR + 'glove-' + key + '.webp', url: CZ_LINKS[key] || CUSTOMIZER_URL }));
+  const CZ_STEPS = [
+    ['Start', 'Kies een startpunt: blanco of een van de kleurinspiraties.'],
+    ['Hand, maat & vingerbescherming', 'Werphand, positie, maat van 11.5" tot 12.75" en een vingerpad.'],
+    ['Type web', 'H-Web, Spiral I-Web, Standard I-Web, Cross-web of Spilce-web.'],
+    ['Kleuren', '20 onderdelen, elk in een eigen kleur. Ook crocodile pattern.'],
+    ['Logo\'s', 'Kies het bullet logo op de pols, van Edge Gold tot Rainbow.'],
+    ['Naam op de handschoen', 'Borduur je naam op de duim en initialen of nummer in de cirkel.'],
+    ['Controleren', 'Je handschoen van vier kanten, alle keuzes op een rij, en bestellen.']
+  ].map(([t, d], i) => ({ t, d, img: CZ_DIR + 'step-' + (i + 1) + '.webp' }));
 
   const I = {
     glove: '<path d="M21 56C12 52 7 44 7 34c0-8 3-14 8-16l5 10c2-10 6-17 14-19 9-2 18 2 21 10 3 9 1 21-3 28-4 6-11 9-19 9z"/><path d="M29 12c2 9 2 20 0 30M39 10c2 10 2 22 0 34M48 14c2 9 2 20-1 30" stroke-dasharray="3 3.5"/><path d="M15 18l-3 6 5 6 3-2"/><path d="M24 47c6 4 15 4 21-2"/><path d="M9 40c4 8 10 13 18 14"/>',
@@ -35,22 +69,22 @@
 
   const NAV = [
     ['Clubkleding', 'shirt', '/Webwinkel-Category-5743459/Clubkleding.html', 'Teamkleding voor jouw vereniging'],
-    ['Kleding', 'shirt', '#', 'Jerseys, broeken, jassen, petten'],
+    ['Kleding', 'shirt', '/Webwinkel-Category-5784653/Kleding.html', 'Jerseys, broeken, jassen, petten'],
     ['Ballen', 'ball', '/Webwinkel-Category-5758263/Ballen.html', 'Honkballen en softballen'],
     ['Knuppels', 'bat', '/Webwinkel-Category-5784631/Knuppels.html', 'BB-COR, composite, hout, fastpitch'],
     ['Handschoenen', 'glove', '/Webwinkel-Category-5784651/Handschoenen.html', 'Veld, catcher, eerste honk, training'],
     ['Schoenen', 'shoe', '/Webwinkel-Category-5725725/Schoenen.html', 'Spikes en turfs'],
     ['Helmen', 'helmet', '/Webwinkel-Category-5725835/Helmen.html', 'Slag- en coachhelmen'],
-    ['Slaghandschoenen', 'bglove', '#', 'Grip aan de knuppel'],
-    ['Catcher', 'mask', '#', 'Masker, bodyprotector, scheenbeschermers'],
-    ['Veld', 'base', '#', 'Bases, netten, onderhoud'],
-    ['Scheidsrechter', 'whistle', '#', 'Umpire gear'],
-    ['Tassen', 'bag', '#', 'Bat bags en backpacks'],
-    ['Accessoires', 'cap', '#', 'Alles voor de dugout'],
+    ['Slaghandschoenen', 'bglove', '/Webwinkel-Category-5784991/Slaghandschoenen.html', 'Grip aan de knuppel'],
+    ['Catcher', 'mask', '/Webwinkel-Category-5784701/Catcher.html', 'Masker, bodyprotector, scheenbeschermers'],
+    ['Veld', 'base', '/Webwinkel-Category-5784707/Veld.html', 'Bases, netten, onderhoud'],
+    ['Scheidsrechter', 'whistle', '/Webwinkel-Category-5784989/Scheidsrechter.html', 'Umpire gear'],
+    ['Tassen', 'bag', '/Tassen', 'Bat bags en backpacks'],
+    ['Accessoires', 'cap', '/Webwinkel-Category-5856307/Accessoires.html', 'Alles voor de dugout'],
     ['Outlet', 'tag', '/Webwinkel-Category-10665083/Outlet.html', 'Tot 50% korting'],
     ['New Arrivals', 'star', '/New-Arrivals', 'Net binnen'],
-    ['Zomer Korting', 'sun', '#', 'Zomerdeals'],
-    ['Hoofdklasse Holland Series 2026', 'trophy', '#', 'De collectie van de Holland Series']
+    ['Zomer Korting', 'sun', '/Zomer-Korting', 'Zomerdeals'],
+    ['Hoofdklasse Holland Series 2026', 'trophy', '/Hoofdklasse-Holland-Series', 'De collectie van de Holland Series']
   ].map(([name, icon, url, sub]) => ({ name, icon, url: url.startsWith('/') ? BASE + url : url, sub }));
   NAV[16].sub = 'De collectie van de Holland Series';
 
@@ -92,6 +126,11 @@
   'GDN200-SSK-Baseball': PH + '2417010134.png',
     'GDN100-SSK-Baseball': PH + '2417010101.png',
     'Rawlings-REV1X-34-Catcher-Glove-Columbia-blue/Black/Pink-RHT': PH + '2410122391.png',
+    'Rawlings-RX2-Gloss-Batting-Helmet-Scarlet': PH + '2382805112.png',
+    'Rawlings-RX2-Matte-Batting-Helmet-Dark-Green': PH + '2382795494.png',
+    'Rawlings-REV1X-12.75-Outfield-Glove-Columbia-Blue/Purple/Pink-RHT': PH + '2410115931.png',
+    'Rawlings-Heart-Of-The-Hide-13-First-Base-Glove-Mint/Hot-Pink/Pink/Columbia-Blue': PH + '2382824876.png',
+    'Rawlings-Heart-of-the-Hide-Fun-Burst-2.0-11.5-Infield-Glove-Camel/Columbia-Blue/Pink-RHT': PH + '2410156659.png',
     'FP27-Louisville-Slugger-Air-Gold-Ultra-Light-Aluminium-Softbal-Knuppel-%2834/24%29': PH + '1034731165.jpg'
   };
   const LOGO = BASE + '/Files/2/81000/81585/Protom/3046376/Media/300x300/ssk%20logo_nl.jpg';
@@ -102,7 +141,16 @@
       P('Rawlings', 'Pro Preferred Vladimir Guerrero Jr 13" First Base Glove Navy/Scarlet RHT', 499.95, 0, 'glove', ['#1d2947', '#b3222b'], 'Nieuw', 'Rawlings-Pro-Preferred-Vladimir-Guerrero-Jr-13-First-Base-Glove-Navy/Scarlet-RHT'),
       P('Rawlings', 'Heart of the Hide Fun Burst 2.0 11.5" Infield Glove Navy/Mint RHT', 449.95, 0, 'glove', ['#1d2947', '#8fd9c0'], 'Nieuw', 'Rawlings-Heart-of-the-Hide-Fun-Burst-2.0-11.5-Infield-Glove-Navy/Mint-RHT'),
       P('Wilson', 'A2000 M23SS 33.5" Catcher Glove Seafoam/Black/Pink', 379.95, 0, 'glove', ['#9fd6c8', '#e58fa6'], 'Nieuw', 'Wilson-A2000-M23SS-33.5%E2%80%9D-Catcher-Glove-Seafoam/Black/Pink'),
-      P('Rawlings', 'REV1X 34" Catcher Glove Columbia blue/Black/Pink RHT', 494.95, 0, 'glove', ['#8db8e0', '#1b1a19'], 'Nieuw', 'Rawlings-REV1X-34-Catcher-Glove-Columbia-blue/Black/Pink-RHT')
+      P('Rawlings', 'REV1X 34" Catcher Glove Columbia blue/Black/Pink RHT', 494.95, 0, 'glove', ['#8db8e0', '#1b1a19'], 'Nieuw', 'Rawlings-REV1X-34-Catcher-Glove-Columbia-blue/Black/Pink-RHT'),
+      P('Rawlings', 'REV1X 12.75" Outfield Glove Columbia Blue/Purple/Pink RHT', 494.95, 0, 'glove', ['#8db8e0', '#6b4fa0'], 'Nieuw', 'Rawlings-REV1X-12.75-Outfield-Glove-Columbia-Blue/Purple/Pink-RHT'),
+      P('Rawlings', 'Heart Of The Hide 13" First Base Glove Mint/Hot Pink/Pink/Columbia Blue', 429.95, 0, 'glove', ['#8fd9c0', '#e58fa6'], 'Nieuw', 'Rawlings-Heart-Of-The-Hide-13-First-Base-Glove-Mint/Hot-Pink/Pink/Columbia-Blue'),
+      P('Rawlings', 'Heart of the Hide Fun Burst 2.0 11.5" Infield Glove Camel/Columbia Blue/Pink RHT', 449.95, 0, 'glove', ['#c9935b', '#8db8e0'], 'Nieuw', 'Rawlings-Heart-of-the-Hide-Fun-Burst-2.0-11.5-Infield-Glove-Camel/Columbia-Blue/Pink-RHT')
+    ],
+    helmets: [
+      P('Rawlings', 'RX2 Gloss Batting Helmet Black', 64.95, 0, 'helmet', ['#1b1a19', '#80827f'], 'Nieuw', 'Rawlings-RX2-Gloss-Batting-Helmet-Black'),
+      P('Rawlings', 'RX2 Gloss Batting Helmet Scarlet', 64.95, 0, 'helmet', ['#b3222b', '#1b1a19'], 'Nieuw', 'Rawlings-RX2-Gloss-Batting-Helmet-Scarlet'),
+      P('Rawlings', 'RX2 Matte Batting Helmet Navy', 69.95, 0, 'helmet', ['#1d2947', '#80827f'], 'Nieuw', 'Rawlings-RX2-Matte-Batting-Helmet-Navy'),
+      P('Rawlings', 'RX2 Matte Batting Helmet Dark Green', 69.95, 0, 'helmet', ['#24452f', '#80827f'], 'Nieuw', 'Rawlings-RX2-Matte-Batting-Helmet-Dark-Green')
     ],
     more: [
       P('Rawlings', 'Pro Preferred Mike Trout 12.75" Outfield Glove Black/Gray RHT', 499.95, 0, 'glove', ['#1b1a19', '#80827f'], '', 'Rawlings-Pro-Preferred-Mike-Trout-12.75-Outfield-Glove-Black/Gray-RHT'),
@@ -132,7 +180,18 @@
 
   const BRANDS = ['SSK', 'Rawlings', 'Wilson', 'Easton', 'DeMarini', 'Louisville Slugger', 'Champro', 'Evoshield'];
   const HOURS = [['Maandag', 'Gesloten'], ['Dinsdag', '12:00 – 16:30'], ['Woensdag', '10:00 – 17:30'], ['Donderdag', '12:00 – 16:30'], ['Vrijdag', '12:00 – 20:30'], ['Zaterdag', '10:00 – 16:00'], ['Zondag', 'Gesloten']];
-  const PAGES = ['Openingstijden', 'Algemene voorwaarden', 'Privacy Verklaring', 'Prijslijst', 'Levertijden', 'Retour Zenden', 'Niet Te Ruilen', 'Maten', 'Garantie', '3D Geborduurde Caps en Sublimatie Jerseys', 'Was Voorschrift', 'Welke Bal Koopt U?', 'Bedrukken Kleding / Caps', 'Voorverkoop Aanbieding Ballen 2027'];
+  // Information pages of the shop, with their real URLs.
+  const PAGES = [
+    ['Openingstijden', '/Openingstijden'], ['Algemene voorwaarden', '/Webwinkel-Page-944655/Algemene-voorwaarden.html'],
+    ['Privacy Verklaring', '/Privacy-Verklaring'], ['Prijslijst', '/Webwinkel-Page-1008707/Prijslijst.html'],
+    ['Levertijden', '/Webwinkel-Page-1182239/Levertijden.html'], ['Retour Zenden', '/Webwinkel-Page-1182445/Retour-Zenden.html'],
+    ['Niet Te Ruilen', '/Webwinkel-Page-1164549/Niet-Te-Ruilen.html'], ['Maten', '/Maten'], ['Garantie', '/Garantie'],
+    ['3D Geborduurde Caps en Sublimatie Jerseys', '/3d-borduring'], ['Was Voorschrift', '/Webwinkel-Page-4237210/Was-Voorschrift.html'],
+    ['Welke Bal Koopt U?', '/Welke-bal-koopt-U-'], ['Bedrukken Kleding / Caps', '/SSK-HQ-Gloves'],
+    ['Voorverkoop Aanbieding Ballen 2027', '/Voorverkoop-Aanbieding-Ballen-2027']
+  ];
+  const PAGE = Object.fromEntries(PAGES.map(([n, u]) => [n, BASE + u]));
+  const SHOP = { search: BASE + '/website/index.php?Show=Search&KeyWord=', cart: BASE + '/website/index.php?Show=WebShopBasket', account: BASE + '/website/index.php?Show=WebShopUserLogin', maps: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Heulweg 128B, 2295 KK Kwintsheul') };
   const CONTACT = { name: 'SSK European Baseball Center', street: 'Heulweg 128B', city: '2295 KK Kwintsheul', phone: '+31 174 501 888', email: 'info@sskeurope.com', instagram: 'https://www.instagram.com/ssk_europe', facebook: 'https://www.facebook.com/SSK-Europe-1806900749536624/' };
   const LEAD = [['Op voorraad (webshop)', '3 – 5 werkdagen'], ['Bedrukken op voorraad', '+ 3 – 5 werkdagen'], ['Standaard wedstrijdkleding', '30 – 35 werkdagen'], ['Speciale broeken', '36 – 45 werkdagen'], ['Club- en studentenjassen', '36 – 45 werkdagen']];
 
@@ -140,5 +199,5 @@
   // Image with graceful fallback: if the shop image fails, the tile keeps its icon.
   const img = (src, alt) => src ? `<img src="${src}" alt="${alt}" loading="lazy" onerror="this.remove()">` : '';
 
-  window.SSK = { LOGO, BASE, CUSTOMIZER_URL, CUSTOMIZER_IMG, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
+  window.SSK = { LOGO, BASE, CUSTOMIZER_URL, CUSTOMIZER_IMG, COLOURWAYS, CZ_STEPS, PAGE, SHOP, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
 })();

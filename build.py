@@ -1,6 +1,6 @@
 """Build the standalone pages from src/.
 
-src/v2-homepage.html -> index.html (the chosen version 2, served by GitHub Pages)
+src/v2-homepage.html (+ home.css, home.js) -> index.html (the chosen version 2, served by GitHub Pages)
 src/0*.html          -> concepts/ (the five earlier versions)
 """
 import glob, os
@@ -8,11 +8,12 @@ here = os.path.dirname(os.path.abspath(__file__))
 src = os.path.join(here, 'src')
 rd = lambda f: open(os.path.join(src, f), encoding='utf-8').read()
 css, js, head = rd('base.css'), rd('data.js') + '\n' + rd('ui.js'), rd('head.html')
+home_css, home_js = rd('home.css'), rd('home.js')
 
 def build(f, dest, assets):
     page = open(f, encoding='utf-8').read()
     title, body = page.split('\n', 1)
-    html = head.replace('{{TITLE}}', title.strip()).replace('/*CSS*/', css) + body.replace('/*DATA*/', js.replace('/*ASSETS*/', assets))
+    html = head.replace('{{TITLE}}', title.strip()).replace('/*CSS*/', css) + body.replace('/*DATA*/', js.replace('/*ASSETS*/', assets)).replace('/*HOME_CSS*/', home_css).replace('/*HOME_JS*/', home_js)
     os.makedirs(os.path.dirname(dest), exist_ok=True)
     open(dest, 'w', encoding='utf-8').write(html)
     print('built', os.path.relpath(dest, here))
