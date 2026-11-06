@@ -63,8 +63,12 @@
   };
   NAV.forEach(n => n.img = CAT_IMG[n.name] || '');
 
-  // Product photos (og:image from each product page). Missing ones show a neutral placeholder.
-  const PH = BASE + '/Files/2/81000/81585/ProductPhotos/1200x630/';
+  // Product photos (og:image from each product page). The values are the shop's file names.
+  // A copy of each photo lives in assets/products/<id>.jpg (fetched by .github/workflows/product-photos.yml);
+  // if that copy is missing the page falls back to the live shop, then to a neutral placeholder.
+  const PH = '';
+  const REMOTE = BASE + '/Files/2/81000/81585/ProductPhotos/1200x630/';
+  const LOCAL = '/*ASSETS*/assets/products/';
   const PHOTO = {
   'Rawlings-Pro-Preferred-Mike-Trout-12.75-Outfield-Glove-Black/Gray-RHT': PH + '2401957967.png',
   'Wilson-A2K-FALL-2024-B23-BLACK-12%E2%80%9D': PH + '2105045046.jpg',
@@ -92,7 +96,7 @@
   };
   const LOGO = BASE + '/Files/2/81000/81585/Protom/3046376/Media/300x300/ssk%20logo_nl.jpg';
   // c = colourway used for the product tile when no photo is available
-  const P = (brand, name, price, was, icon, c, tag, url) => ({ brand, name, price, was, icon, c, tag, url: BASE + '/' + url, photo: PHOTO[url] || '' });
+  const P = (brand, name, price, was, icon, c, tag, url) => ({ brand, name, price, was, icon, c, tag, url: BASE + '/' + url, photo: PHOTO[url] ? LOCAL + PHOTO[url].replace(/\.\w+$/, '.jpg') : '', remote: PHOTO[url] ? REMOTE + PHOTO[url] : '' });
   const PRODUCTS = {
     gloves: [
       P('Rawlings', 'Pro Preferred Vladimir Guerrero Jr 13" First Base Glove Navy/Scarlet RHT', 499.95, 0, 'glove', ['#1d2947', '#b3222b'], 'Nieuw', 'Rawlings-Pro-Preferred-Vladimir-Guerrero-Jr-13-First-Base-Glove-Navy/Scarlet-RHT'),

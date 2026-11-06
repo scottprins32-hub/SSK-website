@@ -30,9 +30,11 @@
   const MAIN = ['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Schoenen', 'Clubkleding', 'Outlet'];
 
   // Photo with labelled placeholder underneath; the placeholder shows if the photo is missing or fails.
-  function photo(src, label, iconName) {
+  // Optional fallback: if the local copy fails, try the live shop, then show the placeholder.
+  function photo(src, label, iconName, fallback) {
+    const err = fallback ? `if(this.dataset.fb){this.src=this.dataset.fb;this.removeAttribute('data-fb')}else this.remove()` : 'this.remove()';
     return `<div class="phd">${ic(iconName || 'glove')}<span>${esc(label || 'Productfoto')}</span></div>` +
-      (src ? `<img src="${src}" alt="${esc(label)}" loading="lazy" onerror="this.remove()">` : '');
+      (src ? `<img src="${src}"${fallback ? ` data-fb="${fallback}"` : ''} alt="${esc(label)}" loading="lazy" onerror="${err}">` : '');
   }
 
   function header(o) {
@@ -70,7 +72,7 @@
     const sale = p.was > 0;
     const badge = p.tag ? `<span class="badge ${sale ? 'b-sale' : 'b-new'}">${p.tag}</span>` : '';
     return `<a class="card lift pc" href="${p.url}">
-      <div class="ph">${badge}${photo(p.photo, 'Productfoto', p.icon)}</div>
+      <div class="ph">${badge}${photo(p.photo, 'Productfoto', p.icon, p.remote)}</div>
       <div class="info"><span class="brand">${p.brand}</span><span class="name">${esc(p.name)}</span>
       <span class="price${sale ? ' sale' : ''}"><b>${S.eur(p.price)}</b>${sale ? `<s>${S.eur(p.was)}</s>` : ''}</span></div></a>`;
   }

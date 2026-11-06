@@ -1,0 +1,23 @@
+name: Product photos
+# Copies the product photos from the live shop into assets/products/ and commits them.
+on:
+  push:
+    paths: ['src/data.js', 'scripts/fetch_photos.py', '.github/workflows/product-photos.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install pillow
+      - run: python scripts/fetch_photos.py
+      - name: Commit photos
+        run: |
+          git add assets/products
+          if git diff --cached --quiet; then echo "No new photos"; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898333+github-actions[bot]@users.noreply.github.com" commit -m "Add product photos from the shop"
+          git push

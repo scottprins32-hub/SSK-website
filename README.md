@@ -4,7 +4,7 @@ Five homepage layouts for [sskeurope.ccvshop.nl](https://sskeurope.ccvshop.nl/),
 
 Every version keeps the content of the current shop: all 17 categories, new arrivals, balls, outlet, club apparel and printing with lead times, the Hoofdklasse Holland Series 2026, brands, the showroom with opening hours, and the full footer. Each one gives the glove customiser a prominent spot and button. The customiser itself is not changed.
 
-Open `index.html` for an overview, or open any file in `concepts/` on its own. Every file is self-contained (fonts load from Google Fonts), so it can be emailed or opened straight from disk.
+Open `concepts/index.html` for an overview of the five earlier versions, or open any file in `concepts/` on its own. Every file is self-contained (fonts load from Google Fonts), so it can be emailed or opened straight from disk.
 
 | # | Version | Layout |
 |---|---------|--------|
@@ -16,7 +16,9 @@ Open `index.html` for an overview, or open any file in `concepts/` on its own. E
 
 ## Homepage versie 2 (gekozen richting)
 
-`homepage/v2-homepage.html` is version 02 "Customizer voorop" worked out as a complete homepage: the customiser as the hero, then gloves, the 2026 bats, outlet and balls, a short SSK heritage strip, club apparel and Holland Series, the showroom with opening hours, brands and the footer. Every product shown is a real product from the shop with its real name, price, link and product photo (the `og:image` of its product page). The heritage line "Baseball, it's our game." comes from SSK's US site, sskbaseballshop.com.
+`index.html` (online via GitHub Pages: https://scottprins32-hub.github.io/SSK-website/) is version 02 "Customizer voorop" worked out as a complete homepage: the customiser as the hero, then gloves, the 2026 bats, outlet and balls, a short SSK heritage strip, club apparel and Holland Series, the showroom with opening hours, brands and the footer. Every product shown is a real product from the shop with its real name, price, link and product photo (the `og:image` of its product page). The heritage line "Baseball, it's our game." comes from SSK's US site, sskbaseballshop.com.
+
+Product photos are copies in `assets/products/`, fetched from the shop by the *Product photos* GitHub Action whenever `src/data.js` changes. If a copy is missing, the page loads the photo from the live shop instead.
 
 Still to fill in: `CUSTOMIZER_URL` (the customiser link) and `CUSTOMIZER_IMG` (a customiser screenshot for the hero) in `src/data.js`.
 
@@ -29,4 +31,4 @@ Still to fill in: `CUSTOMIZER_URL` (the customiser link) and `CUSTOMIZER_IMG` (a
 
 ## Editing
 
-`src/base.css` holds the design tokens and components, `src/ui.js` the shared header, cards, customiser block, showroom and footer, and `src/data.js` the content. Edit `src/`, then run `python3 build.py` to rebuild the files in `concepts/` and `homepage/`.
+`src/base.css` holds the design tokens and components, `src/ui.js` the shared header, cards, customiser block, showroom and footer, and `src/data.js` the content. Edit `src/`, then run `python3 build.py` to rebuild `index.html` and the files in `concepts/`.
