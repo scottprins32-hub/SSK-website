@@ -1,0 +1,66 @@
+SSK Europe · Versie 04 · Rustig
+<style>
+body{background:#fff}
+.card{box-shadow:none}
+.lift:hover{box-shadow:var(--sh-raised)}
+.hero{padding:80px 0 56px;text-align:center}
+.hero .d-xl{font-size:clamp(44px,7vw,80px);max-width:14ch;margin:16px auto}
+.hero .lead{margin:0 auto}
+.hero .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+.hero .stitch{width:96px;margin:40px auto 0}
+.band{background:var(--chalk);border-top:1px solid var(--g200);border-bottom:1px solid var(--g200)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--g200);margin-bottom:24px;overflow-x:auto}
+.tabs button{height:48px;padding:0 16px;font:700 16px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--g500);border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--navy-900);border-bottom-color:var(--navy-900)}
+.tabs button:hover{color:var(--navy-900)}
+.cats2{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--g200)}
+.cats2 a{display:flex;align-items:center;gap:16px;padding:18px 4px;border-bottom:1px solid var(--g200);font:700 20px/1 var(--display);letter-spacing:.04em;text-transform:uppercase;color:var(--navy-900)}
+.cats2 a svg.ico{width:28px;height:28px;flex:none}
+.cats2 a .ui{margin-left:auto;color:var(--g400);transition:transform .15s var(--ease)}
+.cats2 a:hover .ui{transform:translateX(3px);color:var(--navy-900)}
+@media (min-width:901px){.cats2 a:not(:nth-child(3n)){margin-right:32px}}
+@media (max-width:900px){.cats2{grid-template-columns:1fr 1fr}.cats2 a:nth-child(odd){margin-right:24px}}
+@media (max-width:600px){.hero{padding:48px 0 40px}.cats2{grid-template-columns:1fr}.cats2 a{margin-right:0!important}}
+</style>
+</head>
+<body>
+<div data-ui="header"></div>
+<main>
+  <section class="hero"><div class="wrap">
+    <div class="kick">SSK European Baseball Center</div>
+    <h1 class="d-xl">Gemaakt voor het spel</h1>
+    <p class="lead">Honkbal- en softbaluitrusting van de beste merken, clubkleding op maat en een showroom in Kwintsheul.</p>
+    <div class="btns"><a class="btn btn-red" id="cz1">Ontwerp je handschoen</a><a class="btn btn-line" id="shop1">Shop het assortiment</a></div>
+    <div class="stitch"></div>
+  </div></section>
+
+  <section class="sec" style="padding-top:0"><div class="wrap" id="s-tabs"></div></section>
+  <section class="band"><div class="wrap sec"><div data-ui="customizer"></div></div></section>
+  <section class="sec"><div class="wrap"><div class="sec-h"><div><div class="kick">Assortiment</div><h2 class="d-lg">Alle categorieën</h2></div></div><div class="cats2" id="cats2"></div></div></section>
+  <section class="sec" style="padding-top:0"><div class="wrap"><div data-ui="club"></div></div></section>
+  <section class="sec tight" style="padding-top:0"><div class="wrap"><div data-ui="showroom"></div></div></section>
+  <section class="sec tight" style="padding-top:0"><div class="wrap"><div data-ui="brands"></div></div></section>
+</main>
+<div data-ui="footer"></div>
+<script>
+/*DATA*/
+</script>
+<script>
+const S = SSK, U = UI, P = S.PRODUCTS;
+U.mount({ header: U.header({ light: true, topbar: false }), customizer: U.customizer({ title: 'Jouw handschoen, jouw ontwerp' }), club: U.club(), brands: U.brands(), showroom: U.showroom(), footer: U.footer() });
+document.getElementById('cz1').href = S.CUSTOMIZER_URL;
+document.getElementById('shop1').href = U.nav('Handschoenen').url;
+const T = [['New arrivals', P.gloves, 'New Arrivals'], ['Ballen', P.balls, 'Ballen'], ['Outlet', P.outlet, 'Outlet']];
+const box = document.getElementById('s-tabs');
+box.innerHTML = `<div class="tabs" role="tablist">${T.map((t, i) => `<button role="tab" aria-selected="${i === 0}" data-i="${i}">${t[0]}</button>`).join('')}</div><div id="tabp"></div><div style="margin-top:24px;text-align:center"><a class="link" id="tabl"></a></div>`;
+function show(i) {
+  box.querySelectorAll('.tabs button').forEach((b, j) => b.setAttribute('aria-selected', i === j));
+  document.getElementById('tabp').innerHTML = U.grid(T[i][1]);
+  const l = document.getElementById('tabl'); l.href = U.nav(T[i][2]).url; l.innerHTML = `Bekijk alle ${T[i][0].toLowerCase()} ${U.ui('arrow')}`;
+}
+box.querySelector('.tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) show(+b.dataset.i); });
+show(0);
+document.getElementById('cats2').innerHTML = S.NAV.map(n => `<a href="${n.url}">${U.ic(n.icon)}${n.name}${U.ui('arrow')}</a>`).join('');
+</script>
+</body>
+</html>

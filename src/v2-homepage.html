@@ -1,0 +1,88 @@
+SSK Europe · Homepage versie 2 · Customizer voorop
+<style>
+/* Hero: the customiser is the first thing you see */
+.hero{background:var(--navy-950);color:var(--navy-100)}
+.hero .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:center;padding-top:64px;padding-bottom:64px}
+.hero .d-xl{color:#fff;margin:14px 0 18px}
+.hero .d-xl em{font-style:normal;color:var(--red-600)}
+.hero p{font-size:17px;max-width:46ch}
+.hero .steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:28px 0 32px}
+.hero .steps li{border-top:2px solid var(--navy-700);padding-top:12px}
+.hero .steps li:first-child{border-top-color:var(--red-600)}
+.hero .steps i{font:600 12px/1 var(--mono);font-style:normal;color:var(--g400)}
+.hero .steps b{display:block;margin-top:6px;font:700 18px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;color:#fff}
+.hero .steps small{color:var(--g400);font-size:13px}
+.hero .btns{display:flex;gap:12px;flex-wrap:wrap}
+.hero .btn-ghost{color:#fff}
+/* customiser screenshot slot */
+.shot{position:relative;aspect-ratio:16/11;border-radius:var(--r2);background:var(--navy-900);border:1px dashed var(--navy-500);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:24px;overflow:hidden}
+.shot svg{width:64px;height:64px;color:var(--navy-500)}
+.shot b{font:700 18px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;color:#fff}
+.shot small{font:600 11px/1.5 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--g400);max-width:34ch}
+.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.catbar{background:#fff;border-bottom:1px solid var(--g200);padding:20px 0}
+/* customiser reminder under the gloves */
+.czline{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:16px;padding:18px 24px;background:#fff;border:1px solid var(--g200);border-left:3px solid var(--red-600);border-radius:var(--r2)}
+.czline b{font:700 20px/1.1 var(--display);letter-spacing:.04em;text-transform:uppercase;color:var(--navy-900)}
+.czline span{color:var(--g600);font-size:15px}
+/* heritage strip, wording from SSK's own US site */
+.heri{background:var(--navy-950);color:var(--navy-100);border-radius:var(--r2);padding:40px 48px;display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center}
+.heri .tag{font:800 clamp(28px,3.4vw,40px)/1 var(--display);text-transform:uppercase;color:#fff;letter-spacing:.01em}
+.heri .tag em{font-style:normal;color:var(--red-600)}
+.heri p{max-width:60ch;font-size:16px}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr;gap:32px;padding-top:40px;padding-bottom:40px}.heri{grid-template-columns:1fr;padding:32px;gap:12px}}
+@media (max-width:600px){.hero .steps{gap:12px}.hero .steps small{display:none}.hero .steps b{font-size:16px}.heri{padding:24px}}
+</style>
+</head>
+<body>
+<div data-ui="header"></div>
+<main>
+  <section class="hero" id="customizer"><div class="wrap">
+    <div>
+      <div class="kick">Glove Customizer</div>
+      <h1 class="d-xl">Ontwerp je eigen <em>handschoen</em></h1>
+      <p>Kies het model dat bij jouw positie past, bepaal de kleuren van leer, veters en stiksels en maak hem af met jouw details.</p>
+      <ol class="steps">
+        <li><i>01</i><b>Model</b><small>Positie en maat</small></li>
+        <li><i>02</i><b>Kleuren</b><small>Leer, veters, stiksels</small></li>
+        <li><i>03</i><b>Details</b><small>Naam en afwerking</small></li>
+      </ol>
+      <div class="btns"><a class="btn btn-red" id="cz1">Start de customizer</a><a class="btn btn-ghost" id="shop1">Bekijk handschoenen</a></div>
+    </div>
+    <div class="shot" id="czshot"></div>
+  </div></section>
+  <div data-ui="usp"></div>
+  <div class="catbar"><div class="wrap" id="chips"></div></div>
+
+  <section class="sec"><div class="wrap" id="s-gloves"></div></section>
+  <section class="sec" style="padding-top:0"><div class="wrap" id="s-bats"></div></section>
+  <section class="sec" style="padding-top:0"><div class="wrap" id="s-outlet"></div></section>
+  <section class="sec" style="padding-top:0"><div class="wrap" id="s-balls"></div></section>
+  <section class="sec tight" style="padding-top:0"><div class="wrap"><div class="heri">
+    <div class="tag">Baseball,<br><em>it's our game.</em></div>
+    <p>SSK begon als een kleine winkel in Kyoto, Japan. Vandaag maakt SSK handschoenen met de hand, van premium leer, voor spelers over de hele wereld. In Kwintsheul vind je SSK Europe, samen met de andere topmerken in honkbal en softbal.</p>
+  </div></div></section>
+  <section class="sec tight" style="padding-top:16px"><div class="wrap"><div data-ui="club"></div></div></section>
+  <section class="sec tight" style="padding-top:0"><div class="wrap"><div data-ui="showroom"></div></div></section>
+  <section class="sec tight" style="padding-top:0"><div class="wrap"><div data-ui="brands"></div></div></section>
+</main>
+<div data-ui="footer"></div>
+<script>
+/*DATA*/
+</script>
+<script>
+const S = SSK, U = UI, P = S.PRODUCTS;
+U.mount({ header: U.header(), usp: U.usp(), club: U.club(), brands: U.brands(), showroom: U.showroom(), footer: U.footer() });
+document.getElementById('cz1').href = S.CUSTOMIZER_URL;
+document.getElementById('shop1').href = U.nav('Handschoenen').url;
+// Customiser screenshot: set CUSTOMIZER_IMG in data.js and it replaces the placeholder.
+document.getElementById('czshot').innerHTML = U.ic('glove') + '<b>Screenshot van de customizer</b><small>Plaatshouder: hier komt een beeld uit de bestaande glove customizer</small>' + (S.CUSTOMIZER_IMG ? `<img src="${S.CUSTOMIZER_IMG}" alt="De SSK Glove Customizer">` : '');
+document.getElementById('chips').innerHTML = U.chips(['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Slaghandschoenen', 'Schoenen', 'Kleding', 'Clubkleding', 'Tassen', 'Veld', 'Scheidsrechter', 'Accessoires', 'New Arrivals', 'Outlet', 'Zomer Korting', 'Hoofdklasse Holland Series 2026']);
+document.getElementById('s-gloves').innerHTML = U.secHead('Handschoenen', 'Nieuw binnen', 'Alle handschoenen', U.nav('Handschoenen').url) + U.grid(P.gloves.concat(P.more)) +
+  `<div class="czline"><div><b>Staat jouw handschoen er niet tussen?</b><br><span>Ontwerp hem zelf in de Glove Customizer.</span></div><a class="btn btn-red sm" href="${S.CUSTOMIZER_URL}">Start de customizer</a></div>`;
+document.getElementById('s-bats').innerHTML = U.secHead('Knuppels', 'De 2026 modellen', 'Alle knuppels', U.nav('Knuppels').url) + U.grid(P.bats);
+document.getElementById('s-outlet').innerHTML = U.secHead('Outlet', 'Tot 50% korting', 'Naar de outlet', U.nav('Outlet').url) + U.grid(P.outlet);
+document.getElementById('s-balls').innerHTML = U.secHead('Ballen', 'Honkballen en softballen', 'Alle ballen', U.nav('Ballen').url) + U.grid(P.balls);
+</script>
+</body>
+</html>

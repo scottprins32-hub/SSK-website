@@ -1,0 +1,65 @@
+SSK Europe · Versie 02 · Customizer voorop
+<style>
+.czh{background:var(--navy-900);color:var(--navy-100);border-top:1px solid var(--navy-800)}
+.czh .wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding-top:56px;padding-bottom:56px}
+.czh .d-xl{color:#fff;margin:12px 0 16px}
+.czh p{font-size:17px;max-width:48ch}
+.czh .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:28px 0}
+.czh .steps div{border:1px solid var(--navy-700);border-radius:var(--r2);padding:14px}
+.czh .steps i{font:600 12px/1 var(--mono);font-style:normal;color:var(--tan-200)}
+.czh .steps b{display:block;margin-top:8px;font:700 18px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;color:#fff}
+.czh .steps small{color:var(--navy-100);font-size:13px}
+.czh .vis{position:relative;aspect-ratio:5/4;background:var(--navy-800);border-radius:var(--r2);overflow:hidden}
+.czh .vis .phd{background:var(--navy-800);color:var(--navy-100)}
+.czh .vis .phd svg{color:var(--navy-500);width:72px;height:72px}
+.czh .vis img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:24px}
+.czh .btns{display:flex;gap:12px;flex-wrap:wrap}
+.catbar{background:#fff;border-bottom:1px solid var(--g200);padding:20px 0}
+.catbar .stitch{margin-bottom:20px}
+@media (max-width:900px){.czh .wrap{grid-template-columns:1fr;padding-top:40px;padding-bottom:40px}}
+@media (max-width:600px){.czh .steps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div data-ui="header"></div>
+<main>
+  <section class="czh" id="customizer"><div class="wrap">
+    <div>
+      <div class="kick" style="color:var(--tan-200)">Nieuw · Glove Customizer</div>
+      <h1 class="d-xl">Jouw handschoen, jouw ontwerp</h1>
+      <p>Stel je eigen handschoen samen. Kies het model dat bij je positie past, bepaal de kleuren en maak hem af met jouw details.</p>
+      <div class="steps">
+        <div><i>01</i><b>Model</b><small>Kies je basis</small></div>
+        <div><i>02</i><b>Kleuren</b><small>Maak hem van jou</small></div>
+        <div><i>03</i><b>Details</b><small>Afwerking naar keuze</small></div>
+      </div>
+      <div class="btns"><a class="btn btn-red" id="cz1">Start de customizer</a><a class="btn btn-ghost" id="shop1">Bekijk handschoenen</a></div>
+    </div>
+    <div class="vis" id="czvis"></div>
+  </div></section>
+  <div class="catbar"><div class="wrap"><div id="chips"></div></div></div>
+
+  <section class="sec"><div class="wrap" id="s-new"></div></section>
+  <section class="sec" style="padding-top:0"><div class="wrap" id="s-outlet"></div></section>
+  <section class="sec" style="padding-top:0"><div class="wrap" id="s-balls"></div></section>
+  <section class="sec" style="padding-top:0"><div class="wrap"><div data-ui="club"></div></div></section>
+  <section class="sec tight" style="padding-top:0"><div class="wrap"><div data-ui="showroom"></div></div></section>
+  <section class="sec tight" style="padding-top:0"><div class="wrap"><div data-ui="brands"></div></div></section>
+</main>
+<div data-ui="footer"></div>
+<script>
+/*DATA*/
+</script>
+<script>
+const S = SSK, U = UI, P = S.PRODUCTS;
+U.mount({ header: U.header(), club: U.club(), brands: U.brands(), showroom: U.showroom(), footer: U.footer() });
+document.getElementById('cz1').href = S.CUSTOMIZER_URL;
+document.getElementById('shop1').href = U.nav('Handschoenen').url;
+document.getElementById('czvis').innerHTML = U.photo('', 'Beeld uit de customizer', 'glove');
+document.getElementById('chips').innerHTML = '<div class="stitch"></div>' + U.chips(['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Slaghandschoenen', 'Schoenen', 'Kleding', 'Clubkleding', 'Tassen', 'Veld', 'Scheidsrechter', 'Accessoires', 'New Arrivals', 'Outlet', 'Zomer Korting', 'Hoofdklasse Holland Series 2026']);
+document.getElementById('s-new').innerHTML = U.secHead('Net binnen', 'New arrivals', 'Bekijk alles', U.nav('New Arrivals').url) + U.grid(P.gloves);
+document.getElementById('s-outlet').innerHTML = U.secHead('Outlet', 'Tot 50% korting', 'Naar de outlet', U.nav('Outlet').url) + U.grid(P.outlet);
+document.getElementById('s-balls').innerHTML = U.secHead('Ballen', 'Honkballen en softballen', 'Alle ballen', U.nav('Ballen').url) + U.grid(P.balls);
+</script>
+</body>
+</html>

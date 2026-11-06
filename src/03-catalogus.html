@@ -1,0 +1,78 @@
+SSK Europe · Versie 03 · Catalogus
+<style>
+.shop{display:grid;grid-template-columns:260px 1fr;gap:24px;padding-top:24px;align-items:start}
+.side{position:sticky;top:136px;display:grid;gap:16px}
+.side .card{padding:8px}
+.side h3{font:700 13px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--g500);padding:12px 12px 8px}
+.side a.c{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:var(--r1);font-size:15px;font-weight:500;color:var(--g700)}
+.side a.c:hover{background:var(--g50);color:var(--navy-900)}
+.side a.c svg{width:22px;height:22px;color:var(--navy-900);flex:none}
+.side a.c.hot{color:var(--red-600);font-weight:600}
+.czc{background:var(--navy-900);border-color:var(--navy-900);color:var(--navy-100);padding:20px!important;display:flex;flex-direction:column;gap:10px}
+.czc .d-sm{color:#fff}
+.czc p{font-size:14px}
+.promo{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:40px}
+.promo .card{position:relative;overflow:hidden;min-height:260px;display:flex;flex-direction:column;justify-content:flex-end;padding:28px;gap:10px;align-items:flex-start}
+.promo .big{background:var(--navy-900);border-color:var(--navy-900);color:var(--navy-100)}
+.promo .big .d-lg{color:#fff;max-width:14ch}
+.promo .big .ph{position:absolute;right:0;top:0;bottom:0;width:48%;background:var(--navy-800)}
+.promo .big .ph .phd{background:var(--navy-800);color:var(--navy-100)}.promo .big .ph .phd svg{color:var(--navy-500)}
+.promo .big .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:16px}
+.promo .big>*:not(.ph){position:relative;z-index:1;max-width:50%}
+.promo .sale{background:var(--red-50);border-color:#F3C9D0}
+.promo .sale .d-xl{color:var(--red-600)}
+.main section{margin-bottom:48px}
+.main .sec-h .d-lg{font-size:32px}
+.trail{font-size:13px;color:var(--g500);margin-bottom:12px}
+@media (max-width:1080px){.shop{grid-template-columns:220px 1fr}.main .grid3{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:900px){
+  .shop{grid-template-columns:1fr}
+  .side{position:static}
+  .side .card.cl{display:none}
+  .side{display:none}
+  .promo .card{min-height:0}
+  .promo{grid-template-columns:1fr}
+}
+@media (max-width:600px){.promo .big>*:not(.ph){max-width:100%}.promo .big .ph{position:relative;width:auto;height:180px;margin:-28px -28px 8px;order:-1}}
+</style>
+</head>
+<body>
+<div data-ui="header"></div>
+<div class="wrap shop">
+  <aside class="side">
+    <div class="card cl" id="catlist"></div>
+    <div class="card czc"><div class="kick" style="color:var(--tan-200)">Glove Customizer</div><div class="d-sm">Ontwerp je eigen handschoen</div><p>Kies model, kleuren en details.</p><a class="btn btn-red sm" id="cz2">Start de customizer</a></div>
+  </aside>
+  <main class="main">
+    <div class="trail">Home / Webwinkel</div>
+    <div class="promo">
+      <a class="card big" id="customizer"><div class="ph" id="czvis"></div><div class="kick" style="color:var(--tan-200)">Nieuw</div><h1 class="d-lg">Jouw handschoen, jouw ontwerp</h1><p>Stel hem zelf samen in de Glove Customizer.</p><span class="btn btn-red sm">Start de customizer</span></a>
+      <a class="card sale" id="outl"><div class="kick">Outlet</div><div class="d-xl">−50%</div><p>Tot de helft korting op knuppels, catcher gear en meer.</p><span class="link">Naar de outlet <svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    </div>
+    <div class="stitch" style="margin-bottom:40px"></div>
+    <section id="s-new"></section>
+    <section id="s-balls"></section>
+    <section id="s-outlet"></section>
+    <section><div data-ui="club"></div></section>
+  </main>
+</div>
+<section class="sec tight" style="padding-top:0"><div class="wrap"><div data-ui="showroom"></div></div></section>
+<section class="sec tight" style="padding-top:0"><div class="wrap"><div data-ui="brands"></div></div></section>
+<div data-ui="footer"></div>
+<script>
+/*DATA*/
+</script>
+<script>
+const S = SSK, U = UI, P = S.PRODUCTS;
+U.mount({ header: U.header(), club: U.club(), brands: U.brands(), showroom: U.showroom(), footer: U.footer() });
+['cz2', 'customizer'].forEach(id => document.getElementById(id).href = S.CUSTOMIZER_URL);
+document.getElementById('outl').href = U.nav('Outlet').url;
+document.getElementById('czvis').innerHTML = U.photo('', 'Beeld uit de customizer', 'glove');
+document.getElementById('catlist').innerHTML = '<h3>Categorieën</h3>' + S.NAV.map(n => `<a class="c${['Outlet', 'Zomer Korting'].includes(n.name) ? ' hot' : ''}" href="${n.url}">${U.ic(n.icon)}${n.name}</a>`).join('');
+const sh = (k, t, l, u) => `<div class="sec-h"><div><div class="kick">${k}</div><h2 class="d-lg">${t}</h2></div><a class="link" href="${u}">${l} ${U.ui('arrow')}</a></div>`;
+document.getElementById('s-new').innerHTML = sh('Net binnen', 'New arrivals', 'Bekijk alles', U.nav('New Arrivals').url) + U.grid(P.gloves.concat([P.more[3], P.more[0]]), 3);
+document.getElementById('s-balls').innerHTML = sh('Ballen', 'Honkballen en softballen', 'Alle ballen', U.nav('Ballen').url) + U.grid(P.balls.slice(0, 3), 3);
+document.getElementById('s-outlet').innerHTML = sh('Outlet', 'Tot 50% korting', 'Naar de outlet', U.nav('Outlet').url) + U.grid(P.outlet.slice(0, 3), 3);
+</script>
+</body>
+</html>
