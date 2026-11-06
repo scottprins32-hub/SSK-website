@@ -151,6 +151,7 @@
           <div class="soc"><a href="${c.instagram}" aria-label="Instagram">${ui('ig')}</a><a href="${c.facebook}" aria-label="Facebook">${ui('fb')}</a></div></div>
         <div><h4>Klantenservice</h4><ul>${li(S.PAGES.slice(0, half))}</ul></div>
         <div><h4>Informatie</h4><ul>${li(S.PAGES.slice(half))}</ul></div>
+        <div><h4>Openingstijden</h4><ul class="fh">${S.HOURS.map(([d, t]) => `<li><span>${d}</span><span>${t}</span></li>`).join('')}</ul></div>
         <div><h4>Contact</h4><ul><li>${c.street}</li><li>${c.city}</li><li><a href="tel:${c.phone.replace(/\s/g, '')}">${c.phone}</a></li><li><a href="mailto:${c.email}">${c.email}</a></li></ul></div>
       </div>
       <div class="bot"><span>© 2026 SSK Europe</span><span>${c.street}, ${c.city}</span></div>

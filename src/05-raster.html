@@ -18,9 +18,10 @@ SSK Europe · Versie 05 · Promoraster
 .cat-list{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
 @media (max-width:900px){
   .promo{grid-template-columns:1fr;grid-template-rows:auto}
-  .promo .cz{grid-row:auto;min-height:440px}
+  .promo .cz{grid-row:auto;min-height:0;justify-content:flex-start}
+  .promo .cz .ph{position:relative;inset:auto;height:220px;margin:-28px -28px 8px;align-self:stretch}
 }
-@media (max-width:600px){.promo .cz{min-height:0;justify-content:flex-start}.promo .cz .ph{position:relative;inset:auto;height:200px;margin:-20px -20px 8px;align-self:stretch}.promo .sm .ph{width:44%}.promo .sm>*:not(.ph){max-width:54%}.promo>a{padding:20px}}
+@media (max-width:600px){.promo .cz .ph{margin:-20px -20px 8px}.promo .sm .ph{width:44%}.promo .sm>*:not(.ph){max-width:54%}.promo>a{padding:20px}}
 </style>
 </head>
 <body>

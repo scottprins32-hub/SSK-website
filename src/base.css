@@ -212,7 +212,11 @@ img{display:block;max-width:100%}
 
 /* footer */
 .ftr{background:var(--navy-900);color:var(--navy-100);margin-top:64px}
-.ftr .top{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:32px;padding:56px 0 40px}
+.ftr .top{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.1fr 1fr;gap:32px;padding:56px 0 40px}
+.ftr .fh{max-width:320px}
+.ftr .fh li{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:13px}
+.ftr .fh li span:first-child{font-family:var(--body);font-size:14px}
+@media (max-width:1080px){.ftr .top{grid-template-columns:1fr 1fr 1fr}}
 .ftr .logo{color:#fff;margin-bottom:12px}
 .ftr h4{font:700 14px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:#fff;margin-bottom:16px}
 .ftr ul{list-style:none;display:grid;gap:8px;font-size:14px}

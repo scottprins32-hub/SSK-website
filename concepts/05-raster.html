@@ -221,7 +221,11 @@ img{display:block;max-width:100%}
 
 /* footer */
 .ftr{background:var(--navy-900);color:var(--navy-100);margin-top:64px}
-.ftr .top{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:32px;padding:56px 0 40px}
+.ftr .top{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.1fr 1fr;gap:32px;padding:56px 0 40px}
+.ftr .fh{max-width:320px}
+.ftr .fh li{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:13px}
+.ftr .fh li span:first-child{font-family:var(--body);font-size:14px}
+@media (max-width:1080px){.ftr .top{grid-template-columns:1fr 1fr 1fr}}
 .ftr .logo{color:#fff;margin-bottom:12px}
 .ftr h4{font:700 14px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:#fff;margin-bottom:16px}
 .ftr ul{list-style:none;display:grid;gap:8px;font-size:14px}
@@ -299,9 +303,10 @@ img{display:block;max-width:100%}
 .cat-list{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
 @media (max-width:900px){
   .promo{grid-template-columns:1fr;grid-template-rows:auto}
-  .promo .cz{grid-row:auto;min-height:440px}
+  .promo .cz{grid-row:auto;min-height:0;justify-content:flex-start}
+  .promo .cz .ph{position:relative;inset:auto;height:220px;margin:-28px -28px 8px;align-self:stretch}
 }
-@media (max-width:600px){.promo .cz{min-height:0;justify-content:flex-start}.promo .cz .ph{position:relative;inset:auto;height:200px;margin:-20px -20px 8px;align-self:stretch}.promo .sm .ph{width:44%}.promo .sm>*:not(.ph){max-width:54%}.promo>a{padding:20px}}
+@media (max-width:600px){.promo .cz .ph{margin:-20px -20px 8px}.promo .sm .ph{width:44%}.promo .sm>*:not(.ph){max-width:54%}.promo>a{padding:20px}}
 </style>
 </head>
 <body>
@@ -606,6 +611,7 @@ img{display:block;max-width:100%}
           <div class="soc"><a href="${c.instagram}" aria-label="Instagram">${ui('ig')}</a><a href="${c.facebook}" aria-label="Facebook">${ui('fb')}</a></div></div>
         <div><h4>Klantenservice</h4><ul>${li(S.PAGES.slice(0, half))}</ul></div>
         <div><h4>Informatie</h4><ul>${li(S.PAGES.slice(half))}</ul></div>
+        <div><h4>Openingstijden</h4><ul class="fh">${S.HOURS.map(([d, t]) => `<li><span>${d}</span><span>${t}</span></li>`).join('')}</ul></div>
         <div><h4>Contact</h4><ul><li>${c.street}</li><li>${c.city}</li><li><a href="tel:${c.phone.replace(/\s/g, '')}">${c.phone}</a></li><li><a href="mailto:${c.email}">${c.email}</a></li></ul></div>
       </div>
       <div class="bot"><span>© 2026 SSK Europe</span><span>${c.street}, ${c.city}</span></div>
