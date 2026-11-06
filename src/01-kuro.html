@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SSK Europe · Concept 01 · Kuro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Manrope:wght@300;400;500;600&family=Noto+Serif+JP:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0c0b0a;--ink2:#151311;--line:rgba(239,231,218,.12);--ivory:#efe7da;--mute:rgba(239,231,218,.55);--red:#c8102e;--gold:#c49a5a;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Manrope',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{background:var(--ink);color:var(--ivory);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{max-width:1440px;margin:0 auto;padding:0 clamp(16px,4vw,56px)}
+/* grain */
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* top */
+.bar{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;justify-content:space-between;padding-top:10px;padding-bottom:10px;gap:16px}
+header{position:sticky;top:0;z-index:50;background:rgba(12,11,10,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:76px;gap:24px}
+.logo{font-family:var(--serif);font-size:30px;font-style:italic;font-weight:500;letter-spacing:.02em;display:flex;align-items:baseline;gap:10px}
+.logo small{font-family:var(--sans);font-style:normal;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+nav ul{display:flex;gap:28px;list-style:none;font-size:13px;letter-spacing:.04em}
+nav a{opacity:.75;transition:.3s}nav a:hover{opacity:1;color:var(--gold)}
+.hdr-r{display:flex;gap:18px;align-items:center;font-size:13px}
+.pill{border:1px solid var(--line);padding:10px 18px;border-radius:99px;transition:.3s}
+.pill:hover{border-color:var(--gold);color:var(--gold)}
+.pill.red{background:var(--red);border-color:var(--red);color:#fff}
+.pill.red:hover{background:#a50d26;color:#fff}
+/* hero */
+.hero{position:relative;min-height:calc(100vh - 110px);display:grid;grid-template-columns:1fr 1.15fr;align-items:center;gap:40px;padding:40px 0 60px}
+.hero:after{content:"";position:absolute;right:-10%;top:-10%;width:70%;height:120%;background:radial-gradient(closest-side,rgba(196,154,90,.18),transparent 70%);pointer-events:none}
+.kicker{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);display:flex;gap:14px;align-items:center}
+.kicker:before{content:"";width:36px;height:1px;background:var(--gold)}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(56px,7.6vw,128px);line-height:.9;letter-spacing:-.02em;margin:26px 0 28px}
+h1 em{color:var(--gold)}
+.lead{max-width:440px;font-size:17px;line-height:1.7;color:var(--mute)}
+.hero-cta{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap}
+.vert{position:absolute;left:-40px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-family:'Noto Serif JP',serif;font-size:13px;letter-spacing:.6em;color:rgba(239,231,218,.25)}
+/* configurator */
+.studio{position:relative;z-index:2;display:grid;grid-template-columns:1fr 300px;border:1px solid var(--line);border-radius:4px;background:linear-gradient(160deg,#1a1714,#0f0e0c);overflow:hidden}
+.stage{position:relative;display:grid;place-items:center;padding:30px 20px 10px;min-height:560px}
+.stage .ring{position:absolute;width:78%;aspect-ratio:1;border:1px solid var(--line);border-radius:50%}
+.stage .ring.two{width:58%;border-style:dashed;animation:spin 60s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+[data-glove]{width:min(100%,400px);transition:transform .25s ease-out;position:relative;z-index:1}
+.glove-svg{width:100%;height:auto;display:block}
+.pulse{animation:pulse .6s ease}
+@keyframes pulse{0%{filter:brightness(1.6)}100%{filter:none}}
+.stage-meta{position:absolute;left:24px;top:22px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.stage-meta b{display:block;font-family:var(--serif);font-size:34px;letter-spacing:0;text-transform:none;font-style:italic;font-weight:400;color:var(--ivory);margin-top:6px}
+.stage-tools{z-index:2;position:absolute;bottom:20px;left:24px;right:24px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.seg{display:flex;border:1px solid var(--line);border-radius:99px;padding:3px}
+.seg button{padding:7px 14px;border-radius:99px;font-size:12px;color:var(--mute)}
+.seg button.on{background:var(--ivory);color:var(--ink)}
+.panel{border-left:1px solid var(--line);padding:22px;display:flex;flex-direction:column;gap:20px;background:rgba(0,0,0,.25)}
+.lbl{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--mute);margin-bottom:10px;display:flex;justify-content:space-between}
+.lbl span{color:var(--gold);letter-spacing:.1em;text-transform:none;font-size:12px}
+[data-zones]{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+[data-zones] button{display:flex;align-items:center;gap:8px;padding:9px 10px;border:1px solid var(--line);border-radius:3px;font-size:12px;text-align:left;transition:.2s}
+[data-zones] button i{width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 1px rgba(255,255,255,.2)}
+[data-zones] button.on{border-color:var(--gold);background:rgba(196,154,90,.1)}
+[data-swatches]{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+[data-swatches] button{aspect-ratio:1;border-radius:50%;background:var(--c);box-shadow:inset 0 -6px 10px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.12);transition:.2s}
+[data-swatches] button:hover{transform:scale(1.12)}
+[data-swatches] button.on{box-shadow:0 0 0 2px var(--ink),0 0 0 3px var(--gold)}
+[data-webs]{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+[data-webs] button,[data-presets] button{padding:8px;border:1px solid var(--line);border-radius:3px;font-size:12px}
+[data-webs] button.on{border-color:var(--gold);color:var(--gold)}
+input[data-text]{width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--ivory);font-family:var(--serif);font-size:22px;font-style:italic;padding:6px 0;outline:none}
+input[data-text]:focus{border-color:var(--gold)}
+.total{margin-top:auto;border-top:1px solid var(--line);padding-top:16px;display:flex;justify-content:space-between;align-items:end}
+.total b{font-family:var(--serif);font-size:34px;font-weight:400}
+.total small{font-size:10px;color:var(--mute);letter-spacing:.14em;text-transform:uppercase;display:block}
+.panel .pill.red{text-align:center;display:block}
+/* marquee */
+.marq{border-block:1px solid var(--line);overflow:hidden;padding:22px 0;font-family:var(--serif);font-size:clamp(26px,3.4vw,46px);font-style:italic;white-space:nowrap}
+.marq div{display:inline-block;animation:marq 40s linear infinite}
+.marq span{margin:0 34px;opacity:.85}.marq span.g{color:var(--gold)}
+@keyframes marq{to{transform:translateX(-50%)}}
+/* sections */
+section{padding:120px 0}
+.sh{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:56px;flex-wrap:wrap}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(40px,5vw,76px);line-height:.95;letter-spacing:-.01em}
+h2 em{color:var(--gold)}
+.sh p{max-width:380px;color:var(--mute);line-height:1.7}
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.cat{background:var(--ink);padding:34px 28px 28px;min-height:280px;display:flex;flex-direction:column;justify-content:space-between;transition:.4s;position:relative;overflow:hidden}
+.cat:hover{background:var(--ink2)}
+.cat .n{font-size:11px;letter-spacing:.2em;color:var(--gold)}
+.cat h3{font-family:var(--serif);font-size:38px;font-weight:400}
+.cat p{font-size:13px;color:var(--mute);margin-top:6px}
+.cat .arr{position:absolute;right:26px;bottom:28px;width:42px;height:42px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;transition:.4s}
+.cat:hover .arr{background:var(--gold);color:var(--ink);transform:rotate(-45deg)}
+.prods{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.prod{cursor:pointer}
+.prod .img{aspect-ratio:4/5;background:radial-gradient(circle at 50% 40%,#25201b,#100e0c 70%);display:grid;place-items:center;border:1px solid var(--line);position:relative;overflow:hidden}
+.prod .img>div{width:70%;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.prod:hover .img>div{transform:scale(1.06) rotate(-3deg)}
+.tag{position:absolute;top:16px;left:16px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--line);padding:6px 10px;border-radius:99px}
+.tag.red{background:var(--red);border-color:var(--red)}
+.prod h4{font-family:var(--serif);font-size:24px;font-weight:400;margin-top:18px}
+.prod .row{display:flex;justify-content:space-between;color:var(--mute);font-size:13px;margin-top:6px}
+.prod .row b{color:var(--ivory);font-weight:500}
+.prod s{opacity:.5;margin-right:8px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.craft{aspect-ratio:1;border:1px solid var(--line);position:relative;display:grid;place-items:center;background:radial-gradient(circle,#1d1915,#0c0b0a 70%)}
+.craft .jp{position:absolute;right:28px;top:28px;writing-mode:vertical-rl;font-family:'Noto Serif JP',serif;font-size:42px;color:var(--gold);opacity:.8}
+.craft>div{width:58%}
+.steps{margin-top:40px;border-top:1px solid var(--line)}
+.steps li{list-style:none;display:grid;grid-template-columns:60px 1fr auto;gap:20px;padding:22px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.steps li b{font-family:var(--serif);font-size:26px;font-weight:400}
+.steps li span{color:var(--gold);font-size:12px;letter-spacing:.2em}
+.steps li i{font-style:normal;color:var(--mute);font-size:13px}
+.club{position:relative;border:1px solid var(--line);padding:clamp(30px,6vw,90px);overflow:hidden;background:linear-gradient(120deg,#1a0a0d,#0c0b0a 60%)}
+.club h2{max-width:780px}
+.club .big{position:absolute;right:-20px;bottom:-60px;font-family:var(--serif);font-style:italic;font-size:clamp(160px,22vw,340px);line-height:1;color:rgba(200,16,46,.16)}
+.club ul{display:flex;gap:40px;margin-top:44px;list-style:none;flex-wrap:wrap;position:relative}
+.club li b{display:block;font-family:var(--serif);font-size:48px;font-weight:400;color:var(--gold)}
+.club li{font-size:13px;color:var(--mute)}
+.visit{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+.visit>div{background:var(--ink);padding:40px}
+.hours{list-style:none;font-size:14px}
+.hours li{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);color:var(--mute)}
+.hours li b{color:var(--ivory);font-weight:400}
+.visit h3{font-family:var(--serif);font-size:32px;font-weight:400;margin-bottom:18px}
+.visit p{color:var(--mute);line-height:1.8;font-size:14px}
+footer{border-top:1px solid var(--line);padding:70px 0 40px;margin-top:40px}
+.fgrid{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:40px}
+.fgrid h5{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:500}
+.fgrid ul{list-style:none;font-size:13px;line-height:2.2;color:var(--mute)}
+.fbig{font-family:var(--serif);font-size:clamp(70px,14vw,230px);line-height:.8;font-style:italic;letter-spacing:-.03em;margin-top:70px;color:rgba(239,231,218,.08);white-space:nowrap}
+.legal{display:flex;justify-content:space-between;font-size:11px;color:var(--mute);margin-top:30px;letter-spacing:.06em;flex-wrap:wrap;gap:10px}
+.reveal{opacity:0;transform:translateY(30px);transition:1s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (max-width:1100px){nav{display:none}.hero{grid-template-columns:1fr}.cats{grid-template-columns:1fr 1fr}.split{grid-template-columns:1fr}.visit{grid-template-columns:1fr}}
+@media (max-width:760px){.studio{grid-template-columns:1fr}.panel{border-left:0;border-top:1px solid var(--line)}.stage{min-height:480px;padding-bottom:70px}[data-glove]{width:78%}.prods{grid-template-columns:1fr}.cats{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}.bar .wrap span:last-child{display:none}.hdr-r .pill:not(.red){display:none}}
+</style>
+</head>
+<body>
+<div class="bar"><div class="wrap"><span>European Baseball Center · Kwintsheul</span><span>Op voorraad = 3–5 werkdagen in huis</span></div></div>
+<header><div class="wrap">
+  <a class="logo" href="#">SSK <small>Europe</small></a>
+  <nav><ul><li><a href="#">Handschoenen</a></li><li><a href="#">Knuppels</a></li><li><a href="#">Ballen</a></li><li><a href="#">Clubkleding</a></li><li><a href="#">Catcher</a></li><li><a href="#">Schoenen</a></li><li><a href="#">Outlet</a></li></ul></nav>
+  <div class="hdr-r"><a class="pill" href="#">NL / EN</a><a class="pill red" href="#ontwerp">Ontwerp je handschoen</a></div>
+</div></header>
+
+<main>
+<div class="wrap">
+  <div class="hero">
+    <div class="vert">職人の手仕事 · 野球</div>
+    <div class="reveal">
+      <div class="kicker">Glove Studio · Nieuw</div>
+      <h1>Gemaakt voor<br><em>één</em> hand.<br>De jouwe.</h1>
+      <p class="lead">Kies je leer, je web, je kleuren en je naam op de duim. Elke SSK handschoen uit onze studio is uniek, met Japans vakmanschap en voor jouw positie gemaakt.</p>
+      <div class="hero-cta"><a class="pill red" href="#ontwerp">Start met ontwerpen</a><a class="pill" href="#collectie">Bekijk de collectie</a></div>
+    </div>
+
+    <div class="studio reveal" id="ontwerp" data-cfg>
+      <div class="stage" data-tilt>
+        <div class="ring"></div><div class="ring two"></div>
+        <div class="stage-meta">Nu bewerken<b data-zone-name>Palm</b><span data-color-name style="letter-spacing:.1em;text-transform:none;color:var(--gold)"></span></div>
+        <div data-glove></div>
+        <div class="stage-tools"><div class="seg" data-hands></div><button class="pill" data-random>Verras me</button></div>
+      </div>
+      <div class="panel">
+        <div><div class="lbl">Onderdeel</div><div data-zones></div></div>
+        <div><div class="lbl">Leerkleur <span data-color-name></span></div><div data-swatches></div></div>
+        <div><div class="lbl">Webtype</div><div data-webs></div></div>
+        <div><div class="lbl">Borduring duim</div><input data-text placeholder="Jouw naam"></div>
+        <div class="total"><div><small>Indicatieve prijs</small><b data-price>€349,00</b></div><small>incl. btw</small></div>
+        <a class="pill red" href="#">Aanvragen bij SSK</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="marq"><div>
+  <span>Handschoenen</span><span class="g">✦</span><span>Knuppels</span><span class="g">✦</span><span>Clubkleding</span><span class="g">✦</span><span>Hoofdklasse Holland Series 2026</span><span class="g">✦</span><span>3D Geborduurde Caps</span><span class="g">✦</span>
+  <span>Handschoenen</span><span class="g">✦</span><span>Knuppels</span><span class="g">✦</span><span>Clubkleding</span><span class="g">✦</span><span>Hoofdklasse Holland Series 2026</span><span class="g">✦</span><span>3D Geborduurde Caps</span><span class="g">✦</span>
+</div></div>
+
+<section id="collectie"><div class="wrap">
+  <div class="sh reveal"><h2>Alles voor het<br><em>diamant.</em></h2><p>Van wedstrijdbal tot catcher gear. Rawlings, Wilson, Easton, Louisville Slugger, Champro, Franklin en natuurlijk SSK, onder één dak in Kwintsheul.</p></div>
+  <div class="cats reveal">
+    <a class="cat" href="#"><span class="n">01</span><div><h3>Handschoenen</h3><p>Veld, catcher, eerste honk, training</p></div><span class="arr">→</span></a>
+    <a class="cat" href="#"><span class="n">02</span><div><h3>Knuppels</h3><p>BB-COR, composite, hout, fastpitch</p></div><span class="arr">→</span></a>
+    <a class="cat" href="#"><span class="n">03</span><div><h3>Ballen</h3><p>Wedstrijd- en trainingsballen</p></div><span class="arr">→</span></a>
+    <a class="cat" href="#"><span class="n">04</span><div><h3>Clubkleding</h3><p>Jerseys, jassen, letters &amp; nummers</p></div><span class="arr">→</span></a>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="sh reveal"><h2>Uitgelicht<br><em>leer.</em></h2><a class="pill" href="#">Alle handschoenen</a></div>
+  <div class="prods">
+    <div class="prod reveal"><div class="img"><span class="tag red">Sale</span><div data-preset='{"palm":"camel","fingers":"camel","thumb":"camel","web":"camel","binding":"zwart","laces":"zwart","stitch":"zwart","logo":"zwart"}' data-mark=""></div></div><h4>Rawlings REV1X Francisco Lindor 11.75"</h4><div class="row"><span>Infield · RHT</span><b><s>€494,95</s>€454,95</b></div></div>
+    <div class="prod reveal"><div class="img"><span class="tag">Outfield</span><div data-preset='{"palm":"tan","fingers":"zwart","thumb":"zwart","web":"zwart","binding":"rood","laces":"tan","stitch":"rood","logo":"rood"}' data-web="trapeze" data-mark=""></div></div><h4>Rawlings Pro Preferred Mike Trout 12.75"</h4><div class="row"><span>Outfield · RHT</span><b>€499,95</b></div></div>
+    <div class="prod reveal"><div class="img"><span class="tag">Pitcher</span><div data-preset='{"palm":"bruin","fingers":"bruin","thumb":"zwart","web":"bruin","binding":"zwart","laces":"bruin","stitch":"geel","logo":"zwart"}' data-web="basket" data-mark=""></div></div><h4>Wilson A2K Fall 2024 12"</h4><div class="row"><span>Pitcher · RHT</span><b>€475,00</b></div></div>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap split">
+  <div class="craft reveal"><span class="jp">職人</span><div data-preset="Kwintsheul" data-web="H"></div></div>
+  <div class="reveal">
+    <div class="kicker">Hoe het werkt</div>
+    <h2 style="margin-top:20px">Van idee<br>tot <em>pocket.</em></h2>
+    <ul class="steps">
+      <li><span>01</span><b>Ontwerp online</b><i>8 onderdelen, 14 kleuren</i></li>
+      <li><span>02</span><b>Persoonlijk advies</b><i>maat &amp; positie</i></li>
+      <li><span>03</span><b>Handgemaakt</b><i>premium SSK leer</i></li>
+      <li><span>04</span><b>Ophalen of bezorgd</b><i>Kwintsheul of thuis</i></li>
+    </ul>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="club reveal">
+    <span class="big">Club</span>
+    <div class="kicker">Clubkleding &amp; bedrukken</div>
+    <h2 style="margin-top:22px">Je hele team in <em>één lijn</em>. Jerseys, caps en jassen, met 3D borduring en sublimatie.</h2>
+    <ul><li><b>30–35</b>werkdagen voor wedstrijdkleding</li><li><b>3D</b>geborduurde caps</li><li><b>A–Z</b>letters &amp; nummers in clubkleuren</li></ul>
+    <div class="hero-cta"><a class="pill red" href="#">Offerte aanvragen</a><a class="pill" href="#">Bekijk clubshops</a></div>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="visit reveal">
+    <div><h3>Kom passen in Kwintsheul.</h3><p>Een handschoen koop je met je hand. Loop binnen in het European Baseball Center en voel het verschil tussen leersoorten, webs en maten.</p><p style="margin-top:18px;color:var(--ivory)">Heulweg 128B<br>2295 KK Kwintsheul</p></div>
+    <div><h3>Openingstijden</h3><ul class="hours"><li>Maandag<b>Gesloten</b></li><li>Dinsdag<b>12:00–16:30</b></li><li>Woensdag<b>10:00–17:30</b></li><li>Donderdag<b>12:00–16:30</b></li><li>Vrijdag<b>12:00–20:30</b></li><li>Za &amp; zo<b>Gesloten</b></li></ul></div>
+    <div><h3>Contact</h3><p>+31 174 501 888<br>info@sskeurope.com</p><p style="margin-top:18px">Instagram<br><span style="color:var(--gold)">@ssk_europe</span></p></div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div><a class="logo" href="#">SSK <small>Europe</small></a><p style="color:var(--mute);font-size:13px;line-height:1.8;margin-top:16px;max-width:300px">Baseball &amp; softball specialist sinds jaar en dag. Webshop, showroom en clubpartner.</p></div>
+    <div><h5>Shop</h5><ul><li>Handschoenen</li><li>Knuppels</li><li>Ballen</li><li>Catcher</li><li>Outlet</li></ul></div>
+    <div><h5>Service</h5><ul><li>Levertijden</li><li>Retour zenden</li><li>Garantie</li><li>Maten</li><li>Prijslijst</li></ul></div>
+    <div><h5>Over</h5><ul><li>Openingstijden</li><li>Bedrukken kleding</li><li>Algemene voorwaarden</li><li>Privacy</li></ul></div>
+  </div>
+  <div class="fbig">Made for one hand.</div>
+  <div class="legal"><span>© 2026 SSK European Baseball Center</span><span>Concept 01 · Kuro</span></div>
+</div></footer>
+
+<script>/*GLOVE*/</script>
+<script>
+SSKGlove.paint();
+SSKGlove.bind(document.querySelector('[data-cfg]'));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

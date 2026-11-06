@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SSK Europe · Concept 02 · Raster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,700;0,800;0,900;1,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f0eb;--ink:#0f0f0f;--red:#e3001b;--line:#0f0f0f;--mute:#6d6a64;--sans:'Inter Tight',system-ui,sans-serif;--mono:'JetBrains Mono',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.g{display:grid;grid-template-columns:repeat(12,1fr);border-left:1px solid var(--line)}
+.g>*{border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.wrap{padding:0 clamp(16px,2vw,28px)}
+/* header */
+header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--line)}
+header .in{display:grid;grid-template-columns:auto 1fr auto;align-items:stretch;height:64px}
+.logo{display:flex;align-items:center;gap:10px;padding:0 24px;border-right:1px solid var(--line);font-weight:900;font-size:26px;letter-spacing:-.04em}
+.logo i{width:14px;height:14px;background:var(--red);border-radius:50%}
+nav{display:flex;align-items:center;overflow:auto}
+nav a{padding:0 18px;height:100%;display:flex;align-items:center;font-weight:500;font-size:14px;border-right:1px solid transparent;white-space:nowrap}
+nav a:hover{background:var(--ink);color:var(--bg)}
+.hcta{display:flex;align-items:center;gap:0}
+.hcta a{height:100%;display:flex;align-items:center;padding:0 22px;border-left:1px solid var(--line);font-weight:700;font-size:14px}
+.hcta a.r{background:var(--red);color:#fff}
+/* hero */
+.hero{display:grid;grid-template-columns:repeat(12,1fr);border-bottom:1px solid var(--line)}
+.hero-t{grid-column:span 12;padding:28px 24px 0;display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line);padding-bottom:14px}
+h1{grid-column:span 12;font-weight:900;font-size:clamp(64px,14.4vw,250px);line-height:.8;letter-spacing:-.065em;padding:26px 18px 30px;border-bottom:1px solid var(--line)}
+h1 span{color:var(--red)}
+/* config */
+.cfg{grid-column:span 12;display:grid;grid-template-columns:3fr 5fr 4fr;min-height:640px}
+.cfg>*{border-right:1px solid var(--line)}
+.cfg>*:last-child{border-right:0}
+.steps{display:flex;flex-direction:column}
+.steps .h{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}
+[data-zones]{display:flex;flex-direction:column;flex:1}
+[data-zones] button{flex:1;display:grid;grid-template-columns:44px 1fr 24px;align-items:center;padding:0 24px;border-bottom:1px solid var(--line);font-weight:700;font-size:clamp(18px,1.6vw,24px);letter-spacing:-.02em;text-align:left;counter-increment:z;min-height:52px;transition:background .15s}
+[data-zones]{counter-reset:z}
+[data-zones] button:before{content:counter(z,decimal-leading-zero);font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:0;color:var(--mute)}
+[data-zones] button i{order:3;width:20px;height:20px;background:var(--c);border:1px solid var(--ink)}
+[data-zones] button:hover{background:#e6e3dc}
+[data-zones] button.on{background:var(--ink);color:var(--bg)}
+[data-zones] button.on:before{color:var(--red)}
+.stage{position:relative;display:grid;place-items:center;background:var(--bg);overflow:hidden}
+.stage .cross{position:absolute;inset:0;background:linear-gradient(var(--line),var(--line)) center/1px 100% no-repeat,linear-gradient(var(--line),var(--line)) center/100% 1px no-repeat;opacity:.12}
+.stage .circle{position:absolute;width:82%;aspect-ratio:1;border-radius:50%;background:var(--red)}
+[data-glove]{width:min(86%,430px);position:relative;transition:transform .2s ease-out}
+.glove-svg{width:100%;height:auto;display:block}
+.pulse{animation:pl .5s steps(2)}@keyframes pl{50%{opacity:.4}}
+.stage .tl,.stage .tr,.stage .bl,.stage .br{position:absolute;padding:16px 18px}
+.tl{left:0;top:0}.tr{right:0;top:0;text-align:right}.bl{left:0;bottom:0}.br{right:0;bottom:0}
+.stage .big{font-weight:900;font-size:44px;letter-spacing:-.04em;line-height:1;margin-top:6px}
+.opts{display:flex;flex-direction:column}
+.opts>div{padding:18px 24px;border-bottom:1px solid var(--line)}
+.opts .hd{display:flex;justify-content:space-between;margin-bottom:12px}
+[data-swatches]{display:grid;grid-template-columns:repeat(7,1fr);border-left:1px solid var(--ink);border-top:1px solid var(--ink)}
+[data-swatches] button{aspect-ratio:1;background:var(--c);border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);position:relative}
+[data-swatches] button.on:after{content:"";position:absolute;inset:30%;background:var(--bg);border:1px solid var(--ink);border-radius:50%}
+.row{display:flex;flex-wrap:wrap;border-left:1px solid var(--ink);border-top:1px solid var(--ink)}
+.row button{flex:1 0 auto;padding:10px 12px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);font-weight:600;font-size:13px}
+.row button.on{background:var(--red);color:#fff}
+input[data-text]{width:100%;border:1px solid var(--ink);background:#fff;padding:12px;font:700 18px var(--sans);outline:none;text-transform:uppercase;letter-spacing:.04em}
+input[data-text]:focus{outline:2px solid var(--red)}
+.buy{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;border-bottom:0!important;padding:0!important}
+.buy .p{padding:18px 24px;border-right:1px solid var(--line)}
+.buy .p b{display:block;font-weight:900;font-size:40px;letter-spacing:-.04em}
+.buy a{background:var(--red);color:#fff;display:flex;align-items:end;padding:18px 24px;font-weight:800;font-size:22px;letter-spacing:-.02em;transition:.2s}
+.buy a:hover{background:var(--ink)}
+/* info strip */
+.strip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+.strip>div{padding:22px 24px;border-right:1px solid var(--line)}
+.strip>div:last-child{border-right:0}
+.strip b{display:block;font-weight:800;font-size:22px;letter-spacing:-.02em;margin-top:8px}
+/* sections */
+.sec{border-bottom:1px solid var(--line)}
+.sec-h{display:grid;grid-template-columns:3fr 9fr;border-bottom:1px solid var(--line)}
+.sec-h>*{padding:24px}
+.sec-h>*:first-child{border-right:1px solid var(--line)}
+h2{font-weight:900;font-size:clamp(44px,6.4vw,112px);line-height:.86;letter-spacing:-.055em}
+h2 span{color:var(--red)}
+.cats{display:grid;grid-template-columns:repeat(6,1fr)}
+.cat{border-right:1px solid var(--line);padding:20px;min-height:300px;display:flex;flex-direction:column;justify-content:space-between;transition:.2s;position:relative}
+.cat:last-child{border-right:0}
+.cat:hover{background:var(--red);color:#fff}
+.cat h3{font-weight:900;font-size:clamp(22px,2.2vw,34px);letter-spacing:-.045em;line-height:.95}
+.cat .c{display:flex;justify-content:space-between;align-items:end}
+.cat .c span:last-child{font-size:30px;font-weight:300}.cat .c .mono{max-width:70%}
+.prods{display:grid;grid-template-columns:repeat(4,1fr)}
+.prod{border-right:1px solid var(--line);display:flex;flex-direction:column}
+.prod:last-child{border-right:0}
+.prod .img{aspect-ratio:1;display:grid;place-items:center;border-bottom:1px solid var(--line);position:relative;background:#e9e6df}
+.prod .img>div{width:66%;transition:.4s}
+.prod:hover .img>div{transform:translateY(-8px)}
+.prod .img .tag{position:absolute;top:12px;left:12px;background:var(--ink);color:var(--bg);padding:4px 8px}
+.prod .img .tag.r{background:var(--red)}
+.prod .meta{padding:16px 18px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.prod h4{font-weight:700;font-size:18px;letter-spacing:-.02em;line-height:1.15}
+.prod .pr{margin-top:auto;display:flex;justify-content:space-between;align-items:end}
+.prod .pr b{font-weight:900;font-size:24px;letter-spacing:-.03em}
+.prod s{color:var(--mute);font-size:13px}
+.club{display:grid;grid-template-columns:7fr 5fr;background:var(--red);color:#fff}
+.club>div{padding:28px 24px}
+.club>div:first-child{border-right:1px solid rgba(255,255,255,.4)}
+.club h2 span{color:var(--ink)}
+.club p{font-size:20px;line-height:1.35;max-width:540px;margin-top:26px;font-weight:500}
+.club ol{list-style:none;border-top:1px solid rgba(255,255,255,.4)}
+.club li{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.4);font-weight:700;font-size:20px}
+.club .btn{display:inline-block;margin-top:24px;background:var(--ink);color:#fff;padding:14px 22px;font-weight:800}
+.visit{display:grid;grid-template-columns:repeat(3,1fr)}
+.visit>div{padding:24px;border-right:1px solid var(--line)}
+.visit>div:last-child{border-right:0}
+.visit h3{font-weight:800;font-size:28px;letter-spacing:-.03em;margin:10px 0 16px}
+.visit p{line-height:1.6}
+.hours li{list-style:none;display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:7px 0;font-size:15px}
+footer{padding:24px}
+footer .fb{font-weight:900;font-size:clamp(80px,22vw,380px);letter-spacing:-.08em;line-height:.78;margin-top:24px}
+footer .fb span{color:var(--red)}
+.fl{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+@media (max-width:1100px){nav{display:none}.cfg{grid-template-columns:1fr 1fr}.cfg .steps{grid-column:span 2;border-right:0;border-bottom:1px solid var(--line)}[data-zones]{display:grid;grid-template-columns:1fr 1fr}.cats{grid-template-columns:repeat(3,1fr)}.cat{border-bottom:1px solid var(--line)}.prods{grid-template-columns:1fr 1fr}.prod{border-bottom:1px solid var(--line)}}
+@media (max-width:760px){.cfg{grid-template-columns:1fr}.cfg .steps{grid-column:auto}.cfg>*{border-right:0;border-bottom:1px solid var(--line)}.stage{min-height:420px}.strip,.visit,.club,.sec-h{grid-template-columns:1fr}.strip>div,.visit>div,.sec-h>*{border-right:0!important;border-bottom:1px solid var(--line)}.cats{grid-template-columns:1fr 1fr}.prods{grid-template-columns:1fr}.hcta a:not(.r){display:none}.hero-t span:nth-child(2){display:none}}
+</style>
+</head>
+<body>
+<header><div class="in">
+  <a class="logo" href="#"><i></i>SSK</a>
+  <nav><a href="#">Handschoenen</a><a href="#">Knuppels</a><a href="#">Ballen</a><a href="#">Clubkleding</a><a href="#">Kleding</a><a href="#">Catcher</a><a href="#">Schoenen</a><a href="#">Helmen</a><a href="#">Outlet</a></nav>
+  <div class="hcta"><a href="#">Zoeken</a><a href="#">Winkelwagen (0)</a><a class="r" href="#cfg">Glove Builder →</a></div>
+</div></header>
+
+<section class="hero">
+  <div class="hero-t mono"><span>SSK European Baseball Center</span><span>Kwintsheul, NL · 52.0°N 4.3°E</span><span>Nr. 001 / Glove Builder</span></div>
+  <h1>Bouw je<br>eigen <span>glove.</span></h1>
+  <div class="cfg" id="cfg" data-cfg>
+    <div class="steps">
+      <div class="h mono"><span>Stap 1 · Onderdeel</span><span>8 zones</span></div>
+      <div data-zones></div>
+    </div>
+    <div class="stage" data-tilt>
+      <div class="circle"></div><div class="cross"></div>
+      <div data-glove></div>
+      <div class="tl mono">Actief<div class="big" data-zone-name>Palm</div></div>
+      <div class="tr mono">Kleur<div class="big" data-color-name>Tan</div></div>
+      <div class="bl"><div class="row" data-hands style="border-color:var(--ink);background:var(--bg)"></div></div>
+      <div class="br"><button class="mono" data-random style="background:var(--ink);color:var(--bg);padding:10px 14px">Random ↻</button></div>
+    </div>
+    <div class="opts">
+      <div><div class="hd mono"><span>Stap 2 · Leer</span><span data-color-name></span></div><div data-swatches></div></div>
+      <div><div class="hd mono"><span>Stap 3 · Web</span></div><div class="row" data-webs></div></div>
+      <div><div class="hd mono"><span>Stap 4 · Positie</span></div><div class="row" data-positions></div></div>
+      <div><div class="hd mono"><span>Stap 5 · Naam op duim</span><span>max. 12</span></div><input data-text placeholder="JOUW NAAM"></div>
+      <div class="buy"><div class="p mono">Indicatief<b data-price>€349,00</b></div><a href="#">Aanvragen →</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div><span class="mono">01 · Levering</span><b>3–5 werkdagen op voorraad</b></div>
+  <div><span class="mono">02 · Showroom</span><b>Passen in Kwintsheul</b></div>
+  <div><span class="mono">03 · Merken</span><b>SSK, Rawlings, Wilson +4</b></div>
+  <div><span class="mono">04 · Clubs</span><b>Clubkleding op maat</b></div>
+</div>
+
+<section class="sec">
+  <div class="sec-h"><span class="mono">Index / Categorieën</span><h2>Shop per <span>categorie.</span></h2></div>
+  <div class="cats">
+    <a class="cat" href="#"><span class="mono">A</span><h3>Handschoenen</h3><div class="c"><span class="mono">Veld · Catcher · 1e honk</span><span>↗</span></div></a>
+    <a class="cat" href="#"><span class="mono">B</span><h3>Knuppels</h3><div class="c"><span class="mono">BB-COR · Fastpitch</span><span>↗</span></div></a>
+    <a class="cat" href="#"><span class="mono">C</span><h3>Ballen</h3><div class="c"><span class="mono">Honk · Softbal</span><span>↗</span></div></a>
+    <a class="cat" href="#"><span class="mono">D</span><h3>Clubkleding</h3><div class="c"><span class="mono">Jerseys · Jassen</span><span>↗</span></div></a>
+    <a class="cat" href="#"><span class="mono">E</span><h3>Catcher</h3><div class="c"><span class="mono">Gear · Helmen</span><span>↗</span></div></a>
+    <a class="cat" href="#"><span class="mono">F</span><h3>Outlet</h3><div class="c"><span class="mono">Zomer korting</span><span>↗</span></div></a>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="sec-h"><span class="mono">Selectie / Handschoenen</span><h2>Nu in de <span>winkel.</span></h2></div>
+  <div class="prods">
+    <a class="prod" href="#"><div class="img"><span class="tag r mono">−€40</span><div data-preset='{"palm":"camel","fingers":"camel","thumb":"camel","web":"camel","binding":"zwart","laces":"zwart","stitch":"zwart","logo":"zwart"}' data-mark="" data-shadow=".18"></div></div><div class="meta"><span class="mono">Rawlings · Infield · 11.75"</span><h4>REV1X Francisco Lindor</h4><div class="pr"><s>€494,95</s><b>€454,95</b></div></div></a>
+    <a class="prod" href="#"><div class="img"><span class="tag mono">Outfield</span><div data-preset='{"palm":"tan","fingers":"zwart","thumb":"zwart","web":"zwart","binding":"rood","laces":"tan","stitch":"rood","logo":"rood"}' data-web="trapeze" data-mark="" data-shadow=".18"></div></div><div class="meta"><span class="mono">Rawlings · Outfield · 12.75"</span><h4>Pro Preferred Mike Trout</h4><div class="pr"><span></span><b>€499,95</b></div></div></a>
+    <a class="prod" href="#"><div class="img"><span class="tag mono">Pitcher</span><div data-preset='{"palm":"bruin","fingers":"bruin","thumb":"zwart","web":"bruin","binding":"zwart","laces":"bruin","stitch":"geel","logo":"zwart"}' data-web="basket" data-mark="" data-shadow=".18"></div></div><div class="meta"><span class="mono">Wilson · Pitcher · 12"</span><h4>A2K Fall 2024</h4><div class="pr"><span></span><b>€475,00</b></div></div></a>
+    <a class="prod" href="#"><div class="img"><span class="tag mono">Infield</span><div data-preset="Classic Tan" data-web="H" data-mark="" data-shadow=".18"></div></div><div class="meta"><span class="mono">Rawlings · Infield · 11.75"</span><h4>Heart of the Hide</h4><div class="pr"><span></span><b>€449,95</b></div></div></a>
+  </div>
+</section>
+
+<section class="sec club">
+  <div><span class="mono">Service / Clubkleding &amp; bedrukken</span><h2 style="margin-top:20px">Eén club.<br>Eén <span>kleur.</span></h2><p>Jerseys, broeken, jassen en caps voor je hele team. Met 3D borduring, sublimatie en letters &amp; nummers in jouw clubkleuren.</p><a class="btn" href="#">Offerte aanvragen →</a></div>
+  <div><ol><li><span>Wedstrijdkleding</span><span>30–35 dagen</span></li><li><span>Speciale broeken</span><span>36–45 dagen</span></li><li><span>Club- &amp; studentenjassen</span><span>36–45 dagen</span></li><li><span>Bedrukken voorraad</span><span>+3–5 dagen</span></li><li><span>3D caps &amp; sublimatie</span><span>Op aanvraag</span></li></ol></div>
+</section>
+
+<section class="sec visit">
+  <div><span class="mono">Adres</span><h3>Heulweg 128B<br>2295 KK Kwintsheul</h3><p>Kom langs om handschoenen te passen en je ontwerp te bespreken.</p></div>
+  <div><span class="mono">Openingstijden</span><ul class="hours" style="margin-top:12px"><li>Ma<b>Gesloten</b></li><li>Di<b>12:00–16:30</b></li><li>Wo<b>10:00–17:30</b></li><li>Do<b>12:00–16:30</b></li><li>Vr<b>12:00–20:30</b></li><li>Za–Zo<b>Gesloten</b></li></ul></div>
+  <div><span class="mono">Contact</span><h3>+31 174 501 888</h3><p>info@sskeurope.com<br>Instagram @ssk_europe<br>Facebook SSK Europe</p></div>
+</section>
+
+<footer>
+  <div class="fl mono"><span>Levertijden · Retour zenden · Garantie · Maten · Prijslijst · Algemene voorwaarden · Privacy</span><span>NL / EN</span></div>
+  <div class="fb">SSK<span>.</span>EU</div>
+  <div class="fl mono" style="margin-top:20px"><span>© 2026 SSK European Baseball Center</span><span>Concept 02 · Raster</span></div>
+</footer>
+
+<script>/*GLOVE*/</script>
+<script>SSKGlove.paint();SSKGlove.bind(document.querySelector('[data-cfg]'));</script>
+</body>
+</html>

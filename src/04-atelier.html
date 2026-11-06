@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SSK Europe · Concept 04 · Atelier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3ece0;--paper2:#ebe1cf;--ink:#2a1d14;--brown:#6b4226;--tan:#c9935b;--red:#a8262b;--mute:#857463;--line:rgba(42,29,20,.18);--serif:'Instrument Serif',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--hand:'Caveat',cursive}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:clip}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;background-image:radial-gradient(rgba(107,66,38,.06) 1px,transparent 1px);background-size:22px 22px}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{max-width:1360px;margin:0 auto;padding:0 clamp(16px,3vw,40px)}
+.stitch{border:2px dashed rgba(42,29,20,.35)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;height:92px;gap:20px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo .seal{width:52px;height:52px;border-radius:50%;background:var(--brown);color:var(--paper);display:grid;place-items:center;font-family:var(--serif);font-style:italic;font-size:20px;box-shadow:inset 0 0 0 3px var(--brown),inset 0 0 0 5px rgba(243,236,224,.5)}
+.logo b{font-family:var(--serif);font-size:26px;font-weight:400;line-height:1}
+.logo small{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+nav{display:flex;gap:26px;font-size:15px}
+nav a{position:relative}
+nav a:after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:repeating-linear-gradient(90deg,var(--brown) 0 5px,transparent 5px 9px);transform:scaleX(0);transition:.3s;transform-origin:left}
+nav a:hover:after{transform:scaleX(1)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--brown);color:var(--paper);padding:14px 22px;border-radius:8px;font-weight:500;font-size:15px;box-shadow:inset 0 0 0 2px var(--brown),inset 0 0 0 4px rgba(243,236,224,.35);transition:.25s}
+.btn:hover{background:var(--ink);box-shadow:inset 0 0 0 2px var(--ink),inset 0 0 0 4px rgba(243,236,224,.35)}
+.btn.o{background:transparent;color:var(--ink);box-shadow:none;border:2px dashed var(--brown)}
+.hand{font-family:var(--hand);color:var(--red);font-size:24px;line-height:1}
+/* hero */
+.intro{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:end;padding:40px 0 30px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(56px,8vw,132px);line-height:.92;letter-spacing:-.02em}
+h1 em{color:var(--brown)}
+.intro p{font-size:18px;line-height:1.65;color:var(--mute);max-width:460px}
+.book{display:grid;grid-template-columns:1.15fr 1fr;background:#fbf7ef;border-radius:14px;box-shadow:0 2px 0 var(--paper2),0 30px 60px -20px rgba(60,35,15,.35);position:relative;margin-bottom:40px}
+.book>*{min-width:0}
+.book:before{content:"";position:absolute;left:53.5%;top:0;bottom:0;width:40px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(60,35,15,.12),transparent);pointer-events:none}
+.bench{position:relative;padding:28px;min-height:620px;display:grid;place-items:center;background:linear-gradient(rgba(42,29,20,.06) 1px,transparent 1px) 0 0/28px 28px,linear-gradient(90deg,rgba(42,29,20,.06) 1px,transparent 1px) 0 0/28px 28px,#2f4a3a;border-radius:14px 0 0 14px;color:#f3ece0;overflow:hidden}
+.bench .ruler{position:absolute;left:0;right:0;bottom:0;height:26px;background:repeating-linear-gradient(90deg,rgba(243,236,224,.6) 0 1px,transparent 1px 14px);border-top:1px solid rgba(243,236,224,.5)}
+.bench .note{position:absolute;font-family:var(--hand);font-size:22px;color:#f7e6c4;line-height:1.1}
+.bench .note.a{left:26px;top:24px;transform:rotate(-4deg)}
+.bench .note.b{right:26px;top:30px;text-align:right;transform:rotate(3deg)}
+.bench .note.c{left:28px;bottom:44px;transform:rotate(-2deg)}
+[data-glove]{width:min(88%,420px);transition:transform .2s ease-out}
+.glove-svg{width:100%;height:auto;display:block}
+.pulse{animation:pu .7s}@keyframes pu{0%{filter:sepia(1) brightness(1.4)}}
+.pages{padding:28px 30px;display:flex;flex-direction:column;gap:22px}
+.pg-h{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:10px}
+.pg-h b{font-family:var(--serif);font-weight:400;font-size:28px}
+.lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:10px;display:flex;justify-content:space-between;align-items:baseline}
+[data-zones]{display:flex;flex-wrap:wrap;gap:8px}
+[data-zones] button{display:flex;align-items:center;gap:8px;padding:7px 12px 7px 8px;border-radius:99px;border:1px solid var(--line);background:#fff;font-size:14px;transition:.2s}
+[data-zones] button i{width:18px;height:18px;border-radius:50%;background:var(--c);box-shadow:inset 0 -3px 4px rgba(0,0,0,.25)}
+[data-zones] button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+[data-swatches]{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+[data-swatches] button{aspect-ratio:3/4;border-radius:6px 6px 14px 14px;background:var(--c);position:relative;box-shadow:inset 0 0 0 3px rgba(0,0,0,.08),inset 0 -10px 16px rgba(0,0,0,.22),0 3px 6px rgba(60,35,15,.2);transition:.25s}
+[data-swatches] button:before{content:"";position:absolute;inset:5px;border:1.5px dashed rgba(255,255,255,.55);border-radius:3px 3px 10px 10px}
+[data-swatches] button:after{content:"";position:absolute;top:8px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--paper);box-shadow:inset 0 1px 2px rgba(0,0,0,.4)}
+[data-swatches] button:hover{transform:translateY(-4px) rotate(-3deg)}
+[data-swatches] button.on{transform:translateY(-8px);box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--brown),0 10px 18px rgba(60,35,15,.3)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opts button{padding:7px 11px;border-radius:6px;border:1.5px dashed var(--line);font-size:13px}
+.opts button.on{border:1.5px solid var(--brown);background:var(--brown);color:var(--paper)}
+input[data-text]{width:100%;background:transparent;border:0;border-bottom:2px dashed var(--brown);font-family:var(--hand);font-size:34px;color:var(--red);padding:2px 0;outline:none}
+.slip{background:#fff;border:1px solid var(--line);border-radius:6px;padding:16px 18px;position:relative;transform:rotate(-.6deg)}
+.slip .stamp{position:absolute;right:-14px;top:-56px;font-family:var(--serif);font-style:italic;color:var(--red);border:2px solid var(--red);border-radius:50%;width:84px;height:84px;display:grid;place-items:center;text-align:center;font-size:14px;line-height:1.05;transform:rotate(12deg);opacity:.85;background:rgba(255,255,255,.7)}
+.slip .tot{display:flex;justify-content:space-between;align-items:end;margin-top:8px;flex-wrap:wrap;gap:12px}
+.slip .tot b{font-family:var(--serif);font-weight:400;font-size:44px;line-height:1}
+/* sections */
+section{padding:100px 0}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(44px,5.6vw,88px);line-height:.95;letter-spacing:-.015em}
+h2 em{color:var(--brown)}
+.sh{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:48px;flex-wrap:wrap}
+.sh p{max-width:380px;color:var(--mute);line-height:1.65}
+.tags{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.tagc{background:#fbf7ef;border-radius:10px 10px 10px 10px;padding:46px 20px 22px;position:relative;box-shadow:0 12px 24px -12px rgba(60,35,15,.35);transition:.35s;min-height:220px;display:flex;flex-direction:column;justify-content:flex-end}
+.tagc:nth-child(odd){transform:rotate(-1.5deg)}.tagc:nth-child(even){transform:rotate(1.5deg)}
+.tagc:hover{transform:rotate(0) translateY(-6px)}
+.tagc:before{content:"";position:absolute;top:16px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--paper);box-shadow:inset 0 1px 3px rgba(0,0,0,.35)}
+.tagc:after{content:"";position:absolute;inset:8px;border:1.5px dashed var(--line);border-radius:6px;pointer-events:none}
+.tagc h3{font-family:var(--serif);font-weight:400;font-size:32px}
+.tagc p{color:var(--mute);font-size:13px;margin-top:4px}
+.tagc .hand{position:absolute;top:40px;right:18px;font-size:22px}
+.prods{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.prod .img{aspect-ratio:1;border-radius:12px;background:var(--paper2);display:grid;place-items:center;position:relative;overflow:hidden}
+.prod .img>div{width:68%;transition:.5s}
+.prod:hover .img>div{transform:rotate(-5deg) scale(1.05)}
+.prod .img .hand{position:absolute;left:14px;top:12px;transform:rotate(-6deg)}
+.prod h4{font-family:var(--serif);font-weight:400;font-size:22px;margin-top:14px;line-height:1.15}
+.prod .row{display:flex;justify-content:space-between;color:var(--mute);font-size:14px;margin-top:6px}
+.prod .row b{color:var(--ink)}
+.prod s{margin-right:6px}
+.process{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px dashed var(--line)}
+.process div{padding:28px 22px 0 0;position:relative}
+.process div:before{content:"";position:absolute;top:-9px;left:0;width:16px;height:16px;border-radius:50%;background:var(--brown);box-shadow:0 0 0 5px var(--paper)}
+.process b{font-family:var(--serif);font-weight:400;font-size:30px;display:block;margin-bottom:8px}
+.process p{color:var(--mute);line-height:1.6;font-size:15px}
+.club{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;background:var(--brown);color:var(--paper);border-radius:18px;padding:clamp(28px,5vw,70px);position:relative;overflow:hidden}
+.club:after{content:"";position:absolute;inset:12px;border:2px dashed rgba(243,236,224,.35);border-radius:12px;pointer-events:none}
+.club h2 em{color:var(--tan)}
+.club p{line-height:1.7;margin:18px 0 26px;opacity:.85;max-width:460px}
+.club .btn{background:var(--paper);color:var(--ink);box-shadow:none}
+.jersey{justify-self:center;width:min(100%,360px)}
+.lead-times{list-style:none;margin-top:10px}
+.lead-times li{display:flex;justify-content:space-between;border-bottom:1px dashed rgba(243,236,224,.3);padding:9px 0;font-size:15px}
+.visit{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:24px}
+.card{background:#fbf7ef;border-radius:14px;padding:28px;box-shadow:0 12px 24px -16px rgba(60,35,15,.35)}
+.card h3{font-family:var(--serif);font-weight:400;font-size:32px;margin-bottom:12px}
+.card p{color:var(--mute);line-height:1.7}
+.card ul{list-style:none}
+.card li{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line);font-size:15px}
+footer{padding:60px 0 40px;border-top:2px dashed var(--line);margin-top:20px}
+.fb{font-family:var(--serif);font-style:italic;font-size:clamp(60px,12vw,200px);line-height:.9;color:var(--brown)}
+.fl{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--mute);font-size:14px;margin-top:30px}
+@media (max-width:1100px){nav{display:none}.intro{grid-template-columns:1fr}.book{grid-template-columns:1fr}.book:before{display:none}.bench{border-radius:14px 14px 0 0;min-height:480px}.tags{grid-template-columns:repeat(3,1fr)}.prods{grid-template-columns:1fr 1fr}.club,.visit{grid-template-columns:1fr}.process{grid-template-columns:1fr 1fr;row-gap:30px}}
+@media (max-width:640px){.tags{grid-template-columns:1fr 1fr}.prods{grid-template-columns:1fr}.two{grid-template-columns:1fr}.process{grid-template-columns:1fr}.hdr-btn{display:none}[data-swatches]{grid-template-columns:repeat(7,1fr);gap:6px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="#"><span class="seal">SSK</span><span><b>SSK Europe</b><small>Baseball atelier · Kwintsheul</small></span></a>
+  <nav><a href="#">Handschoenen</a><a href="#">Knuppels</a><a href="#">Ballen</a><a href="#">Clubkleding</a><a href="#">Catcher</a><a href="#">Outlet</a></nav>
+  <a class="btn hdr-btn" href="#atelier">Naar het atelier</a>
+</div></header>
+
+<main class="wrap">
+  <div class="intro">
+    <h1>Een handschoen<br>die <em>jou</em> kent.</h1>
+    <div><span class="hand">nieuw in de werkplaats →</span><p style="margin-top:10px">Kies je leer uit ons stalenboek, bepaal de web en laat je naam op de duim borduren. Jij ontwerpt, wij zetten het stiksel.</p></div>
+  </div>
+
+  <div class="book" id="atelier" data-cfg>
+    <div class="bench" data-tilt>
+      <div class="note a">jouw ontwerp ↓</div>
+      <div class="note b">nu: <span data-zone-name>Palm</span><br><span data-color-name>Tan</span></div>
+      <div data-glove></div>
+      <div class="note c">tip: klik op ‘verras me’ ✎</div>
+      <div class="ruler"></div>
+    </div>
+    <div class="pages">
+      <div class="pg-h"><b>Stalenboek</b><span class="hand" style="font-size:20px">blad 1 / 1</span></div>
+      <div><div class="lbl">1. Kies een onderdeel</div><div data-zones></div></div>
+      <div><div class="lbl">2. Kies het leer <span data-color-name style="font-family:var(--hand);font-size:22px;color:var(--red);text-transform:none;letter-spacing:0"></span></div><div data-swatches></div></div>
+      <div class="two">
+        <div><div class="lbl">3. Web</div><div class="opts" data-webs></div></div>
+        <div><div class="lbl">4. Hand</div><div class="opts" data-hands></div></div>
+      </div>
+      <div><div class="lbl">5. Naam op de duim</div><input data-text placeholder="Pim"></div>
+      <div class="slip">
+        <span class="stamp">Hand-<br>gemaakt</span>
+        <div class="lbl" style="margin:0">Werkbon · indicatief</div>
+        <div class="tot"><b data-price>€349,00</b><div style="display:flex;gap:8px"><button class="btn o" data-random>Verras me</button><a class="btn" href="#">Aanvragen</a></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<section><div class="wrap">
+  <div class="sh"><h2>Uit de <em>winkel.</em></h2><p>Alles voor honkbal en softbal: van wedstrijdbal tot catcher gear, van SSK tot Rawlings en Wilson.</p></div>
+  <div class="tags">
+    <a class="tagc" href="#"><span class="hand">veld!</span><h3>Handschoenen</h3><p>Veld · catcher · eerste honk</p></a>
+    <a class="tagc" href="#"><h3>Knuppels</h3><p>BB-COR · composite · hout</p></a>
+    <a class="tagc" href="#"><h3>Ballen</h3><p>Wedstrijd &amp; training</p></a>
+    <a class="tagc" href="#"><span class="hand">team</span><h3>Clubkleding</h3><p>Jerseys · jassen · caps</p></a>
+    <a class="tagc" href="#"><h3>Outlet</h3><p>Zomer korting</p></a>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="sh"><h2>Op de <em>plank.</em></h2><a class="btn o" href="#">Alle handschoenen</a></div>
+  <div class="prods">
+    <a class="prod" href="#"><div class="img"><span class="hand">−€40!</span><div data-preset='{"palm":"camel","fingers":"camel","thumb":"camel","web":"camel","binding":"zwart","laces":"zwart","stitch":"zwart","logo":"zwart"}' data-mark="" data-shadow=".2"></div></div><h4>Rawlings REV1X Francisco Lindor 11.75"</h4><div class="row"><span>Infield · RHT</span><b><s>€494,95</s>€454,95</b></div></a>
+    <a class="prod" href="#"><div class="img"><div data-preset='{"palm":"tan","fingers":"zwart","thumb":"zwart","web":"zwart","binding":"rood","laces":"tan","stitch":"rood","logo":"rood"}' data-web="trapeze" data-mark="" data-shadow=".2"></div></div><h4>Rawlings Pro Preferred Mike Trout 12.75"</h4><div class="row"><span>Outfield · RHT</span><b>€499,95</b></div></a>
+    <a class="prod" href="#"><div class="img"><div data-preset="Classic Tan" data-web="H" data-mark="" data-shadow=".2"></div></div><h4>Rawlings Heart of the Hide 11.75"</h4><div class="row"><span>Infield · RHT</span><b>€449,95</b></div></a>
+    <a class="prod" href="#"><div class="img"><div data-preset='{"palm":"bruin","fingers":"bruin","thumb":"zwart","web":"bruin","binding":"zwart","laces":"bruin","stitch":"geel","logo":"zwart"}' data-web="basket" data-mark="" data-shadow=".2"></div></div><h4>Wilson A2K Fall 2024 12"</h4><div class="row"><span>Pitcher · RHT</span><b>€475,00</b></div></a>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="sh"><h2>Van schets<br>tot <em>stiksel.</em></h2></div>
+  <div class="process">
+    <div><b>Schetsen</b><p>Ontwerp je handschoen online, kleur per onderdeel.</p></div>
+    <div><b>Passen</b><p>Kom langs in Kwintsheul voor de juiste maat en positie.</p></div>
+    <div><b>Maken</b><p>Jouw ontwerp gaat naar de werkplaats en wordt met de hand gestikt.</p></div>
+    <div><b>Inspelen</b><p>Ophalen of laten bezorgen, en dan de pocket vormen.</p></div>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="club">
+    <div><span class="hand" style="color:var(--tan)">voor je hele club</span><h2 style="margin-top:8px">Clubkleding,<br><em>op maat</em> gemaakt.</h2><p>Jerseys, broeken, jassen en caps met 3D borduring of sublimatie, in je eigen clubkleuren en met letters &amp; nummers.</p>
+      <ul class="lead-times"><li>Wedstrijdkleding<span>30–35 werkdagen</span></li><li>Club- &amp; studentenjassen<span>36–45 werkdagen</span></li><li>Bedrukken op voorraad<span>+3–5 werkdagen</span></li></ul>
+      <a class="btn" href="#" style="margin-top:26px">Offerte aanvragen</a></div>
+    <svg class="jersey" viewBox="0 0 300 300" aria-hidden="true">
+      <path d="M95 30 L60 45 L10 95 L45 140 L70 120 L70 280 L230 280 L230 120 L255 140 L290 95 L240 45 L205 30 Q150 70 95 30 Z" fill="#f3ece0" stroke="#2a1d14" stroke-width="2"/>
+      <path d="M95 30 Q150 70 205 30" fill="none" stroke="#a8262b" stroke-width="6"/>
+      <path d="M150 52 L150 280" stroke="#2a1d14" stroke-dasharray="4 5" stroke-width="1.5"/>
+      <text x="150" y="150" text-anchor="middle" font-family="Instrument Serif, serif" font-style="italic" font-size="48" fill="#6b4226">Club</text>
+      <text x="150" y="235" text-anchor="middle" font-family="DM Sans, sans-serif" font-weight="700" font-size="70" fill="#a8262b">26</text>
+    </svg>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="visit">
+    <div class="card"><span class="hand">kom gerust langs ☕</span><h3 style="margin-top:6px">De winkel in Kwintsheul</h3><p>Heulweg 128B<br>2295 KK Kwintsheul<br><br>Voel het leer, pas de maat, en bespreek je ontwerp met ons.</p></div>
+    <div class="card"><h3>Openingstijden</h3><ul><li>Maandag<b>gesloten</b></li><li>Dinsdag<b>12:00–16:30</b></li><li>Woensdag<b>10:00–17:30</b></li><li>Donderdag<b>12:00–16:30</b></li><li>Vrijdag<b>12:00–20:30</b></li><li>Weekend<b>gesloten</b></li></ul></div>
+    <div class="card"><h3>Contact</h3><p>+31 174 501 888<br>info@sskeurope.com<br><br>@ssk_europe op Instagram<br>SSK Europe op Facebook</p></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="fb">met de hand.</div>
+  <div class="fl"><span>Levertijden · Retour zenden · Garantie · Maten · Prijslijst · Voorwaarden · Privacy</span><span>© 2026 SSK European Baseball Center · Concept 04 · Atelier</span></div>
+</div></footer>
+
+<script>/*GLOVE*/</script>
+<script>SSKGlove.paint();SSKGlove.bind(document.querySelector('[data-cfg]'));</script>
+</body>
+</html>
