@@ -235,9 +235,9 @@ img{display:block;max-width:100%}
 
 /* brands */
 .brands{display:grid;grid-template-columns:repeat(8,1fr);border:1px solid var(--g200);border-radius:var(--r2);background:#fff;overflow:hidden}
-.brands span{display:grid;place-items:center;height:72px;border-right:1px solid var(--g200);font:800 18px/1 var(--display);text-transform:uppercase;letter-spacing:.04em;color:var(--g500);text-align:center;padding:0 8px;transition:color .15s var(--ease)}
-.brands span:last-child{border-right:0}
-.brands span:hover{color:var(--navy-900)}
+.brands>*{display:grid;place-items:center;height:72px;border-right:1px solid var(--g200);font:800 18px/1 var(--display);text-transform:uppercase;letter-spacing:.04em;color:var(--g500);text-align:center;padding:0 8px;transition:color .15s var(--ease)}
+.brands>*:last-child{border-right:0}
+.brands>*:hover{color:var(--navy-900);background:var(--g50)}
 
 /* showroom */
 .show{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px}
@@ -275,8 +275,8 @@ img{display:block;max-width:100%}
 @media (max-width:1080px){
   .cats{grid-template-columns:repeat(4,1fr)}
   .brands{grid-template-columns:repeat(4,1fr)}
-  .brands span:nth-child(4){border-right:0}
-  .brands span:nth-child(-n+4){border-bottom:1px solid var(--g200)}
+  .brands>*:nth-child(4){border-right:0}
+  .brands>*:nth-child(-n+4){border-bottom:1px solid var(--g200)}
   .nav>.wrap>a{padding:0 9px;font-size:14px}
   .nav .hide-md{display:none}
 }
@@ -430,6 +430,19 @@ body.home{background:var(--chalk)}
 .js .rv.in{opacity:1;transform:none;transition:opacity .8s var(--ease) calc(var(--i,0) * 80ms),transform .9s cubic-bezier(.2,.8,.2,1) calc(var(--i,0) * 80ms)}
 .js .hx .rv{transition-delay:calc(.35s + var(--i,0) * 90ms)!important}
 
+.wsplit .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.06em;margin-bottom:-.06em}
+.wsplit .w>span{display:inline-block;transform:translateY(108%);transition:transform .9s cubic-bezier(.2,.8,.15,1) calc(var(--wi) * 70ms + 80ms)}
+.in .wsplit .w>span,.wsplit.in .w>span{transform:none}
+
+/* image wipe and pointer spotlight */
+.js .bt.rv .bt-img{clip-path:inset(100% 0 0 0)}
+.js .bt.rv.in .bt-img{clip-path:inset(0 0 0 0);transition:clip-path 1.1s cubic-bezier(.65,0,.25,1) calc(var(--i,0) * 90ms + 100ms)}
+.bt,.pc{--mx:50%;--my:50%;background:radial-gradient(520px circle at var(--mx) var(--my),rgba(200,16,46,.09),transparent 55%),#fff}
+.pc{position:relative}
+.pc .ph{background:transparent}
+.bt .bt-img img,.pc .ph img{background:transparent!important;mix-blend-mode:multiply}
+.bt-img:has(img) .phd,.pc .ph:has(img) .phd{visibility:hidden}
+
 /* ---------- marquee ---------- */
 .mq{background:var(--red-600);color:#fff;overflow:hidden;border-block:1px solid #000}
 .mq-in{display:flex;width:max-content;animation:mq 38s linear infinite}
@@ -450,7 +463,7 @@ body.home{background:var(--chalk)}
 .bt.wide{grid-column:span 2}
 .bt.tall{grid-row:span 2}
 .bt-img{position:absolute;inset:0;z-index:-1}
-.bt-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:18px 18px 64px;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.bt-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:16px 18px 82px;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
 .bt.big .bt-img img{padding:40px 40px 90px}
 .bt:hover .bt-img img{transform:scale(1.07) rotate(-2deg)}
 .bt-tx{position:absolute;z-index:2;left:18px;bottom:16px;right:64px}
@@ -579,7 +592,20 @@ body.home{background:var(--chalk)}
 .brandmq span{font:800 clamp(34px,4.4vw,56px)/110px var(--display);text-transform:uppercase;letter-spacing:.01em;color:transparent;-webkit-text-stroke:1px var(--g400);padding:0 34px;transition:color .25s var(--ease),-webkit-text-stroke-color .25s}
 .brandmq span:hover{color:var(--navy-900);-webkit-text-stroke-color:var(--navy-900)}
 .brandmq i{width:10px;height:10px;background:var(--red-600);transform:rotate(45deg);flex:none}
-.ftr{margin-top:0}
+.brandmq a{position:relative;display:flex;align-items:center;padding:0 34px}
+.brandmq a span{font:800 clamp(34px,4.4vw,56px)/110px var(--display);text-transform:uppercase;letter-spacing:.01em;color:transparent;-webkit-text-stroke:1px var(--g400);transition:color .25s var(--ease),-webkit-text-stroke-color .25s,transform .4s cubic-bezier(.2,.8,.2,1);padding:0}
+.brandmq a small{position:absolute;left:50%;bottom:14px;display:inline-flex;align-items:center;gap:4px;font:700 11px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--red-600);opacity:0;transform:translate(-50%,6px);transition:opacity .25s var(--ease),transform .25s var(--ease);white-space:nowrap}
+.brandmq a small .ui{width:12px;height:12px}
+.brandmq a:hover span,.brandmq a:focus-visible span{color:var(--navy-900);-webkit-text-stroke-color:var(--navy-900);transform:translateY(-8px)}
+.brandmq a:hover small,.brandmq a:focus-visible small{opacity:1;transform:translate(-50%,0)}
+.brandmq:focus-within .mq-in{animation-play-state:paused}
+.ftr{margin-top:0;overflow:hidden}
+.ftr-mark{display:flex;justify-content:space-between;align-items:flex-end;gap:2vw;padding:8px 0 28px;border-top:1px solid var(--navy-800);font:800 clamp(64px,13.5vw,214px)/.8 var(--display);text-transform:uppercase;letter-spacing:-.01em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.34);user-select:none}
+.ftr-mark span:first-child{color:var(--red-600);-webkit-text-stroke:0}
+.js .ftr-mark.rv{opacity:1;transform:none}
+.js .ftr-mark.rv span{display:inline-block;transform:translateY(40%);opacity:0;transition:transform 1.1s cubic-bezier(.2,.8,.15,1),opacity .9s var(--ease)}
+.js .ftr-mark.rv span:last-child{transition-delay:.12s}
+.js .ftr-mark.rv.in span{transform:none;opacity:1}
 .ftr a{transition:color .15s var(--ease)}
 
 /* ---------- floating helpers ---------- */
@@ -646,6 +672,8 @@ body.home{background:var(--chalk)}
   .hx-ghost,.mq-in,.hx-float,.hx-shadow,.hx-cue span,.hx-kick .dot{animation:none!important}
   .js .rv,.js .rail .pc,.js .hx-title .ln>span,.js .hx-stage{opacity:1!important;transform:none!important}
   .js .stitch-draw{clip-path:none}
+  .wsplit .w>span,.js .ftr-mark.rv span{transform:none!important;opacity:1!important}
+  .js .bt.rv .bt-img{clip-path:none}
   .hx-float img{transition:opacity .3s!important}
 }
 
@@ -959,6 +987,8 @@ body.home{background:var(--chalk)}
     ['Voorverkoop Aanbieding Ballen 2027', '/Voorverkoop-Aanbieding-Ballen-2027']
   ];
   const PAGE = Object.fromEntries(PAGES.map(([n, u]) => [n, BASE + u]));
+  // The shop has no brand pages; each brand links to the shop's search for it.
+  const brandUrl = b => BASE + '/website/index.php?Show=Search&KeyWord=' + encodeURIComponent(b);
   const SHOP = { search: BASE + '/website/index.php?Show=Search&KeyWord=', cart: BASE + '/website/index.php?Show=WebShopBasket', account: BASE + '/website/index.php?Show=WebShopUserLogin', maps: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Heulweg 128B, 2295 KK Kwintsheul') };
   const CONTACT = { name: 'SSK European Baseball Center', street: 'Heulweg 128B', city: '2295 KK Kwintsheul', phone: '+31 174 501 888', email: 'info@sskeurope.com', instagram: 'https://www.instagram.com/ssk_europe', facebook: 'https://www.facebook.com/SSK-Europe-1806900749536624/' };
   const LEAD = [['Op voorraad (webshop)', '3 – 5 werkdagen'], ['Bedrukken op voorraad', '+ 3 – 5 werkdagen'], ['Standaard wedstrijdkleding', '30 – 35 werkdagen'], ['Speciale broeken', '36 – 45 werkdagen'], ['Club- en studentenjassen', '36 – 45 werkdagen']];
@@ -967,7 +997,7 @@ body.home{background:var(--chalk)}
   // Image with graceful fallback: if the shop image fails, the tile keeps its icon.
   const img = (src, alt) => src ? `<img src="${src}" alt="${alt}" loading="lazy" onerror="this.remove()">` : '';
 
-  window.SSK = { LOGO, BASE, CUSTOMIZER_URL, CUSTOMIZER_IMG, COLOURWAYS, CZ_STEPS, PAGE, SHOP, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
+  window.SSK = { brandUrl, LOGO, BASE, CUSTOMIZER_URL, CUSTOMIZER_IMG, COLOURWAYS, CZ_STEPS, PAGE, SHOP, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
 })();
 
 /* Shared render helpers for the five versions. Uses window.SSK from data.js. */
@@ -1100,7 +1130,7 @@ body.home{background:var(--chalk)}
     </div>`;
   }
 
-  const brands = () => `<div class="brands">${S.BRANDS.map(b => `<span>${b}</span>`).join('')}</div>`;
+  const brands = () => `<div class="brands">${S.BRANDS.map(b => `<a href="${S.brandUrl(b)}" title="Alles van ${b} in de webshop">${b}</a>`).join('')}</div>`;
 
   // Open or closed right now, in Dutch time.
   function openNow() {
@@ -1177,6 +1207,7 @@ body.home{background:var(--chalk)}
       let html = '';
       if (!q.length) {
         html = `<div class="sg-h">Populair</div><div class="sg-chips">${POP.map(n => `<a role="option" class="sg-chip" href="${nav(n).url}">${n}</a>`).join('')}</div>
+          <div class="sg-h">Merken</div><div class="sg-chips">${S.BRANDS.map(b => `<a role="option" class="sg-chip" href="${S.brandUrl(b)}">${b}</a>`).join('')}</div>
           <a role="option" class="sg-cz" href="${CZ}">${ui('pen')}<span><b>Glove Customizer</b><small>Ontwerp je eigen handschoen</small></span></a>`;
       } else {
         const cats = S.NAV.filter(n => q.every(w => norm(n.name + ' ' + n.sub).includes(w))).slice(0, 3);
@@ -1303,8 +1334,9 @@ body.home{background:var(--chalk)}
   const mqItems = ['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Slaghandschoenen', 'Clubkleding', 'Outlet', 'Showroom Kwintsheul'];
   const mqRow = mqItems.map(t => `<span>${t}</span><i>✶</i>`).join('');
   $('#mq').innerHTML = `<div>${mqRow}</div><div>${mqRow}</div>`;
-  const brRow = S.BRANDS.map(b => `<span>${b}</span><i></i>`).join('');
-  $('#brands').innerHTML = `<div>${brRow}</div><div>${brRow}</div>`;
+  // Brand band: every name links to that brand in the shop. The second copy only makes the loop seamless.
+  const brRow = hide => S.BRANDS.map(b => `<a href="${S.brandUrl(b)}"${hide ? ' tabindex="-1" aria-hidden="true"' : ` aria-label="Alles van ${b} in de webshop"`}><span>${b}</span><small>Bekijk ${U.ui('arrow')}</small></a><i></i>`).join('');
+  $('#brands').innerHTML = `<div>${brRow(false)}</div><div>${brRow(true)}</div>`;
 
   /* ---------- categories: real product photos ---------- */
   const find = (list, w) => list.find(p => p.name.includes(w));
@@ -1404,10 +1436,41 @@ body.home{background:var(--chalk)}
   tab(0);
   addEventListener('resize', () => { const i = tbs.findIndex(b => b.getAttribute('aria-selected') === 'true'); const ink = $('.tab-ink', tl); ink.style.width = tbs[i].offsetWidth + 'px'; ink.style.transform = `translateX(${tbs[i].offsetLeft}px)`; });
 
+  /* ---------- headings rise in word by word ---------- */
+  if (!RM) $$('.sec-h .d-lg, .czw-side .d-lg').forEach(h => {
+    let k = 0;
+    const walk = n => [...n.childNodes].forEach(c => {
+      if (c.nodeType === 3) {
+        const f = document.createDocumentFragment();
+        c.textContent.split(/(\s+)/).forEach(t => {
+          if (!t) return;
+          if (/^\s+$/.test(t)) { f.append(t); return; }
+          const w = document.createElement('span'); w.className = 'w';
+          const i = document.createElement('span'); i.textContent = t; i.style.setProperty('--wi', k++);
+          w.append(i); f.append(w);
+        });
+        c.replaceWith(f);
+      } else if (c.nodeType === 1 && c.tagName !== 'BR') walk(c);
+    });
+    walk(h); h.classList.add('wsplit');
+  });
+
+  /* ---------- pointer spotlight on tiles and product cards ---------- */
+  if (fine && !RM) document.addEventListener('pointermove', e => {
+    const t = e.target.closest('.bt, .pc'); if (!t) return;
+    const r = t.getBoundingClientRect();
+    t.style.setProperty('--mx', (e.clientX - r.left) + 'px'); t.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  }, { passive: true });
+
+  /* ---------- footer wordmark ---------- */
+  const fbot = $('.ftr .bot');
+  if (fbot) fbot.insertAdjacentHTML('beforebegin', '<div class="ftr-mark rv" aria-hidden="true"><span>SSK</span><span>Europe</span></div>');
+
   /* ---------- reveal on scroll ---------- */
   document.documentElement.classList.add('js');
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
   $$('.rv, .stitch-draw, .rail .pc').forEach(el => io.observe(el));
+  const hxIn = $('.hx-in');
   // Count-ups in the hero stats.
   if (!RM) $$('[data-count]').forEach(el => {
     const to = +el.dataset.count; let t0 = 0; el.textContent = '0';
@@ -1421,6 +1484,8 @@ body.home{background:var(--chalk)}
   function onScroll() {
     ticking = false;
     const y = scrollY, H = document.documentElement.scrollHeight - innerHeight;
+    // The hero drifts up and fades as you scroll past it.
+    if (!RM && hxIn) { const f = Math.min(1, y / (hx.offsetHeight || 1)); hxIn.style.transform = f > 0 ? `translateY(${(f * 90).toFixed(1)}px)` : ''; hxIn.style.opacity = (1 - f * .85).toFixed(3); }
     bar.style.transform = `scaleX(${H > 0 ? y / H : 0})`;
     hdr.classList.toggle('scrolled', y > 40);
     top.classList.toggle('show', y > innerHeight * 1.5);

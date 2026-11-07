@@ -100,6 +100,19 @@ body.home{background:var(--chalk)}
 .js .rv.in{opacity:1;transform:none;transition:opacity .8s var(--ease) calc(var(--i,0) * 80ms),transform .9s cubic-bezier(.2,.8,.2,1) calc(var(--i,0) * 80ms)}
 .js .hx .rv{transition-delay:calc(.35s + var(--i,0) * 90ms)!important}
 
+.wsplit .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.06em;margin-bottom:-.06em}
+.wsplit .w>span{display:inline-block;transform:translateY(108%);transition:transform .9s cubic-bezier(.2,.8,.15,1) calc(var(--wi) * 70ms + 80ms)}
+.in .wsplit .w>span,.wsplit.in .w>span{transform:none}
+
+/* image wipe and pointer spotlight */
+.js .bt.rv .bt-img{clip-path:inset(100% 0 0 0)}
+.js .bt.rv.in .bt-img{clip-path:inset(0 0 0 0);transition:clip-path 1.1s cubic-bezier(.65,0,.25,1) calc(var(--i,0) * 90ms + 100ms)}
+.bt,.pc{--mx:50%;--my:50%;background:radial-gradient(520px circle at var(--mx) var(--my),rgba(200,16,46,.09),transparent 55%),#fff}
+.pc{position:relative}
+.pc .ph{background:transparent}
+.bt .bt-img img,.pc .ph img{background:transparent!important;mix-blend-mode:multiply}
+.bt-img:has(img) .phd,.pc .ph:has(img) .phd{visibility:hidden}
+
 /* ---------- marquee ---------- */
 .mq{background:var(--red-600);color:#fff;overflow:hidden;border-block:1px solid #000}
 .mq-in{display:flex;width:max-content;animation:mq 38s linear infinite}
@@ -120,7 +133,7 @@ body.home{background:var(--chalk)}
 .bt.wide{grid-column:span 2}
 .bt.tall{grid-row:span 2}
 .bt-img{position:absolute;inset:0;z-index:-1}
-.bt-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:18px 18px 64px;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.bt-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:16px 18px 82px;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
 .bt.big .bt-img img{padding:40px 40px 90px}
 .bt:hover .bt-img img{transform:scale(1.07) rotate(-2deg)}
 .bt-tx{position:absolute;z-index:2;left:18px;bottom:16px;right:64px}
@@ -249,7 +262,20 @@ body.home{background:var(--chalk)}
 .brandmq span{font:800 clamp(34px,4.4vw,56px)/110px var(--display);text-transform:uppercase;letter-spacing:.01em;color:transparent;-webkit-text-stroke:1px var(--g400);padding:0 34px;transition:color .25s var(--ease),-webkit-text-stroke-color .25s}
 .brandmq span:hover{color:var(--navy-900);-webkit-text-stroke-color:var(--navy-900)}
 .brandmq i{width:10px;height:10px;background:var(--red-600);transform:rotate(45deg);flex:none}
-.ftr{margin-top:0}
+.brandmq a{position:relative;display:flex;align-items:center;padding:0 34px}
+.brandmq a span{font:800 clamp(34px,4.4vw,56px)/110px var(--display);text-transform:uppercase;letter-spacing:.01em;color:transparent;-webkit-text-stroke:1px var(--g400);transition:color .25s var(--ease),-webkit-text-stroke-color .25s,transform .4s cubic-bezier(.2,.8,.2,1);padding:0}
+.brandmq a small{position:absolute;left:50%;bottom:14px;display:inline-flex;align-items:center;gap:4px;font:700 11px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--red-600);opacity:0;transform:translate(-50%,6px);transition:opacity .25s var(--ease),transform .25s var(--ease);white-space:nowrap}
+.brandmq a small .ui{width:12px;height:12px}
+.brandmq a:hover span,.brandmq a:focus-visible span{color:var(--navy-900);-webkit-text-stroke-color:var(--navy-900);transform:translateY(-8px)}
+.brandmq a:hover small,.brandmq a:focus-visible small{opacity:1;transform:translate(-50%,0)}
+.brandmq:focus-within .mq-in{animation-play-state:paused}
+.ftr{margin-top:0;overflow:hidden}
+.ftr-mark{display:flex;justify-content:space-between;align-items:flex-end;gap:2vw;padding:8px 0 28px;border-top:1px solid var(--navy-800);font:800 clamp(64px,13.5vw,214px)/.8 var(--display);text-transform:uppercase;letter-spacing:-.01em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.34);user-select:none}
+.ftr-mark span:first-child{color:var(--red-600);-webkit-text-stroke:0}
+.js .ftr-mark.rv{opacity:1;transform:none}
+.js .ftr-mark.rv span{display:inline-block;transform:translateY(40%);opacity:0;transition:transform 1.1s cubic-bezier(.2,.8,.15,1),opacity .9s var(--ease)}
+.js .ftr-mark.rv span:last-child{transition-delay:.12s}
+.js .ftr-mark.rv.in span{transform:none;opacity:1}
 .ftr a{transition:color .15s var(--ease)}
 
 /* ---------- floating helpers ---------- */
@@ -316,5 +342,7 @@ body.home{background:var(--chalk)}
   .hx-ghost,.mq-in,.hx-float,.hx-shadow,.hx-cue span,.hx-kick .dot{animation:none!important}
   .js .rv,.js .rail .pc,.js .hx-title .ln>span,.js .hx-stage{opacity:1!important;transform:none!important}
   .js .stitch-draw{clip-path:none}
+  .wsplit .w>span,.js .ftr-mark.rv span{transform:none!important;opacity:1!important}
+  .js .bt.rv .bt-img{clip-path:none}
   .hx-float img{transition:opacity .3s!important}
 }

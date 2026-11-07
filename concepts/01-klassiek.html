@@ -235,9 +235,9 @@ img{display:block;max-width:100%}
 
 /* brands */
 .brands{display:grid;grid-template-columns:repeat(8,1fr);border:1px solid var(--g200);border-radius:var(--r2);background:#fff;overflow:hidden}
-.brands span{display:grid;place-items:center;height:72px;border-right:1px solid var(--g200);font:800 18px/1 var(--display);text-transform:uppercase;letter-spacing:.04em;color:var(--g500);text-align:center;padding:0 8px;transition:color .15s var(--ease)}
-.brands span:last-child{border-right:0}
-.brands span:hover{color:var(--navy-900)}
+.brands>*{display:grid;place-items:center;height:72px;border-right:1px solid var(--g200);font:800 18px/1 var(--display);text-transform:uppercase;letter-spacing:.04em;color:var(--g500);text-align:center;padding:0 8px;transition:color .15s var(--ease)}
+.brands>*:last-child{border-right:0}
+.brands>*:hover{color:var(--navy-900);background:var(--g50)}
 
 /* showroom */
 .show{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px}
@@ -275,8 +275,8 @@ img{display:block;max-width:100%}
 @media (max-width:1080px){
   .cats{grid-template-columns:repeat(4,1fr)}
   .brands{grid-template-columns:repeat(4,1fr)}
-  .brands span:nth-child(4){border-right:0}
-  .brands span:nth-child(-n+4){border-bottom:1px solid var(--g200)}
+  .brands>*:nth-child(4){border-right:0}
+  .brands>*:nth-child(-n+4){border-bottom:1px solid var(--g200)}
   .nav>.wrap>a{padding:0 9px;font-size:14px}
   .nav .hide-md{display:none}
 }
@@ -555,6 +555,8 @@ img{display:block;max-width:100%}
     ['Voorverkoop Aanbieding Ballen 2027', '/Voorverkoop-Aanbieding-Ballen-2027']
   ];
   const PAGE = Object.fromEntries(PAGES.map(([n, u]) => [n, BASE + u]));
+  // The shop has no brand pages; each brand links to the shop's search for it.
+  const brandUrl = b => BASE + '/website/index.php?Show=Search&KeyWord=' + encodeURIComponent(b);
   const SHOP = { search: BASE + '/website/index.php?Show=Search&KeyWord=', cart: BASE + '/website/index.php?Show=WebShopBasket', account: BASE + '/website/index.php?Show=WebShopUserLogin', maps: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Heulweg 128B, 2295 KK Kwintsheul') };
   const CONTACT = { name: 'SSK European Baseball Center', street: 'Heulweg 128B', city: '2295 KK Kwintsheul', phone: '+31 174 501 888', email: 'info@sskeurope.com', instagram: 'https://www.instagram.com/ssk_europe', facebook: 'https://www.facebook.com/SSK-Europe-1806900749536624/' };
   const LEAD = [['Op voorraad (webshop)', '3 – 5 werkdagen'], ['Bedrukken op voorraad', '+ 3 – 5 werkdagen'], ['Standaard wedstrijdkleding', '30 – 35 werkdagen'], ['Speciale broeken', '36 – 45 werkdagen'], ['Club- en studentenjassen', '36 – 45 werkdagen']];
@@ -563,7 +565,7 @@ img{display:block;max-width:100%}
   // Image with graceful fallback: if the shop image fails, the tile keeps its icon.
   const img = (src, alt) => src ? `<img src="${src}" alt="${alt}" loading="lazy" onerror="this.remove()">` : '';
 
-  window.SSK = { LOGO, BASE, CUSTOMIZER_URL, CUSTOMIZER_IMG, COLOURWAYS, CZ_STEPS, PAGE, SHOP, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
+  window.SSK = { brandUrl, LOGO, BASE, CUSTOMIZER_URL, CUSTOMIZER_IMG, COLOURWAYS, CZ_STEPS, PAGE, SHOP, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
 })();
 
 /* Shared render helpers for the five versions. Uses window.SSK from data.js. */
@@ -696,7 +698,7 @@ img{display:block;max-width:100%}
     </div>`;
   }
 
-  const brands = () => `<div class="brands">${S.BRANDS.map(b => `<span>${b}</span>`).join('')}</div>`;
+  const brands = () => `<div class="brands">${S.BRANDS.map(b => `<a href="${S.brandUrl(b)}" title="Alles van ${b} in de webshop">${b}</a>`).join('')}</div>`;
 
   // Open or closed right now, in Dutch time.
   function openNow() {
@@ -773,6 +775,7 @@ img{display:block;max-width:100%}
       let html = '';
       if (!q.length) {
         html = `<div class="sg-h">Populair</div><div class="sg-chips">${POP.map(n => `<a role="option" class="sg-chip" href="${nav(n).url}">${n}</a>`).join('')}</div>
+          <div class="sg-h">Merken</div><div class="sg-chips">${S.BRANDS.map(b => `<a role="option" class="sg-chip" href="${S.brandUrl(b)}">${b}</a>`).join('')}</div>
           <a role="option" class="sg-cz" href="${CZ}">${ui('pen')}<span><b>Glove Customizer</b><small>Ontwerp je eigen handschoen</small></span></a>`;
       } else {
         const cats = S.NAV.filter(n => q.every(w => norm(n.name + ' ' + n.sub).includes(w))).slice(0, 3);
