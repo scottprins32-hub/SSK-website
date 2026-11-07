@@ -18,14 +18,14 @@ Open `concepts/index.html` for an overview of the five earlier versions, or open
 
 `index.html` is version 02 "Customizer voorop" worked out as a complete homepage:
 
-- **Hero:** the glove customiser, shown with real renders taken from it. Nine starter colourways crossfade on their own; the swatches switch them, and "Open met deze kleuren" opens the customiser with that glove already loaded. The glove tilts towards the pointer.
+- **Hero:** the shop first. Six new products from the shop (gloves, a 2026 bat, a helmet, the SSK ball) cycle on their own, each with its name, price and a link; thumbnails switch them. The cut-outs in `assets/hero/` are the shop's own product photos with their transparent background kept.
 - **Shop per categorie:** a photo grid with real product photos, plus buttons for the other categories.
 - **Nieuw binnen:** a drag-to-scroll rail with eleven new gloves and a customiser card at the end.
-- **In zeven stappen:** a walkthrough of the customiser with a real screenshot of each step. On a computer the screenshot stays in place while you scroll through the steps.
 - **Uitgelicht:** tabs for 2026 bats, helmets, balls and outlet.
+- **Glove Customizer:** one compact block after the shop: the seven steps next to a real screenshot of each, which play on their own and open the customiser when clicked. Kept secondary on purpose (feedback from Pim: the custom gloves were too much in the foreground).
 - **Heritage, club apparel, Holland Series, showroom** (with a live open/closed label, route and call buttons), **brands** and the footer.
 
-Motion: line-by-line title reveal, scroll reveals, a red stitch scroll bar, marquees, magnetic buttons and a sticky "Ontwerp je handschoen" button on phones. Everything respects *reduce motion*.
+Motion: line-by-line title reveal, scroll reveals, a red stitch scroll bar, marquees, magnetic buttons and Everything respects *reduce motion*.
 
 Every product shown is a real product from the shop, with its real name, price, link and photo. Every button and link goes somewhere real: shop categories, shop pages, search (it searches the shop), account, cart, Google Maps, phone, e-mail and the customiser. The heritage line "Baseball, it's our game." comes from SSK's US site, sskbaseballshop.com.
 

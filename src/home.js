@@ -10,48 +10,53 @@
   U.mount({ header: U.header(), usp: U.usp(), club: U.club(), showroom: U.showroom(), footer: U.footer() });
 
   /* ---------- links ---------- */
-  ['cz-main', 'cz-line', 'cz-end', 'm-cta'].forEach(id => { const a = document.getElementById(id); if (a) a.href = S.CUSTOMIZER_URL; });
+  $('#cz-end').href = S.CUSTOMIZER_URL;
+  $('#hx-new').href = U.nav('New Arrivals').url;
   $('#all-gloves').href = U.nav('Handschoenen').url;
 
-  /* ---------- hero: colourways from the customiser ---------- */
-  const CW = S.COLOURWAYS;
-  const gl = $('#gloves'), sw = $('#swatches'), hx = $('.hx');
-  // Only the first glove loads up front; the other eight follow once the page has loaded.
-  gl.innerHTML = CW.map((c, i) => `<img ${i ? 'data-src' : 'src'}="${c.img}" alt="SSK Pro Custom handschoen in ${c.name}, gemaakt in de customizer" width="845" height="1000"${i ? '' : ' fetchpriority="high"'} class="${i ? '' : 'on'}">`).join('');
-  const loadAll = () => $$('img[data-src]', gl).forEach(im => { im.src = im.dataset.src; im.removeAttribute('data-src'); });
-  if (document.readyState === 'complete') setTimeout(loadAll, 300); else addEventListener('load', () => setTimeout(loadAll, 300));
-  sw.innerHTML = CW.map((c, i) => `<button type="button" style="--a:${c.a};--b:${c.b}" aria-label="${c.name}" aria-pressed="${i === 0}" data-i="${i}"><i></i></button>`).join('');
-  let cur = 0, timer = null;
-  const imgs = $$('img', gl), btns = $$('button', sw);
+  /* ---------- hero: new products from the shop ---------- */
+  // Transparent cut-outs of the shop's own product photos live in assets/hero/<photo id>.webp.
+  const HERO = [
+    [P.gloves[0], '2410112359', '#C8102E'], [P.gloves[2], '2382787655', '#22B5A0'],
+    [P.gloves[3], '2410122391', '#E0559A'], [P.bats[0], '2363268062', '#C8102E'],
+    [P.helmets[1], '2382805112', '#C8102E'], [P.balls[0], '2417010101', '#2F4A9A']
+  ].map(([p, id, accent]) => ({ p, accent, img: 'assets/hero/' + id + '.webp' }));
+  const hi = $('#heroimgs'), th = $('#thumbs'), hx = $('.hx');
+  hi.innerHTML = HERO.map((h, i) => `<img src="${h.img}" alt="${h.p.brand} ${h.p.name}"${i ? ' loading="lazy"' : ' fetchpriority="high"'} class="${i ? '' : 'on'}">`).join('');
+  th.innerHTML = HERO.map((h, i) => `<button type="button" aria-label="${h.p.brand} ${h.p.name}" aria-pressed="${i === 0}" data-i="${i}"><img src="${h.img}" alt="" loading="lazy"><i></i></button>`).join('');
+  let cur = -1, timer = null;
+  const imgs = $$('img', hi), btns = $$('button', th);
   function show(i, user) {
+    i = (i + HERO.length) % HERO.length;
     if (i === cur) return;
-    const prev = cur; cur = (i + CW.length) % CW.length;
-    const nx = imgs[cur]; if (nx.dataset.src) { nx.src = nx.dataset.src; nx.removeAttribute('data-src'); }
+    const prev = cur; cur = i;
     imgs.forEach((im, k) => { im.classList.toggle('on', k === cur); im.classList.toggle('out', k === prev); });
     btns.forEach((b, k) => b.setAttribute('aria-pressed', k === cur));
-    $('#cw-name').textContent = CW[cur].name;
-    $('#cw-open').href = CW[cur].url;
-    hx.style.setProperty('--accent', CW[cur].a === '#1A1A1A' ? CW[cur].b : CW[cur].a);
+    const p = HERO[cur].p;
+    $('#hp-brand').textContent = (p.tag === 'Sale' ? 'Sale · ' : 'Nieuw binnen · ') + p.brand;
+    $('#hp-name').textContent = p.name;
+    $('#hp-price').innerHTML = S.eur(p.price) + (p.was ? ` <s>${S.eur(p.was)}</s>` : '');
+    $('#hp-open').href = p.url;
+    hx.style.setProperty('--accent', HERO[cur].accent);
     if (user) restart();
   }
   function restart() {
-    clearInterval(timer); sw.classList.remove('run'); void sw.offsetWidth;
+    clearInterval(timer); th.classList.remove('run'); void th.offsetWidth;
     if (RM) return;
-    sw.classList.add('run');
-    timer = setInterval(() => show(cur + 1), 3600);
+    th.classList.add('run');
+    timer = setInterval(() => show(cur + 1), 4000);
   }
-  $('#cw-open').href = CW[0].url;
-  hx.style.setProperty('--accent', CW[0].a);
-  sw.addEventListener('click', e => { const b = e.target.closest('button'); if (b) show(+b.dataset.i, true); });
-  sw.addEventListener('keydown', e => {
+  show(0);
+  th.addEventListener('click', e => { const b = e.target.closest('button'); if (b) show(+b.dataset.i, true); });
+  th.addEventListener('keydown', e => {
     if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
     e.preventDefault(); show(cur + (e.key === 'ArrowRight' ? 1 : -1), true); btns[cur].focus();
   });
   const stage = $('#stage');
-  stage.addEventListener('click', () => { location.href = CW[cur].url; });
-  stage.title = 'Open deze handschoen in de customizer';
+  stage.addEventListener('click', () => { location.href = HERO[cur].p.url; });
+  stage.title = 'Bekijk dit product in de webshop';
   // Pause the carousel while the visitor is looking at it.
-  $('.hx-vis').addEventListener('pointerenter', () => { clearInterval(timer); sw.classList.remove('run'); });
+  $('.hx-vis').addEventListener('pointerenter', () => { clearInterval(timer); th.classList.remove('run'); });
   $('.hx-vis').addEventListener('pointerleave', restart);
   restart();
   // Tilt the glove towards the pointer.
@@ -73,7 +78,7 @@
   }
 
   /* ---------- marquee ---------- */
-  const mqItems = ['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Slaghandschoenen', 'Clubkleding', 'Glove Customizer', 'Showroom Kwintsheul'];
+  const mqItems = ['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Slaghandschoenen', 'Clubkleding', 'Outlet', 'Showroom Kwintsheul'];
   const mqRow = mqItems.map(t => `<span>${t}</span><i>✶</i>`).join('');
   $('#mq').innerHTML = `<div>${mqRow}</div><div>${mqRow}</div>`;
   const brRow = S.BRANDS.map(b => `<span>${b}</span><i></i>`).join('');
@@ -102,7 +107,7 @@
 
   /* ---------- glove rail ---------- */
   const rail = $('#rail');
-  rail.innerHTML = '<div class="rail-pad"></div>' + P.gloves.concat(P.more).map(U.card).join('') + `<a class="card cz-card" href="${S.CUSTOMIZER_URL}"><img src="${CW[1].img}" alt="" loading="lazy"><b>Of ontwerp<br>je eigen</b><span class="btn btn-red sm">Start de customizer</span></a><div class="rail-pad"></div>`;
+  rail.innerHTML = '<div class="rail-pad"></div>' + P.gloves.concat(P.more).map(U.card).join('') + `<a class="card cz-card" href="${S.CUSTOMIZER_URL}"><img src="${S.COLOURWAYS[1].img}" alt="" loading="lazy"><b>Of ontwerp<br>je eigen</b><span class="btn btn-red sm">Start de customizer</span></a><div class="rail-pad"></div>`;
   const step = () => Math.min(rail.clientWidth * .8, 900);
   $$('[data-rail]').forEach(b => b.addEventListener('click', () => rail.scrollBy({ left: step() * b.dataset.rail, behavior: RM ? 'auto' : 'smooth' })));
   function railState() {
@@ -124,23 +129,30 @@
   rail.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); rail.scrollBy({ left: (e.key === 'ArrowRight' ? 1 : -1) * 300, behavior: RM ? 'auto' : 'smooth' }); } });
   rail.addEventListener('dragstart', e => e.preventDefault());
 
-  /* ---------- customiser walkthrough ---------- */
+  /* ---------- customiser: compact czStep viewer ---------- */
   const ST = S.CZ_STEPS;
   $('#czw-shots').innerHTML = ST.map((s, i) => `<img src="${s.img}" alt="Customizer, stap ${i + 1}: ${s.t}" width="1600" height="1000" loading="lazy" class="${i ? '' : 'on'}">`).join('') + `<span class="czw-try">Probeer het zelf ${arrow}</span>`;
   $('#czw-shots').href = S.CUSTOMIZER_URL;
   $('#czw-prog').innerHTML = ST.map(() => '<i></i>').join('');
-  $('#czw-steps').innerHTML = ST.map((s, i) => `<li data-i="${i}"${i ? '' : ' class="on"'}>
-      <span class="n">${String(i + 1).padStart(2, '0')}</span><div><h3>${s.t}</h3><p>${s.d}</p>
-      <img class="m-shot" src="${s.img}" alt="Customizer, stap ${i + 1}: ${s.t}" loading="lazy" width="1600" height="1000"></div></li>`).join('');
-  const shots = $$('#czw-shots img'), segs = $$('#czw-prog i'), lis = $$('#czw-steps li');
+  $('#czw-steps').innerHTML = ST.map((s, i) => `<li><button type="button" role="tab" aria-selected="${i === 0}" data-i="${i}" title="${s.d}"><span class="n">${String(i + 1).padStart(2, '0')}</span>${s.t}</button></li>`).join('');
+  const shots = $$('#czw-shots img'), segs = $$('#czw-prog i'), sbs = $$('#czw-steps button');
+  let czStep = 0, stepTimer = null, stepVisible = false;
   function setStep(i) {
-    shots.forEach((im, k) => im.classList.toggle('on', k === i));
-    lis.forEach((li, k) => { li.classList.toggle('on', k === i); li.classList.toggle('done', k < i); });
-    segs.forEach((s, k) => s.classList.toggle('on', k <= i));
-    $('#czw-n').textContent = String(i + 1).padStart(2, '0') + ' / ' + String(ST.length).padStart(2, '0');
+    czStep = (i + ST.length) % ST.length;
+    shots.forEach((im, k) => im.classList.toggle('on', k === czStep));
+    sbs.forEach((b, k) => b.setAttribute('aria-selected', k === czStep));
+    segs.forEach((g, k) => g.classList.toggle('on', k <= czStep));
+    $('#czw-n').textContent = String(czStep + 1).padStart(2, '0') + ' / ' + String(ST.length).padStart(2, '0');
   }
-  const stepIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) setStep(+e.target.dataset.i); }), { rootMargin: '-45% 0px -45% 0px' });
-  lis.forEach(li => { stepIO.observe(li); li.addEventListener('click', () => li.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'center' })); });
+  const stepPlay = () => { clearInterval(stepTimer); if (!RM && stepVisible) stepTimer = setInterval(() => setStep(czStep + 1), 3200); };
+  $('#czw-steps').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { setStep(+b.dataset.i); stepPlay(); } });
+  $('#czw-steps').addEventListener('keydown', e => {
+    const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key]; if (!d) return;
+    e.preventDefault(); setStep(czStep + d); sbs[czStep].focus(); stepPlay();
+  });
+  $('.czw-frame').addEventListener('pointerenter', () => clearInterval(stepTimer));
+  $('.czw-frame').addEventListener('pointerleave', stepPlay);
+  new IntersectionObserver(es => es.forEach(e => { stepVisible = e.isIntersecting; if (stepVisible) stepPlay(); else clearInterval(stepTimer); }), { threshold: .35 }).observe($('.czw'));
 
   /* ---------- tabs ---------- */
   const TABS = [
@@ -182,23 +194,19 @@
   });
 
   /* ---------- scroll: progress, header, heritage type, mobile CTA ---------- */
-  const bar = $('.sprog i'), hdr = $('.hdr'), h1 = $('#h1'), h2 = $('#h2'), heri = $('.heri2'), mcta = $('#m-cta'), top = $('#totop');
+  const bar = $('.sprog i'), hdr = $('.hdr'), h1 = $('#h1'), h2 = $('#h2'), heri = $('.heri2'), top = $('#totop');
   let ticking = false;
   function onScroll() {
     ticking = false;
     const y = scrollY, H = document.documentElement.scrollHeight - innerHeight;
     bar.style.transform = `scaleX(${H > 0 ? y / H : 0})`;
     hdr.classList.toggle('scrolled', y > 40);
-    const pastHero = y > hx.offsetTop + hx.offsetHeight - 80;
-    mcta.classList.toggle('show', pastHero && !nearEnd());
     top.classList.toggle('show', y > innerHeight * 1.5);
     if (!RM) {
       const r = heri.getBoundingClientRect(), f = (innerHeight - r.top) / (innerHeight + r.height);
       if (f > -0.1 && f < 1.1) { h1.style.transform = `translateX(${(-f * 22 + 6).toFixed(2)}%)`; h2.style.transform = `translateX(${(f * 22 - 14).toFixed(2)}%)`; }
     }
   }
-  const ftr = $('.ftr');
-  const nearEnd = () => ftr && ftr.getBoundingClientRect().top < innerHeight;
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   onScroll();
   top.addEventListener('click', () => scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' }));
