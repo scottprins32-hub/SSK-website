@@ -191,6 +191,8 @@
     ['Voorverkoop Aanbieding Ballen 2027', '/Voorverkoop-Aanbieding-Ballen-2027']
   ];
   const PAGE = Object.fromEntries(PAGES.map(([n, u]) => [n, BASE + u]));
+  // The shop has no brand pages; each brand links to the shop's search for it.
+  const brandUrl = b => BASE + '/website/index.php?Show=Search&KeyWord=' + encodeURIComponent(b);
   const SHOP = { search: BASE + '/website/index.php?Show=Search&KeyWord=', cart: BASE + '/website/index.php?Show=WebShopBasket', account: BASE + '/website/index.php?Show=WebShopUserLogin', maps: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Heulweg 128B, 2295 KK Kwintsheul') };
   const CONTACT = { name: 'SSK European Baseball Center', street: 'Heulweg 128B', city: '2295 KK Kwintsheul', phone: '+31 174 501 888', email: 'info@sskeurope.com', instagram: 'https://www.instagram.com/ssk_europe', facebook: 'https://www.facebook.com/SSK-Europe-1806900749536624/' };
   const LEAD = [['Op voorraad (webshop)', '3 – 5 werkdagen'], ['Bedrukken op voorraad', '+ 3 – 5 werkdagen'], ['Standaard wedstrijdkleding', '30 – 35 werkdagen'], ['Speciale broeken', '36 – 45 werkdagen'], ['Club- en studentenjassen', '36 – 45 werkdagen']];
@@ -199,5 +201,5 @@
   // Image with graceful fallback: if the shop image fails, the tile keeps its icon.
   const img = (src, alt) => src ? `<img src="${src}" alt="${alt}" loading="lazy" onerror="this.remove()">` : '';
 
-  window.SSK = { LOGO, BASE, CUSTOMIZER_URL, CUSTOMIZER_IMG, COLOURWAYS, CZ_STEPS, PAGE, SHOP, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
+  window.SSK = { brandUrl, LOGO, BASE, CUSTOMIZER_URL, CUSTOMIZER_IMG, COLOURWAYS, CZ_STEPS, PAGE, SHOP, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
 })();

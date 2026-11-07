@@ -81,8 +81,9 @@
   const mqItems = ['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Slaghandschoenen', 'Clubkleding', 'Outlet', 'Showroom Kwintsheul'];
   const mqRow = mqItems.map(t => `<span>${t}</span><i>✶</i>`).join('');
   $('#mq').innerHTML = `<div>${mqRow}</div><div>${mqRow}</div>`;
-  const brRow = S.BRANDS.map(b => `<span>${b}</span><i></i>`).join('');
-  $('#brands').innerHTML = `<div>${brRow}</div><div>${brRow}</div>`;
+  // Brand band: every name links to that brand in the shop. The second copy only makes the loop seamless.
+  const brRow = hide => S.BRANDS.map(b => `<a href="${S.brandUrl(b)}"${hide ? ' tabindex="-1" aria-hidden="true"' : ` aria-label="Alles van ${b} in de webshop"`}><span>${b}</span><small>Bekijk ${U.ui('arrow')}</small></a><i></i>`).join('');
+  $('#brands').innerHTML = `<div>${brRow(false)}</div><div>${brRow(true)}</div>`;
 
   /* ---------- categories: real product photos ---------- */
   const find = (list, w) => list.find(p => p.name.includes(w));
@@ -182,10 +183,41 @@
   tab(0);
   addEventListener('resize', () => { const i = tbs.findIndex(b => b.getAttribute('aria-selected') === 'true'); const ink = $('.tab-ink', tl); ink.style.width = tbs[i].offsetWidth + 'px'; ink.style.transform = `translateX(${tbs[i].offsetLeft}px)`; });
 
+  /* ---------- headings rise in word by word ---------- */
+  if (!RM) $$('.sec-h .d-lg, .czw-side .d-lg').forEach(h => {
+    let k = 0;
+    const walk = n => [...n.childNodes].forEach(c => {
+      if (c.nodeType === 3) {
+        const f = document.createDocumentFragment();
+        c.textContent.split(/(\s+)/).forEach(t => {
+          if (!t) return;
+          if (/^\s+$/.test(t)) { f.append(t); return; }
+          const w = document.createElement('span'); w.className = 'w';
+          const i = document.createElement('span'); i.textContent = t; i.style.setProperty('--wi', k++);
+          w.append(i); f.append(w);
+        });
+        c.replaceWith(f);
+      } else if (c.nodeType === 1 && c.tagName !== 'BR') walk(c);
+    });
+    walk(h); h.classList.add('wsplit');
+  });
+
+  /* ---------- pointer spotlight on tiles and product cards ---------- */
+  if (fine && !RM) document.addEventListener('pointermove', e => {
+    const t = e.target.closest('.bt, .pc'); if (!t) return;
+    const r = t.getBoundingClientRect();
+    t.style.setProperty('--mx', (e.clientX - r.left) + 'px'); t.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  }, { passive: true });
+
+  /* ---------- footer wordmark ---------- */
+  const fbot = $('.ftr .bot');
+  if (fbot) fbot.insertAdjacentHTML('beforebegin', '<div class="ftr-mark rv" aria-hidden="true"><span>SSK</span><span>Europe</span></div>');
+
   /* ---------- reveal on scroll ---------- */
   document.documentElement.classList.add('js');
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
   $$('.rv, .stitch-draw, .rail .pc').forEach(el => io.observe(el));
+  const hxIn = $('.hx-in');
   // Count-ups in the hero stats.
   if (!RM) $$('[data-count]').forEach(el => {
     const to = +el.dataset.count; let t0 = 0; el.textContent = '0';
@@ -199,6 +231,8 @@
   function onScroll() {
     ticking = false;
     const y = scrollY, H = document.documentElement.scrollHeight - innerHeight;
+    // The hero drifts up and fades as you scroll past it.
+    if (!RM && hxIn) { const f = Math.min(1, y / (hx.offsetHeight || 1)); hxIn.style.transform = f > 0 ? `translateY(${(f * 90).toFixed(1)}px)` : ''; hxIn.style.opacity = (1 - f * .85).toFixed(3); }
     bar.style.transform = `scaleX(${H > 0 ? y / H : 0})`;
     hdr.classList.toggle('scrolled', y > 40);
     top.classList.toggle('show', y > innerHeight * 1.5);

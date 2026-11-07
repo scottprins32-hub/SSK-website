@@ -128,7 +128,7 @@
     </div>`;
   }
 
-  const brands = () => `<div class="brands">${S.BRANDS.map(b => `<span>${b}</span>`).join('')}</div>`;
+  const brands = () => `<div class="brands">${S.BRANDS.map(b => `<a href="${S.brandUrl(b)}" title="Alles van ${b} in de webshop">${b}</a>`).join('')}</div>`;
 
   // Open or closed right now, in Dutch time.
   function openNow() {
@@ -205,6 +205,7 @@
       let html = '';
       if (!q.length) {
         html = `<div class="sg-h">Populair</div><div class="sg-chips">${POP.map(n => `<a role="option" class="sg-chip" href="${nav(n).url}">${n}</a>`).join('')}</div>
+          <div class="sg-h">Merken</div><div class="sg-chips">${S.BRANDS.map(b => `<a role="option" class="sg-chip" href="${S.brandUrl(b)}">${b}</a>`).join('')}</div>
           <a role="option" class="sg-cz" href="${CZ}">${ui('pen')}<span><b>Glove Customizer</b><small>Ontwerp je eigen handschoen</small></span></a>`;
       } else {
         const cats = S.NAV.filter(n => q.every(w => norm(n.name + ' ' + n.sub).includes(w))).slice(0, 3);
