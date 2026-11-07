@@ -358,11 +358,10 @@ body.home{background:var(--chalk)}
 .nav>.wrap>a:after{content:'';position:absolute;left:12px;right:12px;bottom:0;height:3px;background:var(--red-600);transform:scaleX(0);transform-origin:0 50%;transition:transform .3s var(--ease)}
 .nav>.wrap>a:hover:after{transform:scaleX(1)}
 .nav>.wrap>.all:after{left:0}
-.nav .cz{background:var(--red-600);height:34px!important;padding:0 14px!important;border-radius:var(--r1);align-self:center}
-.nav .cz:after{display:none}
-.nav .cz:hover{background:var(--red-700)}
 .mega.open{animation:drop .28s var(--ease)}
 @keyframes drop{from{opacity:0;transform:translateY(-8px)}}
+
+.nav .cz .ui{color:var(--red-600)}
 
 /* ---------- HERO ---------- */
 .hx{--accent:#C8102E;--gx:50%;--gy:50%;position:relative;overflow:hidden;background:#000;color:var(--navy-100);isolation:isolate;transition:--accent 1.2s var(--ease)}
@@ -386,9 +385,9 @@ body.home{background:var(--chalk)}
 .hx-stats div:last-child{border-right:0;margin-right:0}
 .hx-stats dt{font:600 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--g400)}
 .hx-stats dd{margin-top:8px;font:800 30px/1 var(--display);color:#fff;font-variant-numeric:tabular-nums}
-.hx-stats dd.mono{font:600 22px/30px var(--mono)}
+.hx-stats dd small{font:600 13px/1 var(--mono);color:var(--g400);margin-left:2px}
 .hx-vis{position:relative;display:flex;flex-direction:column;align-items:center}
-.hx-stage{position:relative;width:min(100%,480px,calc((100svh - 360px) * .845));min-width:280px;aspect-ratio:845/1000;perspective:1200px;cursor:pointer}
+.hx-stage{position:relative;width:min(100%,470px,calc(100svh - 400px));min-width:280px;aspect-ratio:1/1;perspective:1200px;cursor:pointer}
 .hx-tilt{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
 .hx-float{position:absolute;inset:0;animation:float 7s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-14px) rotate(-1.2deg)}}
@@ -397,19 +396,23 @@ body.home{background:var(--chalk)}
 .hx-float img.out{transform:translateX(-14%) rotate(-10deg) scale(.86)}
 .hx-shadow{position:absolute;left:18%;right:18%;bottom:-3%;height:8%;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.9),transparent);filter:blur(6px);animation:shadow 7s ease-in-out infinite;z-index:-1}
 @keyframes shadow{50%{transform:scale(.88);opacity:.7}}
-.hx-pick{position:relative;z-index:3;margin-top:18px;display:grid;grid-template-columns:auto 1fr;grid-template-areas:'now open' 'sw sw';gap:14px 24px;align-items:end;width:min(100%,500px);padding:16px 18px;border:1px solid rgba(255,255,255,.12);border-radius:var(--r2);background:rgba(10,10,10,.6);backdrop-filter:blur(12px)}
-.hx-now{grid-area:now}
+.hx-pick{position:relative;z-index:3;margin-top:18px;display:grid;grid-template-columns:1fr auto;grid-template-areas:'now open' 'sw sw';gap:14px 24px;align-items:end;width:min(100%,500px);padding:16px 18px;border:1px solid rgba(255,255,255,.12);border-radius:var(--r2);background:rgba(10,10,10,.6);backdrop-filter:blur(12px)}
+.hx-now{grid-area:now;min-width:0}
+.hx-now b{display:block;margin-top:6px;font:800 19px/1.08 var(--display);text-transform:uppercase;letter-spacing:.02em;color:#fff;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.16em}
+.hx-now .mono{display:block;margin-top:6px;font-size:15px;font-weight:600;color:#fff}
+.hx-now s{color:var(--g400);font-weight:400;margin-left:6px}
+.hx-open{align-self:end}
+.hx-thumbs{grid-area:sw;display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.hx-thumbs button{position:relative;aspect-ratio:1;border-radius:var(--r2);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:6px;transition:background-color .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease)}
+.hx-thumbs button:hover{background:rgba(255,255,255,.12);transform:translateY(-2px)}
+.hx-thumbs img{width:100%;height:100%;object-fit:contain}
+.hx-thumbs button i{position:absolute;left:6px;right:6px;bottom:-1px;height:2px;background:var(--red-600);transform:scaleX(0);transform-origin:0 50%}
+.hx-thumbs button[aria-pressed=true]{border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.1)}
+.hx-thumbs button[aria-pressed=true] i{transform:scaleX(1)}
+.hx-thumbs.run button[aria-pressed=true] i{animation:thumbbar 4s linear}
+@keyframes thumbbar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .hx-now small{display:block;font:600 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--g400)}
-.hx-now b{display:block;margin-top:6px;font:800 22px/1 var(--display);text-transform:uppercase;letter-spacing:.03em;color:#fff}
 .hx-open{grid-area:open;justify-self:end;color:#fff}
-.hx-sw{grid-area:sw;display:flex;gap:8px;flex-wrap:wrap}
-.hx-sw button{position:relative;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--a) 50%,var(--b) 50%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);transition:transform .2s var(--ease)}
-.hx-sw button:hover{transform:scale(1.12)}
-.hx-sw button i{position:absolute;inset:-5px;border-radius:50%;border:2px solid transparent}
-.hx-sw button[aria-pressed=true] i{border-color:#fff}
-.hx-sw.run button[aria-pressed=true] i{border-color:rgba(255,255,255,.25);background:conic-gradient(#fff var(--p,0%),transparent 0) border-box;-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 2px));mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 2px));border:0;animation:ring 3.6s linear infinite}
-@property --p{syntax:'<percentage>';inherits:false;initial-value:0%}
-@keyframes ring{to{--p:100%}}
 .hx-cue{position:absolute;left:50%;bottom:22px;width:26px;height:42px;margin-left:-13px;border:1.5px solid rgba(255,255,255,.35);border-radius:14px}
 .hx-cue span{position:absolute;left:50%;top:8px;width:3px;height:8px;margin-left:-1.5px;border-radius:2px;background:#fff;animation:cue 1.8s var(--ease) infinite}
 @keyframes cue{60%{transform:translateY(12px);opacity:0}100%{opacity:0}}
@@ -503,49 +506,39 @@ body.home{background:var(--chalk)}
 .czline b{display:block;font:800 24px/1.05 var(--display);letter-spacing:.02em;text-transform:uppercase;color:var(--navy-900)}
 .czline span{color:var(--g600);font-size:15px}
 
-/* ---------- customiser walkthrough ---------- */
-.czw{position:relative;background:#0A0A0A;color:var(--navy-100);padding:110px 0 100px;overflow:clip}
+/* ---------- customiser (compact) ---------- */
+.czw{position:relative;background:#0A0A0A;color:var(--navy-100);padding:72px 0;overflow:clip}
 .czw:before{content:'';position:absolute;left:0;right:0;top:0;height:0;border-top:3px dashed var(--red-600);opacity:.9}
-.czw-h{display:grid;grid-template-columns:1.1fr .9fr;gap:24px 48px;align-items:end;margin-bottom:56px}
-.czw-h .kick{grid-column:1/-1}
-.czw-h .d-lg{color:#fff;font-size:clamp(40px,5.6vw,76px);line-height:.9}
-.czw-h .d-lg em{font-style:normal;color:var(--red-600)}
-.czw-h p{font-size:17px;max-width:46ch}
-.czw-grid{display:grid;grid-template-columns:1.45fr .8fr;gap:56px;align-items:start}
-.czw-frame-wrap{position:sticky;top:150px}
+.czw-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:center}
+.czw-side .d-lg{color:#fff;font-size:clamp(34px,3.8vw,52px);line-height:.95;margin-top:8px}
+.czw-side .d-lg em{font-style:normal;color:var(--red-600)}
+.czw-side>p{margin-top:14px;font-size:16px;max-width:44ch}
+.czw-steps{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin:22px 0 26px;counter-reset:s}
+.czw-steps button{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;margin-left:-10px;border-radius:var(--r1);text-align:left;font:700 14px/1.15 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--g400);transition:color .2s var(--ease),background-color .2s var(--ease)}
+.czw-steps button:hover{color:#fff;background:rgba(255,255,255,.04)}
+.czw-steps button[aria-selected=true]{color:#fff}
+.czw-steps .n{font:600 11px/1 var(--mono);color:var(--g500);flex:none}
+.czw-steps button[aria-selected=true] .n{color:var(--red-600)}
+.czw-end{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.czw-end>span{color:var(--g400);font-size:14px}
+.czw-end b{color:#fff;font-size:15px}
 .czw-frame{border-radius:10px;overflow:hidden;background:#1A1A1A;border:1px solid #2A2A2A;box-shadow:0 40px 80px -20px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.03)}
-.czw-bar{display:flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-bottom:1px solid #2A2A2A;font:600 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--g400)}
+.czw-bar{display:flex;align-items:center;gap:7px;height:36px;padding:0 14px;border-bottom:1px solid #2A2A2A;font:600 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--g400)}
 .czw-bar i{width:10px;height:10px;border-radius:50%;background:#333}
 .czw-bar i:first-child{background:var(--red-600)}
 .czw-bar span{margin-left:10px}
 .czw-bar b{margin-left:auto;color:#fff;font-weight:600}
-.czw-shots{position:relative;aspect-ratio:16/10;background:#e9e9e9}
+.czw-shots{position:relative;display:block;aspect-ratio:16/10;background:#e9e9e9;cursor:pointer}
 .czw-shots img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.03);transition:opacity .6s var(--ease),transform 1.2s cubic-bezier(.2,.8,.2,1)}
 .czw-shots img.on{opacity:1;transform:none}
-.czw-shots{display:block;cursor:pointer}
 .czw-shots:after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0);transition:background-color .3s var(--ease)}
 .czw-shots:hover:after{background:rgba(0,0,0,.18)}
 .czw-try{position:absolute;z-index:2;right:16px;bottom:16px;display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 16px;border-radius:var(--r1);background:var(--red-600);color:#fff;font:700 14px/1 var(--display);letter-spacing:.1em;text-transform:uppercase;box-shadow:0 10px 24px rgba(200,16,46,.4);opacity:0;transform:translateY(8px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
 .czw-try .ui{width:16px;height:16px}
 .czw-shots:hover .czw-try,.czw-shots:focus-visible .czw-try{opacity:1;transform:none}
-/* Holland Series: big outlined year and a stitch */
-.split .panel.navy{position:relative;overflow:hidden;isolation:isolate}
-.split .panel.navy:before{content:'2026';position:absolute;right:-12px;top:46%;transform:translateY(-50%);z-index:-1;font:800 clamp(140px,16vw,220px)/1 var(--display);color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.24);letter-spacing:-.02em;transition:-webkit-text-stroke-color .4s var(--ease),transform .6s cubic-bezier(.2,.8,.2,1)}
-.split .panel.navy:hover:before{-webkit-text-stroke-color:rgba(200,16,46,.7);transform:translateY(-50%) translateX(-8px)}
 .czw-prog{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:10px 14px}
 .czw-prog i{height:3px;border-radius:2px;background:#2A2A2A;transition:background-color .4s var(--ease)}
 .czw-prog i.on{background:var(--red-600)}
-.czw-steps{list-style:none;padding:12vh 0 18vh}
-.czw-steps li{display:grid;grid-template-columns:56px 1fr;gap:12px;min-height:40vh;align-items:center;cursor:pointer;opacity:.28;transition:opacity .5s var(--ease)}
-.czw-steps li.on{opacity:1}
-.czw-steps li.done{opacity:.45}
-.czw-steps .n{align-self:center;font:600 14px/1 var(--mono);color:var(--g400);padding-top:6px}
-.czw-steps li.on .n{color:var(--red-600)}
-.czw-steps h3{font:800 clamp(30px,3vw,42px)/.95 var(--display);text-transform:uppercase;color:#fff;letter-spacing:.01em}
-.czw-steps p{margin-top:12px;font-size:16px;max-width:34ch}
-.czw-steps .m-shot{display:none}
-.czw-end{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:24px;padding-top:40px;border-top:1px solid #2A2A2A}
-.czw-end>span{color:var(--g400);font-size:15px}
 
 /* ---------- tabs ---------- */
 .tabs{position:relative;display:flex;gap:4px;border-bottom:1px solid var(--g200);margin-bottom:24px;overflow-x:auto;scrollbar-width:none}
@@ -590,8 +583,6 @@ body.home{background:var(--chalk)}
 .ftr a{transition:color .15s var(--ease)}
 
 /* ---------- floating helpers ---------- */
-.m-cta{position:fixed;left:16px;right:16px;bottom:16px;z-index:70;display:none;align-items:center;justify-content:center;gap:10px;height:54px;border-radius:var(--r2);background:var(--red-600);color:#fff;font:800 17px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;box-shadow:0 14px 34px rgba(200,16,46,.45);transform:translateY(130%);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
-.m-cta.show{transform:none}
 .totop{position:fixed;right:22px;bottom:22px;z-index:70;width:48px;height:48px;display:grid;place-items:center;border-radius:50%;background:var(--navy-900);color:#fff;box-shadow:var(--sh-raised);opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .3s,transform .3s,background-color .2s}
 .totop.show{opacity:1;transform:none;pointer-events:auto}
 .totop:hover{background:var(--red-600)}
@@ -600,9 +591,11 @@ body.home{background:var(--chalk)}
 @media (max-width:1080px){
   .hx-title{font-size:clamp(52px,8vw,100px)}
   .hx-stats div{padding-right:18px;margin-right:18px}
-  .czw-grid{grid-template-columns:1.2fr .8fr;gap:36px}
 }
 @media (max-width:900px){
+  .czw{padding:56px 0}
+  .czw-grid{grid-template-columns:1fr;gap:28px}
+  .czw-frame{order:-1}
   html{scroll-padding-top:80px}
   .hx-in{grid-template-columns:1fr;min-height:0;padding-top:36px;padding-bottom:72px;gap:12px}
   .hx-copy{display:contents}
@@ -612,39 +605,29 @@ body.home{background:var(--chalk)}
   .hx-lead{order:4}
   .hx-btns{order:5;margin-top:16px}
   .hx-stats{order:6;margin-top:20px}
-  .czw-steps .n{align-self:start}
-  .hx-stage{width:min(76%,380px)}
+  .hx-stage{width:min(72%,340px)}
   .hx-pick{width:100%}
   .hx-cue{display:none}
   .bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:190px}
   .bt.tall{grid-row:span 1}
-  .czw{padding:80px 0}
-  .czw-h{grid-template-columns:1fr;margin-bottom:24px}
-  .czw-grid{grid-template-columns:1fr}
-  .czw-frame-wrap{display:none}
-  .czw-steps{padding:0}
-  .czw-steps li{min-height:0;opacity:1;padding:28px 0;border-bottom:1px solid #2A2A2A;align-items:start}
-  .czw-steps li.done{opacity:1}
-  .czw-steps .m-shot{display:block;width:100%;height:auto;margin-top:18px;border-radius:8px;border:1px solid #2A2A2A}
   .heri2-cols{grid-template-columns:1fr;gap:16px}
-  .m-cta{display:flex}
   .totop{bottom:84px}
 }
 @media (max-width:600px){
+  .czw-steps{grid-template-columns:1fr 1fr;gap:0 8px}
+  .czw-steps button{font-size:12px;padding:7px 8px;margin-left:-8px}
+  .czw-try{opacity:1;transform:none;height:36px;font-size:12px;right:10px;bottom:10px}
   .hx-title{font-size:clamp(46px,15vw,72px)}
   .hx-lead{font-size:16px}
   .hx-btns .btn{flex:1 1 100%}
   .bt:not(.big):not(.wide) .bt-tx small{display:none}
   .bt-tx{right:58px;left:14px;bottom:14px}
   .bt-go{width:34px;height:34px;right:12px;bottom:12px}
-  .czw-steps li{grid-template-columns:36px 1fr}
   .hx-stats{grid-template-columns:repeat(2,1fr);gap:0}
   .hx-stats div{border-right:0;margin-right:0;padding:14px 0 0}
   .hx-stats dd{font-size:26px}
   .hx-pick{grid-template-areas:'now' 'sw' 'open';grid-template-columns:1fr}
   .hx-open{justify-self:start}
-  .hx-sw{gap:6px}
-  .hx-sw button{width:28px;height:28px}
   .mq span{font-size:18px;line-height:46px;padding:0 14px}
   .bento{grid-auto-rows:170px;gap:10px}
   .bt.big{grid-row:span 2}
@@ -674,41 +657,41 @@ body.home{background:var(--chalk)}
 <div data-ui="header"></div>
 <main id="main">
 
-  <!-- HERO: the customiser, with the real renders from it -->
-  <section class="hx" id="customizer" aria-labelledby="hx-title">
+  <!-- HERO: the shop first, with real new products -->
+  <section class="hx" aria-labelledby="hx-title">
     <div class="hx-glow" aria-hidden="true"></div>
     <div class="hx-grain" aria-hidden="true"></div>
-    <div class="hx-ghost" aria-hidden="true"><span>Pro Custom · Made to order · Pro Custom · Made to order · </span><span>Pro Custom · Made to order · Pro Custom · Made to order · </span></div>
+    <div class="hx-ghost" aria-hidden="true"><span>Honkbal · Softbal · Kwintsheul · Honkbal · Softbal · Kwintsheul · </span><span>Honkbal · Softbal · Kwintsheul · Honkbal · Softbal · Kwintsheul · </span></div>
     <div class="wrap hx-in">
       <div class="hx-copy">
-        <div class="kick hx-kick rv"><span class="dot"></span>SSK Pro Custom · Glove Customizer</div>
+        <div class="kick hx-kick rv"><span class="dot"></span>SSK European Baseball Center · Kwintsheul</div>
         <h1 class="hx-title" id="hx-title">
-          <span class="ln"><span>Ontwerp je</span></span>
-          <span class="ln"><span>eigen <em>hand-</em></span></span>
-          <span class="ln"><span><em>schoen.</em></span></span>
+          <span class="ln"><span>Alles voor</span></span>
+          <span class="ln"><span>honkbal en</span></span>
+          <span class="ln"><span><em>softbal.</em></span></span>
         </h1>
-        <p class="hx-lead rv" style="--i:3">Kies je web, leer en veters, kleur twintig onderdelen en zet je naam op de duim. Elke keuze zie je meteen op de handschoen, van vier kanten.</p>
+        <p class="hx-lead rv" style="--i:3">Handschoenen, knuppels, ballen, helmen en clubkleding van SSK, Rawlings, Wilson, Easton en meer. Bestel online of kom passen in de showroom.</p>
         <div class="hx-btns rv" style="--i:4">
-          <a class="btn btn-red btn-xl mag" id="cz-main"><span>Start de customizer</span><svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a class="btn btn-ghost btn-xl" href="#hoe-het-werkt">Zo werkt het</a>
+          <a class="btn btn-red btn-xl mag" id="hx-new"><span>Bekijk nieuw binnen</span><svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-ghost btn-xl" href="#shop">Shop per categorie</a>
         </div>
         <dl class="hx-stats rv" style="--i:5">
-          <div><dt>Vanaf</dt><dd class="mono">€ 374,95</dd></div>
-          <div><dt>Onderdelen</dt><dd><span data-count="20">20</span></dd></div>
-          <div><dt>Zijden</dt><dd><span data-count="4">4</span></dd></div>
-          <div><dt>Per bestelling</dt><dd>tot <span data-count="5">5</span></dd></div>
+          <div><dt>Levertijd</dt><dd>3–5 <small>dagen</small></dd></div>
+          <div><dt>Categorieën</dt><dd><span data-count="17">17</span></dd></div>
+          <div><dt>Topmerken</dt><dd><span data-count="8">8</span></dd></div>
+          <div><dt>Showroom</dt><dd>Kwintsheul</dd></div>
         </dl>
       </div>
 
       <div class="hx-vis">
         <div class="hx-stage" id="stage" aria-live="polite">
-          <div class="hx-tilt" id="tilt"><div class="hx-float" id="gloves"></div></div>
+          <div class="hx-tilt" id="tilt"><div class="hx-float" id="heroimgs"></div></div>
           <div class="hx-shadow" aria-hidden="true"></div>
         </div>
         <div class="hx-pick">
-          <div class="hx-now"><small>Startkleur uit de customizer</small><b id="cw-name">Cardinal / Wit</b></div>
-          <div class="hx-sw" id="swatches" role="group" aria-label="Kies een startkleur"></div>
-          <a class="link hx-open" id="cw-open">Open met deze kleuren <svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="hx-now"><small id="hp-brand">Nieuw binnen</small><b id="hp-name"></b><span class="mono" id="hp-price"></span></div>
+          <div class="hx-thumbs" id="thumbs" role="group" aria-label="Kies een product"></div>
+          <a class="link hx-open" id="hp-open">Bekijk product <svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
     </div>
@@ -735,25 +718,7 @@ body.home{background:var(--chalk)}
   </div>
   <div class="rail" id="rail" tabindex="0" aria-label="Nieuwe handschoenen, scroll horizontaal"></div>
   <div class="wrap"><div class="rail-bar" aria-hidden="true"><i id="railbar"></i></div>
-    <div class="czline rv"><div><b>Staat jouw handschoen er niet tussen?</b><span>Ontwerp hem zelf, van web tot naam op de duim.</span></div><a class="btn btn-red sm mag" id="cz-line">Start de customizer</a></div>
   </div></section>
-
-  <!-- CUSTOMISER WALKTHROUGH -->
-  <section class="czw" id="hoe-het-werkt" aria-labelledby="czw-title">
-    <div class="wrap">
-      <div class="czw-h rv"><div class="kick">Glove Customizer</div><h2 class="d-lg" id="czw-title">In zeven stappen<br>van idee naar <em>handschoen</em></h2>
-        <p>Dit is de customizer zelf. Je bouwt de handschoen stap voor stap, ziet hem van vier kanten en stuurt je ontwerp in één keer naar SSK Europe.</p></div>
-      <div class="czw-grid">
-        <div class="czw-frame-wrap"><div class="czw-frame">
-          <div class="czw-bar"><i></i><i></i><i></i><span>SSK Glove Customizer</span><b id="czw-n">01 / 07</b></div>
-          <a class="czw-shots" id="czw-shots" aria-label="Open de Glove Customizer"></a>
-          <div class="czw-prog" id="czw-prog"></div>
-        </div></div>
-        <ol class="czw-steps" id="czw-steps"></ol>
-      </div>
-      <div class="czw-end rv"><a class="btn btn-red btn-xl mag" id="cz-end"><span>Ontwerp je handschoen</span></a><span>Gratis ontwerpen. Je betaalt pas als je bestelt.</span></div>
-    </div>
-  </section>
 
   <!-- SHOP TABS -->
   <section class="sec" aria-labelledby="tabs-title"><div class="wrap">
@@ -761,6 +726,26 @@ body.home{background:var(--chalk)}
     <div class="tabs rv" role="tablist" aria-label="Productgroepen" id="tabs"></div>
     <div class="tabpanel" id="tabpanel" role="tabpanel" tabindex="0"></div>
   </div></section>
+
+  <!-- CUSTOMISER: compact, after the shop -->
+  <section class="czw" id="customizer" aria-labelledby="czw-title">
+    <div class="wrap">
+      <div class="czw-grid">
+        <div class="czw-side rv">
+          <div class="kick">Glove Customizer</div>
+          <h2 class="d-lg" id="czw-title">Liever je<br><em>eigen</em> handschoen?</h2>
+          <p>Stel een SSK Pro Custom samen: web, leer, twintig kleuren, logo's en je naam op de duim. Je ziet hem meteen van vier kanten.</p>
+          <ol class="czw-steps" id="czw-steps" role="tablist" aria-label="Stappen in de customizer"></ol>
+          <div class="czw-end"><a class="btn btn-red mag" id="cz-end"><span>Start de customizer</span><svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span>Vanaf <b class="mono">€ 374,95</b></span></div>
+        </div>
+        <div class="czw-frame rv" style="--i:1">
+          <div class="czw-bar"><i></i><i></i><i></i><span>SSK Glove Customizer</span><b id="czw-n">01 / 07</b></div>
+          <a class="czw-shots" id="czw-shots" aria-label="Open de Glove Customizer"></a>
+          <div class="czw-prog" id="czw-prog"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- HERITAGE -->
   <section class="heri2" aria-label="Over SSK">
@@ -779,7 +764,6 @@ body.home{background:var(--chalk)}
   <section class="brandmq" aria-label="Merken"><div class="mq-in" id="brands"></div></section>
 </main>
 <div data-ui="footer"></div>
-<a class="m-cta" id="m-cta" aria-label="Start de Glove Customizer">Ontwerp je handschoen <svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 <button class="totop" id="totop" aria-label="Terug naar boven"><svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
 <script>
 /* SSK Europe shop content, taken from sskeurope.ccvshop.nl (Nov 2026). Shared by all five homepage concepts. */
@@ -1248,48 +1232,53 @@ body.home{background:var(--chalk)}
   U.mount({ header: U.header(), usp: U.usp(), club: U.club(), showroom: U.showroom(), footer: U.footer() });
 
   /* ---------- links ---------- */
-  ['cz-main', 'cz-line', 'cz-end', 'm-cta'].forEach(id => { const a = document.getElementById(id); if (a) a.href = S.CUSTOMIZER_URL; });
+  $('#cz-end').href = S.CUSTOMIZER_URL;
+  $('#hx-new').href = U.nav('New Arrivals').url;
   $('#all-gloves').href = U.nav('Handschoenen').url;
 
-  /* ---------- hero: colourways from the customiser ---------- */
-  const CW = S.COLOURWAYS;
-  const gl = $('#gloves'), sw = $('#swatches'), hx = $('.hx');
-  // Only the first glove loads up front; the other eight follow once the page has loaded.
-  gl.innerHTML = CW.map((c, i) => `<img ${i ? 'data-src' : 'src'}="${c.img}" alt="SSK Pro Custom handschoen in ${c.name}, gemaakt in de customizer" width="845" height="1000"${i ? '' : ' fetchpriority="high"'} class="${i ? '' : 'on'}">`).join('');
-  const loadAll = () => $$('img[data-src]', gl).forEach(im => { im.src = im.dataset.src; im.removeAttribute('data-src'); });
-  if (document.readyState === 'complete') setTimeout(loadAll, 300); else addEventListener('load', () => setTimeout(loadAll, 300));
-  sw.innerHTML = CW.map((c, i) => `<button type="button" style="--a:${c.a};--b:${c.b}" aria-label="${c.name}" aria-pressed="${i === 0}" data-i="${i}"><i></i></button>`).join('');
-  let cur = 0, timer = null;
-  const imgs = $$('img', gl), btns = $$('button', sw);
+  /* ---------- hero: new products from the shop ---------- */
+  // Transparent cut-outs of the shop's own product photos live in assets/hero/<photo id>.webp.
+  const HERO = [
+    [P.gloves[0], '2410112359', '#C8102E'], [P.gloves[2], '2382787655', '#22B5A0'],
+    [P.gloves[3], '2410122391', '#E0559A'], [P.bats[0], '2363268062', '#C8102E'],
+    [P.helmets[1], '2382805112', '#C8102E'], [P.balls[0], '2417010101', '#2F4A9A']
+  ].map(([p, id, accent]) => ({ p, accent, img: 'assets/hero/' + id + '.webp' }));
+  const hi = $('#heroimgs'), th = $('#thumbs'), hx = $('.hx');
+  hi.innerHTML = HERO.map((h, i) => `<img src="${h.img}" alt="${h.p.brand} ${h.p.name}"${i ? ' loading="lazy"' : ' fetchpriority="high"'} class="${i ? '' : 'on'}">`).join('');
+  th.innerHTML = HERO.map((h, i) => `<button type="button" aria-label="${h.p.brand} ${h.p.name}" aria-pressed="${i === 0}" data-i="${i}"><img src="${h.img}" alt="" loading="lazy"><i></i></button>`).join('');
+  let cur = -1, timer = null;
+  const imgs = $$('img', hi), btns = $$('button', th);
   function show(i, user) {
+    i = (i + HERO.length) % HERO.length;
     if (i === cur) return;
-    const prev = cur; cur = (i + CW.length) % CW.length;
-    const nx = imgs[cur]; if (nx.dataset.src) { nx.src = nx.dataset.src; nx.removeAttribute('data-src'); }
+    const prev = cur; cur = i;
     imgs.forEach((im, k) => { im.classList.toggle('on', k === cur); im.classList.toggle('out', k === prev); });
     btns.forEach((b, k) => b.setAttribute('aria-pressed', k === cur));
-    $('#cw-name').textContent = CW[cur].name;
-    $('#cw-open').href = CW[cur].url;
-    hx.style.setProperty('--accent', CW[cur].a === '#1A1A1A' ? CW[cur].b : CW[cur].a);
+    const p = HERO[cur].p;
+    $('#hp-brand').textContent = (p.tag === 'Sale' ? 'Sale · ' : 'Nieuw binnen · ') + p.brand;
+    $('#hp-name').textContent = p.name;
+    $('#hp-price').innerHTML = S.eur(p.price) + (p.was ? ` <s>${S.eur(p.was)}</s>` : '');
+    $('#hp-open').href = p.url;
+    hx.style.setProperty('--accent', HERO[cur].accent);
     if (user) restart();
   }
   function restart() {
-    clearInterval(timer); sw.classList.remove('run'); void sw.offsetWidth;
+    clearInterval(timer); th.classList.remove('run'); void th.offsetWidth;
     if (RM) return;
-    sw.classList.add('run');
-    timer = setInterval(() => show(cur + 1), 3600);
+    th.classList.add('run');
+    timer = setInterval(() => show(cur + 1), 4000);
   }
-  $('#cw-open').href = CW[0].url;
-  hx.style.setProperty('--accent', CW[0].a);
-  sw.addEventListener('click', e => { const b = e.target.closest('button'); if (b) show(+b.dataset.i, true); });
-  sw.addEventListener('keydown', e => {
+  show(0);
+  th.addEventListener('click', e => { const b = e.target.closest('button'); if (b) show(+b.dataset.i, true); });
+  th.addEventListener('keydown', e => {
     if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
     e.preventDefault(); show(cur + (e.key === 'ArrowRight' ? 1 : -1), true); btns[cur].focus();
   });
   const stage = $('#stage');
-  stage.addEventListener('click', () => { location.href = CW[cur].url; });
-  stage.title = 'Open deze handschoen in de customizer';
+  stage.addEventListener('click', () => { location.href = HERO[cur].p.url; });
+  stage.title = 'Bekijk dit product in de webshop';
   // Pause the carousel while the visitor is looking at it.
-  $('.hx-vis').addEventListener('pointerenter', () => { clearInterval(timer); sw.classList.remove('run'); });
+  $('.hx-vis').addEventListener('pointerenter', () => { clearInterval(timer); th.classList.remove('run'); });
   $('.hx-vis').addEventListener('pointerleave', restart);
   restart();
   // Tilt the glove towards the pointer.
@@ -1311,7 +1300,7 @@ body.home{background:var(--chalk)}
   }
 
   /* ---------- marquee ---------- */
-  const mqItems = ['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Slaghandschoenen', 'Clubkleding', 'Glove Customizer', 'Showroom Kwintsheul'];
+  const mqItems = ['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Slaghandschoenen', 'Clubkleding', 'Outlet', 'Showroom Kwintsheul'];
   const mqRow = mqItems.map(t => `<span>${t}</span><i>✶</i>`).join('');
   $('#mq').innerHTML = `<div>${mqRow}</div><div>${mqRow}</div>`;
   const brRow = S.BRANDS.map(b => `<span>${b}</span><i></i>`).join('');
@@ -1340,7 +1329,7 @@ body.home{background:var(--chalk)}
 
   /* ---------- glove rail ---------- */
   const rail = $('#rail');
-  rail.innerHTML = '<div class="rail-pad"></div>' + P.gloves.concat(P.more).map(U.card).join('') + `<a class="card cz-card" href="${S.CUSTOMIZER_URL}"><img src="${CW[1].img}" alt="" loading="lazy"><b>Of ontwerp<br>je eigen</b><span class="btn btn-red sm">Start de customizer</span></a><div class="rail-pad"></div>`;
+  rail.innerHTML = '<div class="rail-pad"></div>' + P.gloves.concat(P.more).map(U.card).join('') + `<a class="card cz-card" href="${S.CUSTOMIZER_URL}"><img src="${S.COLOURWAYS[1].img}" alt="" loading="lazy"><b>Of ontwerp<br>je eigen</b><span class="btn btn-red sm">Start de customizer</span></a><div class="rail-pad"></div>`;
   const step = () => Math.min(rail.clientWidth * .8, 900);
   $$('[data-rail]').forEach(b => b.addEventListener('click', () => rail.scrollBy({ left: step() * b.dataset.rail, behavior: RM ? 'auto' : 'smooth' })));
   function railState() {
@@ -1362,23 +1351,30 @@ body.home{background:var(--chalk)}
   rail.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); rail.scrollBy({ left: (e.key === 'ArrowRight' ? 1 : -1) * 300, behavior: RM ? 'auto' : 'smooth' }); } });
   rail.addEventListener('dragstart', e => e.preventDefault());
 
-  /* ---------- customiser walkthrough ---------- */
+  /* ---------- customiser: compact czStep viewer ---------- */
   const ST = S.CZ_STEPS;
   $('#czw-shots').innerHTML = ST.map((s, i) => `<img src="${s.img}" alt="Customizer, stap ${i + 1}: ${s.t}" width="1600" height="1000" loading="lazy" class="${i ? '' : 'on'}">`).join('') + `<span class="czw-try">Probeer het zelf ${arrow}</span>`;
   $('#czw-shots').href = S.CUSTOMIZER_URL;
   $('#czw-prog').innerHTML = ST.map(() => '<i></i>').join('');
-  $('#czw-steps').innerHTML = ST.map((s, i) => `<li data-i="${i}"${i ? '' : ' class="on"'}>
-      <span class="n">${String(i + 1).padStart(2, '0')}</span><div><h3>${s.t}</h3><p>${s.d}</p>
-      <img class="m-shot" src="${s.img}" alt="Customizer, stap ${i + 1}: ${s.t}" loading="lazy" width="1600" height="1000"></div></li>`).join('');
-  const shots = $$('#czw-shots img'), segs = $$('#czw-prog i'), lis = $$('#czw-steps li');
+  $('#czw-steps').innerHTML = ST.map((s, i) => `<li><button type="button" role="tab" aria-selected="${i === 0}" data-i="${i}" title="${s.d}"><span class="n">${String(i + 1).padStart(2, '0')}</span>${s.t}</button></li>`).join('');
+  const shots = $$('#czw-shots img'), segs = $$('#czw-prog i'), sbs = $$('#czw-steps button');
+  let czStep = 0, stepTimer = null, stepVisible = false;
   function setStep(i) {
-    shots.forEach((im, k) => im.classList.toggle('on', k === i));
-    lis.forEach((li, k) => { li.classList.toggle('on', k === i); li.classList.toggle('done', k < i); });
-    segs.forEach((s, k) => s.classList.toggle('on', k <= i));
-    $('#czw-n').textContent = String(i + 1).padStart(2, '0') + ' / ' + String(ST.length).padStart(2, '0');
+    czStep = (i + ST.length) % ST.length;
+    shots.forEach((im, k) => im.classList.toggle('on', k === czStep));
+    sbs.forEach((b, k) => b.setAttribute('aria-selected', k === czStep));
+    segs.forEach((g, k) => g.classList.toggle('on', k <= czStep));
+    $('#czw-n').textContent = String(czStep + 1).padStart(2, '0') + ' / ' + String(ST.length).padStart(2, '0');
   }
-  const stepIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) setStep(+e.target.dataset.i); }), { rootMargin: '-45% 0px -45% 0px' });
-  lis.forEach(li => { stepIO.observe(li); li.addEventListener('click', () => li.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'center' })); });
+  const stepPlay = () => { clearInterval(stepTimer); if (!RM && stepVisible) stepTimer = setInterval(() => setStep(czStep + 1), 3200); };
+  $('#czw-steps').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { setStep(+b.dataset.i); stepPlay(); } });
+  $('#czw-steps').addEventListener('keydown', e => {
+    const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key]; if (!d) return;
+    e.preventDefault(); setStep(czStep + d); sbs[czStep].focus(); stepPlay();
+  });
+  $('.czw-frame').addEventListener('pointerenter', () => clearInterval(stepTimer));
+  $('.czw-frame').addEventListener('pointerleave', stepPlay);
+  new IntersectionObserver(es => es.forEach(e => { stepVisible = e.isIntersecting; if (stepVisible) stepPlay(); else clearInterval(stepTimer); }), { threshold: .35 }).observe($('.czw'));
 
   /* ---------- tabs ---------- */
   const TABS = [
@@ -1420,23 +1416,19 @@ body.home{background:var(--chalk)}
   });
 
   /* ---------- scroll: progress, header, heritage type, mobile CTA ---------- */
-  const bar = $('.sprog i'), hdr = $('.hdr'), h1 = $('#h1'), h2 = $('#h2'), heri = $('.heri2'), mcta = $('#m-cta'), top = $('#totop');
+  const bar = $('.sprog i'), hdr = $('.hdr'), h1 = $('#h1'), h2 = $('#h2'), heri = $('.heri2'), top = $('#totop');
   let ticking = false;
   function onScroll() {
     ticking = false;
     const y = scrollY, H = document.documentElement.scrollHeight - innerHeight;
     bar.style.transform = `scaleX(${H > 0 ? y / H : 0})`;
     hdr.classList.toggle('scrolled', y > 40);
-    const pastHero = y > hx.offsetTop + hx.offsetHeight - 80;
-    mcta.classList.toggle('show', pastHero && !nearEnd());
     top.classList.toggle('show', y > innerHeight * 1.5);
     if (!RM) {
       const r = heri.getBoundingClientRect(), f = (innerHeight - r.top) / (innerHeight + r.height);
       if (f > -0.1 && f < 1.1) { h1.style.transform = `translateX(${(-f * 22 + 6).toFixed(2)}%)`; h2.style.transform = `translateX(${(f * 22 - 14).toFixed(2)}%)`; }
     }
   }
-  const ftr = $('.ftr');
-  const nearEnd = () => ftr && ftr.getBoundingClientRect().top < innerHeight;
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   onScroll();
   top.addEventListener('click', () => scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' }));
