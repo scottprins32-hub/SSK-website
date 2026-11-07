@@ -107,7 +107,8 @@ body.home{background:var(--chalk)}
 /* image wipe and pointer spotlight */
 .js .bt.rv .bt-img{clip-path:inset(100% 0 0 0)}
 .js .bt.rv.in .bt-img{clip-path:inset(0 0 0 0);transition:clip-path 1.1s cubic-bezier(.65,0,.25,1) calc(var(--i,0) * 90ms + 100ms)}
-.bt,.pc{--mx:50%;--my:50%;background:radial-gradient(520px circle at var(--mx) var(--my),rgba(200,16,46,.09),transparent 55%),#fff}
+.bt,.pc{--mx:50%;--my:50%;--sp:0;background:radial-gradient(520px circle at var(--mx) var(--my),rgba(200,16,46,var(--sp)),transparent 55%),#fff}
+.bt:hover,.pc:hover{--sp:.09}
 .pc{position:relative}
 .pc .ph{background:transparent}
 .bt .bt-img img,.pc .ph img{background:transparent!important;mix-blend-mode:multiply}

@@ -1,0 +1,100 @@
+{{CAT_NAME}} · SSK Europe
+<meta name="description" content="{{CAT_NAME}} bij SSK Europe: {{CAT_COUNT}} producten van SSK, Rawlings, Wilson, Easton en meer. Bestel online of kom passen in de showroom in Kwintsheul.">
+<meta property="og:title" content="{{CAT_NAME}} · SSK Europe">
+<meta property="og:image" content="../assets/customizer/og.jpg">
+<meta name="theme-color" content="#000000">
+<style>
+/*HOME_CSS*/
+/*CAT_CSS*/
+</style>
+</head>
+<body class="home catpage">
+<a class="skip" href="#grid">Naar de producten</a>
+<div class="sprog" aria-hidden="true"><i></i></div>
+<div data-ui="header"></div>
+<main id="main">
+
+  <section class="ch" aria-labelledby="ch-title">
+    <div class="hx-grain" aria-hidden="true"></div>
+    <div class="ch-glow" aria-hidden="true"></div>
+    <div class="wrap ch-in">
+      <div class="ch-copy">
+        <nav class="crumbs rv" aria-label="Kruimelpad"><a href="../">Home</a><span aria-hidden="true">/</span><span aria-current="page" id="crumb"></span></nav>
+        <h1 class="ch-title" id="ch-title"></h1>
+        <p class="ch-sub rv" style="--i:2" id="ch-sub"></p>
+        <div class="ch-meta rv" style="--i:3"><b class="mono" id="ch-count"></b><span id="ch-brands"></span></div>
+        <div class="ch-subs rv" style="--i:4" id="ch-subs"></div>
+      </div>
+      <div class="ch-vis" id="ch-vis" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <div class="tb" id="tb">
+    <div class="wrap tb-in">
+      <button class="tb-filter" id="open-filters" aria-controls="filters" aria-expanded="false"><svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Filters<span class="tb-n" id="filter-n" hidden></span></button>
+      <div class="tb-subs" id="tb-subs" role="group" aria-label="Subcategorie"></div>
+      <div class="tb-right">
+        <span class="tb-count" id="count" aria-live="polite"></span>
+        <label class="tb-sort"><span class="sr">Sorteer</span>
+          <select id="sort">
+            <option value="">Aanbevolen</option>
+            <option value="prijs-op">Prijs laag – hoog</option>
+            <option value="prijs-af">Prijs hoog – laag</option>
+            <option value="korting">Hoogste korting</option>
+            <option value="naam">Naam A – Z</option>
+          </select>
+        </label>
+        <div class="tb-cols" role="group" aria-label="Weergave">
+          <button data-cols="3" aria-label="3 per rij" aria-pressed="false"><i></i><i></i><i></i></button>
+          <button data-cols="4" aria-label="4 per rij" aria-pressed="true"><i></i><i></i><i></i><i></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="cg wrap" id="grid" aria-label="Producten">
+    <aside class="filters" id="filters" aria-label="Filters">
+      <div class="f-head"><b>Filters</b><button class="f-x" id="close-filters" aria-label="Filters sluiten"><svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+      <div class="f-body">
+        <label class="f-search"><svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="search" id="q" placeholder="Zoek in deze categorie" autocomplete="off"></label>
+        <fieldset class="f-grp" id="f-subs-grp"><legend>Subcategorie</legend><div id="f-subs"></div></fieldset>
+        <fieldset class="f-grp" id="f-brands-grp"><legend>Merk</legend><div id="f-brands"></div></fieldset>
+        <fieldset class="f-grp"><legend>Prijs</legend>
+          <div class="range" id="range"><div class="range-track"><i id="range-fill"></i></div><input type="range" id="pmin" aria-label="Minimumprijs"><input type="range" id="pmax" aria-label="Maximumprijs"></div>
+          <div class="range-v mono"><span id="pmin-v"></span><span id="pmax-v"></span></div>
+        </fieldset>
+        <label class="f-toggle"><input type="checkbox" id="sale"><span class="sw" aria-hidden="true"></span><span>Alleen aanbiedingen <small id="sale-n"></small></span></label>
+        <button class="f-clear" id="clear" type="button">Wis alle filters</button>
+        <div class="f-extra" id="f-extra"></div>
+      </div>
+      <div class="f-foot"><button class="btn btn-red" id="apply" type="button"></button></div>
+    </aside>
+    <div class="cg-main">
+      <div class="pills" id="pills"></div>
+      <div class="grid4 pgrid" id="pgrid"></div>
+      <div class="empty" id="empty" hidden>
+        <b>Geen producten met deze filters</b>
+        <p>Probeer een andere combinatie, of zoek in de hele webshop.</p>
+        <div><button class="btn btn-navy sm" id="empty-clear" type="button">Wis filters</button><a class="btn btn-line sm" id="empty-shop">Zoek in de webshop</a></div>
+      </div>
+      <div class="more" id="more-wrap"><span class="more-bar"><i id="more-fill"></i></span><span class="mono" id="more-txt"></span><button class="btn btn-line" id="more" type="button">Toon meer</button></div>
+    </div>
+  </section>
+
+  <section class="sec tight others" aria-labelledby="oth-title"><div class="wrap">
+    <div class="sec-h rv"><div><div class="kick">Verder kijken</div><h2 class="d-lg" id="oth-title">Andere categorieën</h2></div><a class="link" id="shop-link">Deze categorie in de webshop <svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    <div id="others"></div>
+  </div></section>
+  <section class="brandmq" aria-label="Merken"><div class="mq-in" id="brands"></div></section>
+</main>
+<div data-ui="footer"></div>
+<button class="totop" id="totop" aria-label="Terug naar boven"><svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+<script>
+/*DATA*/
+window.CAT = /*CAT_JSON*/;
+</script>
+<script>
+/*CAT_JS*/
+</script>
+</body>
+</html>

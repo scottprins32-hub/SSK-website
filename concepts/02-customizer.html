@@ -452,13 +452,17 @@ img{display:block;max-width:100%}
     ['Catcher', 'mask', '/Webwinkel-Category-5784701/Catcher.html', 'Masker, bodyprotector, scheenbeschermers'],
     ['Veld', 'base', '/Webwinkel-Category-5784707/Veld.html', 'Bases, netten, onderhoud'],
     ['Scheidsrechter', 'whistle', '/Webwinkel-Category-5784989/Scheidsrechter.html', 'Umpire gear'],
-    ['Tassen', 'bag', '/Tassen', 'Bat bags en backpacks'],
+    ['Tassen', 'bag', '/Webwinkel-Category-5728421/Tassen.html', 'Bat bags en backpacks'],
     ['Accessoires', 'cap', '/Webwinkel-Category-5856307/Accessoires.html', 'Alles voor de dugout'],
     ['Outlet', 'tag', '/Webwinkel-Category-10665083/Outlet.html', 'Tot 50% korting'],
     ['New Arrivals', 'star', '/New-Arrivals', 'Net binnen'],
     ['Zomer Korting', 'sun', '/Zomer-Korting', 'Zomerdeals'],
     ['Hoofdklasse Holland Series 2026', 'trophy', '/Hoofdklasse-Holland-Series', 'De collectie van de Holland Series']
-  ].map(([name, icon, url, sub]) => ({ name, icon, url: url.startsWith('/') ? BASE + url : url, sub }));
+  ].map(([name, icon, url, sub]) => {
+    // Every category has its own page on this site (built from src/catalog/<slug>.json); `shop` is the same category in the live shop.
+    const slug = name.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    return { name, icon, slug, sub, shop: url.startsWith('/') ? BASE + url : url, url: '../' + slug + '/' };
+  });
   NAV[16].sub = 'De collectie van de Holland Series';
 
   const CAT_IMG = {

@@ -29,6 +29,17 @@ Motion: line-by-line title reveal, scroll reveals, a red stitch scroll bar, marq
 
 Every product shown is a real product from the shop, with its real name, price, link and photo. Every button and link goes somewhere real: shop categories, shop pages, search (it searches the shop), account, cart, Google Maps, phone, e-mail and the customiser. The heritage line "Baseball, it's our game." comes from SSK's US site, sskbaseballshop.com.
 
+### Category pages
+
+Every category has its own page: `handschoenen/`, `knuppels/`, `ballen/`, `helmen/` and so on, 17 in all, linked from the menu, the homepage and the search. Each page lists every product of that category in the shop, with its real name, price, sale price and photo, and links each product to the shop, where it is bought.
+
+- **Hero:** the category name, the number of products, the main brands, buttons for the subcategories (or a "Kies je vereniging" list for Clubkleding) and three floating product photos.
+- **Filters:** subcategory, brand (with live counts), a price slider, "alleen aanbiedingen" and a search within the category. Sorting by price, discount or name. On phones the filters open as a panel.
+- **Shareable:** the filters live in the address, so `handschoenen/?merk=Wilson&sub=catcher-handschoenen` opens exactly that selection.
+- **Grid:** 24 products at a time with "Toon meer"; the second product photo shows on hover; 3 or 4 per row on large screens.
+
+The products come from `src/catalog/<slug>.json`, written by `scripts/fetch_catalog.py`, which reads every page and subcategory of each category in the shop. Photos load from the shop's own 620×620 thumbnails. The *Catalogue* GitHub Action runs it every Monday (or on demand from the Actions tab), rebuilds the pages and commits the result, so prices stay current.
+
 ### Customiser
 
 The customiser is `scottprins32-hub/ssk-glove-demo`, live at https://scottprins32-hub.github.io/ssk-glove-demo/ (`CUSTOMIZER_URL` in `src/data.js`). `assets/customizer/` holds what was captured from it: `glove-*.webp` (a transparent render of each starter glove), `step-1.webp` … `step-7.webp` (a screenshot of each step, in Dutch) and `og.jpg` (the share image). The share link for each starter (`CZ_LINKS` in `src/data.js`) was made with the customiser's own Share button.
@@ -47,4 +58,4 @@ Turn it on once in the repository: **Settings → Pages → Build and deployment
 
 ## Editing
 
-`src/base.css` holds the design tokens and components, `src/ui.js` the shared header, cards, customiser block, showroom and footer, `src/data.js` the content, and `src/home.css` / `src/home.js` the layout and motion of the version 2 homepage. Edit `src/`, then run `python3 build.py` to rebuild `index.html` and the files in `concepts/`.
+`src/base.css` holds the design tokens and components, `src/ui.js` the shared header, cards, customiser block, showroom and footer, `src/data.js` the content, and `src/home.css` / `src/home.js` the layout and motion of the version 2 homepage. `src/category.html`, `src/cat.css` and `src/cat.js` make the category pages. Edit `src/`, then run `python3 build.py` to rebuild `index.html`, the category pages and the files in `concepts/`.
