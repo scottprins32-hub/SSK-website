@@ -40,6 +40,18 @@ Every category has its own page: `handschoenen/`, `knuppels/`, `ballen/`, `helme
 
 The products come from `src/catalog/<slug>.json`, written by `scripts/fetch_catalog.py`, which reads every page and subcategory of each category in the shop. Photos load from the shop's own 620×620 thumbnails. The *Catalogue* GitHub Action runs it every Monday (or on demand from the Actions tab), rebuilds the pages and commits the result, so prices stay current.
 
+### Themes
+
+A picker in the header switches between **Licht** (the whole site light), **Standaard** (the original look: black header and hero, light content) and **Donker** (the whole site dark). The choice is remembered per visitor and applied before the first paint; switching reveals the new theme in a circle from the button. On phones the picker is one button that steps through the three. The themes live in `src/theme.css`, which `build.py` adds last on every page.
+
+### Product photos
+
+Every product photo sits on a soft studio spotlight with a contact shadow underneath; white photo backgrounds melt into it, colours get a little more saturation, and on hover the product lifts. In the dark theme the photos keep their light stage, so they stand out against the dark page.
+
+### Speed
+
+Fonts are hosted with the site (`assets/fonts/`, preloaded), so nothing waits on Google. The photos a category page shows first (its first 32 products and its hero) are copied small into `assets/thumbs/` by `scripts/fetch_thumbs.py` and load from the site itself; every other photo still comes from the shop when it is needed. The Catalogue workflow refreshes the thumbnails along with the products.
+
 ### Customiser
 
 The customiser is `scottprins32-hub/ssk-glove-demo`, live at https://scottprins32-hub.github.io/ssk-glove-demo/ (`CUSTOMIZER_URL` in `src/data.js`). `assets/customizer/` holds what was captured from it: `glove-*.webp` (a transparent render of each starter glove), `step-1.webp` … `step-7.webp` (a screenshot of each step, in Dutch) and `og.jpg` (the share image). The share link for each starter (`CZ_LINKS` in `src/data.js`) was made with the customiser's own Share button.

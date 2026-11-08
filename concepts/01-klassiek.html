@@ -4,9 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SSK Europe · Versie 01 · Klassiek</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script>
+/* Theme before first paint: "licht", "donker" or the standard look (no attribute). */
+try { var t = localStorage.getItem('ssk-theme'); if (t === 'licht' || t === 'donker') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
+<link rel="preload" href="../assets/fonts/barlow-condensed-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* Fonts are hosted with the site (latin subset), so no request leaves for Google before the first paint. */
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:700;font-display:swap;src:url(../assets/fonts/barlow-condensed-700.woff2) format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:800;font-display:swap;src:url(../assets/fonts/barlow-condensed-800.woff2) format('woff2')}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:400;font-display:swap;src:url(../assets/fonts/barlow-400.woff2) format('woff2')}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:500;font-display:swap;src:url(../assets/fonts/barlow-500.woff2) format('woff2')}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:600;font-display:swap;src:url(../assets/fonts/barlow-600.woff2) format('woff2')}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:700;font-display:swap;src:url(../assets/fonts/barlow-700.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(../assets/fonts/ibm-plex-mono-400.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url(../assets/fonts/ibm-plex-mono-600.woff2) format('woff2')}
 /* SSK Europe design system: tokens + components. Shared by all five versions. */
 :root{
   /* SSK brand: black, red, white. (Token names kept from the design system; "navy" now holds the black scale.) */
@@ -336,6 +350,249 @@ img{display:block;max-width:100%}
 .cz-wrap .stitch{margin-bottom:24px}
 @media (max-width:900px){.hero .wrap{grid-template-columns:1fr}}
 </style>
+<style>
+/* Loaded last on every page (build.py puts it at the end of <head>).
+   1. Product photos on a lit stage, for every theme.
+   2. The theme picker in the header.
+   3. Licht: the whole site light.   4. Donker: the whole site dark.
+   The standard look is the page's own styles, with no data-theme on <html>. */
+
+/* ---------- 1. product photos pop ---------- */
+/* Every photo sits on a soft studio spotlight with a contact shadow underneath. White photo backgrounds
+   melt into the light (multiply), colours get a little more life, and on hover the product lifts. */
+.pc .ph{background:radial-gradient(115% 95% at 50% 36%,#fff 0,#fff 40%,#E9EAEC 100%)}
+.pc .ph:before{content:'';position:absolute;left:20%;right:20%;bottom:6%;height:10%;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.24),rgba(0,0,0,0));z-index:0;transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .6s}
+.pc .ph img{z-index:1;background:transparent!important;mix-blend-mode:multiply;filter:saturate(1.18) contrast(1.05);transition:transform .7s cubic-bezier(.2,.8,.2,1),opacity .45s ease}
+.pc:hover .ph img{transform:translateY(-7px) scale(1.07)}
+.pc:hover .ph:before{transform:scaleX(.8);opacity:.6}
+.pc .badge{z-index:3}
+.pc .phd{background:transparent}
+.bt{background:radial-gradient(520px circle at var(--mx) var(--my),rgba(200,16,46,var(--sp,0)),transparent 55%),radial-gradient(110% 90% at 50% 34%,#fff 0,#fff 38%,#E9EAEC 100%)}
+.bt-img:before{content:'';position:absolute;left:28%;right:28%;bottom:66px;height:22px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.2),rgba(0,0,0,0));transition:transform .8s cubic-bezier(.2,.8,.2,1),opacity .8s}
+.bt.big .bt-img:before{bottom:78px;height:34px}
+.bt .bt-img img{filter:saturate(1.18) contrast(1.05)}
+.bt:hover .bt-img img{transform:translateY(-8px) scale(1.06) rotate(-2deg)}
+.bt:hover .bt-img:before{transform:scaleX(.78);opacity:.6}
+.hx-float img.on{filter:blur(0) drop-shadow(0 30px 40px rgba(0,0,0,.55)) saturate(1.15) contrast(1.04)}
+.hx-thumbs img{filter:saturate(1.15)}
+.ch-vis img{background:radial-gradient(115% 95% at 50% 36%,#fff 0,#fff 40%,#E9EAEC 100%);filter:saturate(1.15) contrast(1.04)}
+.sg-im img{mix-blend-mode:multiply;filter:saturate(1.15)}
+
+/* ---------- 2. theme picker ---------- */
+.theme{display:flex;gap:2px;margin-left:auto;padding:3px;border:1px solid rgba(255,255,255,.18);border-radius:99px}
+.theme button{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;color:var(--g400);transition:background-color .2s var(--ease),color .2s var(--ease)}
+.theme button .ui{width:16px;height:16px}
+.theme button:hover{color:#fff}
+.theme button[aria-pressed=true]{background:#fff;color:#000}
+.hdr .theme+.acts{margin-left:8px}
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+::view-transition-new(root){z-index:2}
+@media (max-width:600px){
+  .theme{--cycle:1;padding:0;border:0;margin-left:auto}
+  .theme button:not([aria-pressed=true]){display:none}
+  .theme button[aria-pressed=true]{width:40px;height:40px;background:none;color:inherit}
+}
+
+/* ---------- 3. Licht ---------- */
+html[data-theme=licht]{color-scheme:light}
+html[data-theme=licht] body{background:#FAFAFA}
+html[data-theme=licht] .theme{border-color:var(--g300)}
+html[data-theme=licht] .theme button{color:var(--g500)}
+html[data-theme=licht] .theme button:hover{color:var(--navy-900)}
+html[data-theme=licht] .theme button[aria-pressed=true]{background:var(--navy-900);color:#fff}
+@media (max-width:600px){html[data-theme=licht] .theme button[aria-pressed=true]{background:none;color:var(--navy-900)}}
+html[data-theme=licht] .topbar{background:#fff;color:var(--g600);border-bottom:1px solid var(--g200)}
+html[data-theme=licht] .topbar .ui{color:var(--red-600)}
+html[data-theme=licht] .hdr{background:rgba(255,255,255,.92);backdrop-filter:blur(14px) saturate(1.4);color:var(--navy-900);border-bottom:1px solid var(--g200)}
+html[data-theme=licht] .hdr.scrolled{box-shadow:0 10px 30px -10px rgba(0,0,0,.14)}
+html[data-theme=licht] .hdr .logo{color:var(--navy-900)}
+html[data-theme=licht] .search{background:var(--g50);border:1px solid var(--g200)}
+html[data-theme=licht] .hdr .acts a:hover,html[data-theme=licht] .hdr .burger:hover{background:var(--g100)}
+html[data-theme=licht] .hdr .burger{color:var(--navy-900)}
+html[data-theme=licht] .nav{border-top-color:var(--g200)}
+html[data-theme=licht] .nav>.wrap>a{color:var(--g600)}
+html[data-theme=licht] .nav>.wrap>a:hover,html[data-theme=licht] .nav>.wrap>.all,html[data-theme=licht] .nav .cz{color:var(--navy-900)}
+/* hero */
+html[data-theme=licht] .hx,html[data-theme=licht] .ch{background:#fff;color:var(--g700)}
+html[data-theme=licht] .hx:before,html[data-theme=licht] .ch:before{background-image:linear-gradient(rgba(0,0,0,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.045) 1px,transparent 1px)}
+html[data-theme=licht] .hx-glow,html[data-theme=licht] .ch-glow{opacity:.28}
+html[data-theme=licht] .hx-grain{opacity:.04;mix-blend-mode:multiply}
+html[data-theme=licht] .hx-ghost{-webkit-text-stroke-color:rgba(0,0,0,.07)}
+html[data-theme=licht] .hx-kick{color:var(--navy-900);border-color:var(--g300);background:#fff}
+html[data-theme=licht] .hx-title,html[data-theme=licht] .ch-title,html[data-theme=licht] .ch-title.one .w>span{color:var(--navy-900)}
+html[data-theme=licht] .hx-lead,html[data-theme=licht] .ch-sub{color:var(--g700)}
+html[data-theme=licht] .hx .btn-ghost{color:var(--navy-900);border-color:var(--g300)}
+html[data-theme=licht] .hx .btn-ghost:hover{border-color:var(--navy-900);background:var(--g50)}
+html[data-theme=licht] .hx-stats{border-top-color:var(--g200)}
+html[data-theme=licht] .hx-stats div{border-right-color:var(--g200)}
+html[data-theme=licht] .hx-stats dt{color:var(--g500)}
+html[data-theme=licht] .hx-stats dd{color:var(--navy-900)}
+html[data-theme=licht] .hx-stats dd small{color:var(--g500)}
+html[data-theme=licht] .hx-pick{background:rgba(255,255,255,.85);border-color:var(--g200);box-shadow:var(--sh-raised)}
+html[data-theme=licht] .hx-now small{color:var(--g500)}
+html[data-theme=licht] .hx-now b,html[data-theme=licht] .hx-now .mono,html[data-theme=licht] .hx-open{color:var(--navy-900)}
+html[data-theme=licht] .hx-thumbs button{background:var(--g50);border-color:var(--g200)}
+html[data-theme=licht] .hx-thumbs button:hover{background:var(--g100)}
+html[data-theme=licht] .hx-thumbs button[aria-pressed=true]{background:#fff;border-color:var(--navy-900)}
+html[data-theme=licht] .hx-thumbs img{mix-blend-mode:multiply}
+html[data-theme=licht] .hx-float img.on{filter:blur(0) drop-shadow(0 28px 34px rgba(0,0,0,.22)) saturate(1.15) contrast(1.04)}
+html[data-theme=licht] .hx-shadow{background:radial-gradient(closest-side,rgba(0,0,0,.28),transparent)}
+html[data-theme=licht] .hx-cue{border-color:rgba(0,0,0,.3)}
+html[data-theme=licht] .hx-cue span{background:var(--navy-900)}
+html[data-theme=licht] .crumbs{color:var(--g500)}
+html[data-theme=licht] .crumbs a:hover,html[data-theme=licht] .crumbs [aria-current]{color:var(--navy-900)}
+html[data-theme=licht] .ch-meta{color:var(--g600)}
+html[data-theme=licht] .ch-meta b{color:var(--navy-900);border-color:var(--g300)}
+html[data-theme=licht] .ch-subs button{color:var(--navy-900);border-color:var(--g300);background:#fff}
+html[data-theme=licht] .ch-subs button small{color:var(--g500)}
+html[data-theme=licht] .ch-subs button:hover{border-color:var(--navy-900)}
+html[data-theme=licht] .ch-subs button[aria-pressed=true]{background:var(--red-600);border-color:var(--red-600);color:#fff}
+html[data-theme=licht] .ch-subs button[aria-pressed=true] small{color:#fff}
+html[data-theme=licht] .ch-pick span{color:var(--g500)}
+html[data-theme=licht] .ch-pick select{color:var(--navy-900);background-color:var(--g50);border-color:var(--g300);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' fill='none' stroke='%23111' stroke-width='1.8'%3E%3Cpath d='M1 1.5l6 6 6-6'/%3E%3C/svg%3E")}
+html[data-theme=licht] .ch-vis img{box-shadow:0 26px 50px -14px rgba(0,0,0,.28),0 0 0 1px rgba(0,0,0,.05)}
+/* customiser, heritage, Holland Series, footer */
+html[data-theme=licht] .czw{background:var(--g50);color:var(--g700)}
+html[data-theme=licht] .czw-side .d-lg,html[data-theme=licht] .czw-end b{color:var(--navy-900)}
+html[data-theme=licht] .czw-steps button{color:var(--g500)}
+html[data-theme=licht] .czw-steps button:hover,html[data-theme=licht] .czw-steps button[aria-selected=true]{color:var(--navy-900);background:var(--g100)}
+html[data-theme=licht] .czw-end>span{color:var(--g600)}
+html[data-theme=licht] .czw-frame{background:#fff;border-color:var(--g200);box-shadow:0 30px 60px -20px rgba(0,0,0,.2)}
+html[data-theme=licht] .czw-bar{border-bottom-color:var(--g200);color:var(--g500)}
+html[data-theme=licht] .czw-bar b{color:var(--navy-900)}
+html[data-theme=licht] .czw-bar i{background:var(--g300)}
+html[data-theme=licht] .czw-prog i{background:var(--g200)}
+html[data-theme=licht] .heri2{background:#fff;color:var(--g700)}
+html[data-theme=licht] .heri2-type,html[data-theme=licht] .heri2-cols .big{color:var(--navy-900)}
+html[data-theme=licht] .heri2-type .l2{-webkit-text-stroke-color:rgba(0,0,0,.55)}
+html[data-theme=licht] .panel.navy{background:#fff;border-color:var(--g200);color:var(--g700)}
+html[data-theme=licht] .panel.navy .d-md{color:var(--navy-900)}
+html[data-theme=licht] .panel.navy [style*="color:#fff"]{color:var(--navy-900)!important}
+html[data-theme=licht] .panel.navy [style*="border-top"]{border-top-color:var(--g200)!important}
+html[data-theme=licht] .split .panel.navy:before{-webkit-text-stroke-color:rgba(0,0,0,.12)}
+html[data-theme=licht] .ftr{background:#F2F2F2;color:var(--g600);border-top:1px solid var(--g200)}
+html[data-theme=licht] .ftr .logo,html[data-theme=licht] .ftr h4,html[data-theme=licht] .ftr a:hover{color:var(--navy-900)}
+html[data-theme=licht] .ftr .soc a{border-color:var(--g300)}
+html[data-theme=licht] .ftr .soc a:hover{border-color:var(--navy-900)}
+html[data-theme=licht] .ftr .bot,html[data-theme=licht] .ftr-mark{border-top-color:var(--g200);color:var(--g500)}
+html[data-theme=licht] .ftr-mark{color:transparent;-webkit-text-stroke-color:rgba(0,0,0,.28)}
+html[data-theme=licht] .ftr-mark span:first-child{color:var(--red-600)}
+
+/* ---------- 4. Donker ---------- */
+html[data-theme=donker]{color-scheme:dark;--chalk:#0B0B0B;--sh-card:0 0 0 1px rgba(255,255,255,.02);--sh-raised:0 18px 40px -12px rgba(0,0,0,.8)}
+html[data-theme=donker] body{background:#0B0B0B;color:#C4C4C4}
+html[data-theme=donker] .d-xl,html[data-theme=donker] .d-lg,html[data-theme=donker] .d-md,html[data-theme=donker] .d-sm,html[data-theme=donker] .caps{color:#fff}
+html[data-theme=donker] .sec-h p,html[data-theme=donker] .muted{color:#9A9A9A}
+html[data-theme=donker] .link{color:#fff}
+html[data-theme=donker] .link:hover{color:var(--red-600)}
+html[data-theme=donker] .hdr.scrolled{box-shadow:0 8px 30px rgba(0,0,0,.7),0 1px 0 #1c1c1c}
+html[data-theme=donker] .card{background:#131313;border-color:#242424}
+html[data-theme=donker] .btn-line{background:transparent;color:#fff;border-color:#3A3A3A}
+html[data-theme=donker] .btn-line:hover{border-color:#fff}
+html[data-theme=donker] .btn-navy{background:#fff;color:#000}
+html[data-theme=donker] .btn-navy:hover{background:#E6E6E6}
+html[data-theme=donker] .b-new{background:#fff;color:#000}
+html[data-theme=donker] .chip{background:#131313;border-color:#2A2A2A;color:#EDEDED}
+html[data-theme=donker] .chip:hover{background:#fff;border-color:#fff;color:#000}
+html[data-theme=donker] .chip svg{color:currentColor}
+html[data-theme=donker] .usp{background:#0F0F0F;border-bottom-color:#1F1F1F}
+html[data-theme=donker] .usp svg,html[data-theme=donker] .usp b{color:#fff}
+html[data-theme=donker] .usp small{color:#8E8E8E}
+html[data-theme=donker] .sugg{background:#141414;color:#C4C4C4;border-top-color:#222}
+html[data-theme=donker] .sugg a{color:#EDEDED}
+html[data-theme=donker] .sugg a:hover,html[data-theme=donker] .sugg a[aria-selected=true]{background:#1E1E1E}
+html[data-theme=donker] .sg-im{background:#fff;border-color:#2A2A2A}
+html[data-theme=donker] .sg-pr,html[data-theme=donker] .sg-cat svg{color:#fff}
+html[data-theme=donker] .sugg .sg-chip{border-color:#2E2E2E}
+html[data-theme=donker] .sugg .sg-chip:hover,html[data-theme=donker] .sugg .sg-chip[aria-selected=true]{background:#fff;color:#000;border-color:#fff}
+html[data-theme=donker] .sugg .sg-all{border-top-color:#222}
+html[data-theme=donker] .mega{background:#121212;border-top-color:#222;color:#C4C4C4}
+html[data-theme=donker] .mega a:hover{background:#1C1C1C}
+html[data-theme=donker] .mega b,html[data-theme=donker] .mega a svg{color:#fff}
+html[data-theme=donker] .drawer .dpanel{background:#111}
+html[data-theme=donker] .drawer .dpanel a.c{color:#fff;border-bottom-color:#222}
+html[data-theme=donker] .drawer .dpanel .logo{color:#fff!important}
+html[data-theme=donker] .drawer .dpanel header button{color:#fff}
+/* product cards: dark card, product on its own lit stage */
+html[data-theme=donker] .pc{background:radial-gradient(520px circle at var(--mx) var(--my),rgba(200,16,46,var(--sp,0)),transparent 55%),#131313;border-color:#242424}
+html[data-theme=donker] .pc:hover{border-color:#3A3A3A}
+html[data-theme=donker] .pc .ph{margin:6px 6px 0;border-radius:4px;border-bottom:0}
+html[data-theme=donker] .pc .name{color:#EDEDED}
+html[data-theme=donker] .pc .brand{color:#8E8E8E}
+html[data-theme=donker] .pc .price b{color:#fff}
+html[data-theme=donker] .pc .price.sale b{color:#FF4B5F}
+html[data-theme=donker] .pc .price s{color:#7A7A7A}
+html[data-theme=donker] .pc .ph:after{background:#fff;color:#000}
+html[data-theme=donker] .bt{border-color:#242424}
+html[data-theme=donker] .bt-go{background:#000}
+/* home sections */
+html[data-theme=donker] .rbtn{background:#131313;border-color:#2E2E2E;color:#fff}
+html[data-theme=donker] .rbtn:hover:not(:disabled){background:#fff;color:#000;border-color:#fff}
+html[data-theme=donker] .rail-bar,html[data-theme=donker] .more-bar{background:#222}
+html[data-theme=donker] .rail-bar i,html[data-theme=donker] .more-bar i{background:#fff}
+html[data-theme=donker] .tabs{border-bottom-color:#222}
+html[data-theme=donker] .tabs button{color:#7E7E7E}
+html[data-theme=donker] .tabs button:hover,html[data-theme=donker] .tabs button[aria-selected=true]{color:#fff}
+html[data-theme=donker] .czw{background:#111}
+html[data-theme=donker] .panel li{border-bottom-color:#222}
+html[data-theme=donker] .panel li .mono,html[data-theme=donker] .hours li .mono{color:#fff}
+html[data-theme=donker] .hours li{border-bottom-color:#222}
+html[data-theme=donker] .hours li.closed .mono{color:#6E6E6E}
+html[data-theme=donker] .addr .ui{color:#9A9A9A}
+html[data-theme=donker] .open-now{background:#1E1E1E;color:#C4C4C4}
+html[data-theme=donker] .open-now.yes{background:#0F2A18;color:#86EFAC}
+html[data-theme=donker] .panel.navy{background:#000;border-color:#242424}
+html[data-theme=donker] .brands{background:#131313;border-color:#242424}
+html[data-theme=donker] .brands>*{border-color:#242424;color:#8E8E8E}
+html[data-theme=donker] .brands>*:hover{background:#1A1A1A;color:#fff}
+html[data-theme=donker] .brandmq{background:#0B0B0B;border-color:#1F1F1F}
+html[data-theme=donker] .brandmq a span{-webkit-text-stroke-color:#4A4A4A}
+html[data-theme=donker] .brandmq a:hover span,html[data-theme=donker] .brandmq a:focus-visible span{color:#fff;-webkit-text-stroke-color:#fff}
+html[data-theme=donker] .heri2{background:#050505}
+html[data-theme=donker] .totop{background:#fff;color:#000}
+html[data-theme=donker] .ftr{background:#000;border-top:1px solid #1A1A1A}
+/* category pages */
+html[data-theme=donker] .tb{background:rgba(11,11,11,.86);border-bottom-color:#1F1F1F}
+html[data-theme=donker] .tb.stuck{background:rgba(11,11,11,.94);box-shadow:0 10px 30px -12px rgba(0,0,0,.9)}
+html[data-theme=donker] .tb-subs button,html[data-theme=donker] .tb-filter{background:#131313;border-color:#2E2E2E;color:#D6D6D6}
+html[data-theme=donker] .tb-subs button:hover{border-color:#fff;color:#fff}
+html[data-theme=donker] .tb-subs button[aria-pressed=true]{background:#fff;border-color:#fff;color:#000}
+html[data-theme=donker] .tb-subs button[aria-pressed=true] small{color:#555}
+html[data-theme=donker] .tb-count{color:#9A9A9A}
+html[data-theme=donker] .tb-sort select,html[data-theme=donker] #f-subs select{background-color:#131313;border-color:#2E2E2E;color:#EDEDED;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23fff' stroke-width='1.6'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E")}
+html[data-theme=donker] .tb-cols{background:#131313;border-color:#2E2E2E}
+html[data-theme=donker] .tb-cols button[aria-pressed=true]{background:#222;color:#fff}
+html[data-theme=donker] .filters{color:#C4C4C4}
+html[data-theme=donker] .f-search{background:#131313;border-color:#2E2E2E}
+html[data-theme=donker] .f-search:focus-within{border-color:#fff}
+html[data-theme=donker] .f-grp,html[data-theme=donker] .f-toggle{border-top-color:#222}
+html[data-theme=donker] .f-grp legend{color:#fff}
+html[data-theme=donker] .f-check,html[data-theme=donker] .f-radio,html[data-theme=donker] .f-toggle{color:#E4E4E4}
+html[data-theme=donker] .f-check .box,html[data-theme=donker] .f-radio .dot{border-color:#5A5A5A}
+html[data-theme=donker] .f-check:hover .box,html[data-theme=donker] .f-radio:hover .dot{border-color:#fff}
+html[data-theme=donker] .f-check input:checked+.box{background:#fff;border-color:#fff}
+html[data-theme=donker] .f-check input:checked+.box:after{border-color:#000}
+html[data-theme=donker] .f-radio input:checked+.dot{border-color:#fff}
+html[data-theme=donker] .range-track{background:#2A2A2A}
+html[data-theme=donker] .range input::-webkit-slider-thumb{background:#111;border-color:#fff}
+html[data-theme=donker] .range input::-moz-range-thumb{background:#111;border-color:#fff}
+html[data-theme=donker] .range-v{color:#C4C4C4}
+html[data-theme=donker] .f-toggle .sw{background:#3A3A3A}
+html[data-theme=donker] .f-clear{color:#9A9A9A}
+html[data-theme=donker] .pills button{background:#fff;color:#000}
+html[data-theme=donker] .pills button:hover{background:var(--red-600);color:#fff}
+html[data-theme=donker] .pills .all{background:none;color:#9A9A9A}
+html[data-theme=donker] .empty{background:#131313;border-color:#2E2E2E}
+html[data-theme=donker] .empty b{color:#fff}
+html[data-theme=donker] .others .chips .chip{background:#131313}
+@media (max-width:900px){
+  html[data-theme=donker] .filters{background:#111}
+  html[data-theme=donker] .f-head{color:#fff;border-bottom-color:#222}
+  html[data-theme=donker] .f-x{color:#fff}
+  html[data-theme=donker] .f-foot{border-top-color:#222}
+}
+
+</style>
 </head>
 <body>
 <div data-ui="header"></div>
@@ -593,7 +850,10 @@ img{display:block;max-width:100%}
     ig: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/>',
     fb: '<path d="M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V10H6v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h2z"/>',
     grid: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
-    shield: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/>'
+    shield: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    half: '<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/>',
+    moon: '<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/>'
   };
   const ui = (n, cls) => `<svg class="${cls || 'ui'}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${L[n]}</svg>`;
   // Category / product line icons (64 grid) drawn at a ~1.75px stroke.
@@ -625,6 +885,11 @@ img{display:block;max-width:100%}
         <button class="burger" aria-label="Menu" data-open="drawer">${ui('menu')}</button>
         <a class="logo" href="./" aria-label="SSK Europe, naar de homepage"><b>SSK</b><i>Europe</i></a>
         <form class="search" role="search" action="${S.BASE}/website/index.php" method="get" data-search>${ui('search')}<input type="hidden" name="Show" value="Search"><input type="search" name="KeyWord" placeholder="Zoek op product, merk of artikelnummer" aria-label="Zoeken in de webshop" autocomplete="off" required role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugg"><button type="submit" class="go" aria-label="Zoeken">${ui('arrow')}</button><div class="sugg" id="sugg" role="listbox" aria-label="Suggesties" hidden></div></form>
+        <div class="theme" role="group" aria-label="Weergave">
+          <button type="button" data-theme-set="licht" aria-label="Lichte weergave" title="Licht">${ui('sun')}</button>
+          <button type="button" data-theme-set="std" aria-label="Standaard weergave" title="Standaard">${ui('half')}</button>
+          <button type="button" data-theme-set="donker" aria-label="Donkere weergave" title="Donker">${ui('moon')}</button>
+        </div>
         <nav class="acts" aria-label="Account">
           <a href="${S.SHOP.account}">${ui('user')}<span class="lbl">Account</span></a>
           <a href="${S.SHOP.cart}">${ui('cart')}<span class="lbl">Winkelwagen</span></a>
@@ -753,7 +1018,39 @@ img{display:block;max-width:100%}
   }
 
   // Wire up: menu, mega menu.
+  // Light, standard and dark. The choice is kept per visitor; head.html applies it before the first paint.
+  const THEMES = ['licht', 'std', 'donker'];
+  const curTheme = () => document.documentElement.getAttribute('data-theme') || 'std';
+  function markTheme() {
+    const t = curTheme();
+    document.querySelectorAll('[data-theme-set]').forEach(b => b.setAttribute('aria-pressed', b.dataset.themeSet === t));
+    const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = t === 'licht' ? '#ffffff' : '#000000';
+  }
+  function setTheme(t, from) {
+    const apply = () => {
+      if (t === 'std') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', t);
+      try { localStorage.setItem('ssk-theme', t); } catch (e) {}
+      markTheme();
+    };
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!document.startViewTransition || reduce || !from) return apply();
+    // A circle grows out of the button that was pressed and reveals the new theme.
+    const r = from.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    document.startViewTransition(apply).ready.then(() => {
+      document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        { duration: 650, easing: 'cubic-bezier(.65,0,.25,1)', pseudoElement: '::view-transition-new(root)' });
+    }).catch(() => {});
+  }
+
   function wire() {
+    markTheme();
+    document.addEventListener('click', e => {
+      const b = e.target.closest('[data-theme-set]'); if (!b) return;
+      // On phones only one button shows: it steps to the next theme.
+      const t = getComputedStyle(b.parentNode).getPropertyValue('--cycle').trim() === '1' ? THEMES[(THEMES.indexOf(curTheme()) + 1) % 3] : b.dataset.themeSet;
+      setTheme(t, b);
+    });
     document.addEventListener('click', e => {
       const t = e.target.closest('[data-open],[data-close]');
       if (!t) { if (!e.target.closest('.mega')) document.querySelectorAll('.mega.open').forEach(m => m.classList.remove('open')); return; }
