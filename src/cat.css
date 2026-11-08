@@ -35,8 +35,8 @@ body.lock{overflow:hidden}
 .ch-vis:hover .f1{transform:translate(calc(var(--px) * -18px - 18px),calc(var(--py) * -12px)) rotate(-16deg)}
 .ch-vis:hover .f2{transform:translate(calc(var(--px) * 14px + 18px),calc(var(--py) * 10px)) rotate(14deg)}
 @keyframes chf{50%{translate:0 -12px}}
-.js .ch-vis img{opacity:0;scale:.92}
-.ready .ch-vis img{opacity:1;scale:1;transition:opacity 1s var(--ease) .2s,scale 1.2s cubic-bezier(.2,.8,.15,1) .2s,transform .9s cubic-bezier(.2,.8,.2,1)}
+.js .ch-vis img{scale:.9;translate:0 24px}
+.ready .ch-vis img{scale:1;translate:0 0;transition:scale 1.1s cubic-bezier(.2,.8,.15,1) .1s,translate 1.1s cubic-bezier(.2,.8,.15,1) .1s,transform .9s cubic-bezier(.2,.8,.2,1)}
 .ready .ch-vis .f1{transition-delay:.35s}
 .ready .ch-vis .f2{transition-delay:.5s}
 
@@ -123,10 +123,11 @@ body.lock{overflow:hidden}
 .pills .all:hover{background:none;color:var(--red-600)}
 .pgrid{grid-template-columns:repeat(4,1fr)}
 .pgrid.c3{grid-template-columns:repeat(3,1fr)}
-.pk{animation:pop .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(min(var(--i),12) * 35ms)}
+.pk{animation:pkin .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(min(var(--i),12) * 35ms)}
+@keyframes pkin{from{transform:translateY(18px)}}
 .pk .ph{aspect-ratio:1/1}
 .pk .ph>svg{position:absolute;inset:30%;width:40%;height:40%;color:var(--g300)}
-.pk .ph img{opacity:0;transition:opacity .45s var(--ease),transform .7s cubic-bezier(.2,.8,.2,1)}
+.pk .ph img{transition:opacity .45s var(--ease),transform .7s cubic-bezier(.2,.8,.2,1)}
 .pk .ph.ok img.a{opacity:1}
 .pk .ph img.b{opacity:0}
 .pk:hover .ph img.b[src]{opacity:1}
