@@ -19,7 +19,10 @@
     ig: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/>',
     fb: '<path d="M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V10H6v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h2z"/>',
     grid: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
-    shield: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/>'
+    shield: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    half: '<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/>',
+    moon: '<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/>'
   };
   const ui = (n, cls) => `<svg class="${cls || 'ui'}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${L[n]}</svg>`;
   // Category / product line icons (64 grid) drawn at a ~1.75px stroke.
@@ -51,6 +54,11 @@
         <button class="burger" aria-label="Menu" data-open="drawer">${ui('menu')}</button>
         <a class="logo" href="./" aria-label="SSK Europe, naar de homepage"><b>SSK</b><i>Europe</i></a>
         <form class="search" role="search" action="${S.BASE}/website/index.php" method="get" data-search>${ui('search')}<input type="hidden" name="Show" value="Search"><input type="search" name="KeyWord" placeholder="Zoek op product, merk of artikelnummer" aria-label="Zoeken in de webshop" autocomplete="off" required role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugg"><button type="submit" class="go" aria-label="Zoeken">${ui('arrow')}</button><div class="sugg" id="sugg" role="listbox" aria-label="Suggesties" hidden></div></form>
+        <div class="theme" role="group" aria-label="Weergave">
+          <button type="button" data-theme-set="licht" aria-label="Lichte weergave" title="Licht">${ui('sun')}</button>
+          <button type="button" data-theme-set="std" aria-label="Standaard weergave" title="Standaard">${ui('half')}</button>
+          <button type="button" data-theme-set="donker" aria-label="Donkere weergave" title="Donker">${ui('moon')}</button>
+        </div>
         <nav class="acts" aria-label="Account">
           <a href="${S.SHOP.account}">${ui('user')}<span class="lbl">Account</span></a>
           <a href="${S.SHOP.cart}">${ui('cart')}<span class="lbl">Winkelwagen</span></a>
@@ -179,7 +187,39 @@
   }
 
   // Wire up: menu, mega menu.
+  // Light, standard and dark. The choice is kept per visitor; head.html applies it before the first paint.
+  const THEMES = ['licht', 'std', 'donker'];
+  const curTheme = () => document.documentElement.getAttribute('data-theme') || 'std';
+  function markTheme() {
+    const t = curTheme();
+    document.querySelectorAll('[data-theme-set]').forEach(b => b.setAttribute('aria-pressed', b.dataset.themeSet === t));
+    const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = t === 'licht' ? '#ffffff' : '#000000';
+  }
+  function setTheme(t, from) {
+    const apply = () => {
+      if (t === 'std') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', t);
+      try { localStorage.setItem('ssk-theme', t); } catch (e) {}
+      markTheme();
+    };
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!document.startViewTransition || reduce || !from) return apply();
+    // A circle grows out of the button that was pressed and reveals the new theme.
+    const r = from.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    document.startViewTransition(apply).ready.then(() => {
+      document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        { duration: 650, easing: 'cubic-bezier(.65,0,.25,1)', pseudoElement: '::view-transition-new(root)' });
+    }).catch(() => {});
+  }
+
   function wire() {
+    markTheme();
+    document.addEventListener('click', e => {
+      const b = e.target.closest('[data-theme-set]'); if (!b) return;
+      // On phones only one button shows: it steps to the next theme.
+      const t = getComputedStyle(b.parentNode).getPropertyValue('--cycle').trim() === '1' ? THEMES[(THEMES.indexOf(curTheme()) + 1) % 3] : b.dataset.themeSet;
+      setTheme(t, b);
+    });
     document.addEventListener('click', e => {
       const t = e.target.closest('[data-open],[data-close]');
       if (!t) { if (!e.target.closest('.mega')) document.querySelectorAll('.mega.open').forEach(m => m.classList.remove('open')); return; }

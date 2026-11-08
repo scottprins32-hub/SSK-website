@@ -18,11 +18,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
+      - run: pip install pillow
       - run: python scripts/fetch_catalog.py
+      - run: python scripts/fetch_thumbs.py
       - run: python build.py
       - name: Commit changes
         run: |
-          git add src/catalog '*/index.html' index.html concepts
+          git add src/catalog assets/thumbs '*/index.html' index.html concepts
           if git diff --cached --quiet; then echo "Catalogue unchanged"; exit 0; fi
           git -c user.name="github-actions[bot]" -c user.email="41898333+github-actions[bot]@users.noreply.github.com" commit -m "Refresh the catalogue from the shop"
           git push

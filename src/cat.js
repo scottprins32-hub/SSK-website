@@ -9,6 +9,8 @@
   const norm = t => String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
   const slug = t => norm(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const eur = S.eur, PAGE = 24;
+  // First-screen photos are copied next to the site (assets/thumbs, see scripts/fetch_thumbs.py); the rest come from the shop.
+  const src = p => p.t ? '../' + p.t : p.i;
   const NAV = S.NAV.find(n => n.slug === C.slug) || { name: C.name, icon: 'ball', sub: '' };
 
   U.mount({ header: U.header(), footer: U.footer() });
@@ -75,7 +77,7 @@
   // Prefer three different subcategories, so the hero shows the range of the category.
   for (const p of pool) { const k = p.s.length ? p.s[0] : p.b + p.k; if (!seen.has(k)) { seen.add(k); showcase.push(p); } if (showcase.length === 3) break; }
   for (const p of pool) { if (showcase.length === 3) break; if (!showcase.includes(p)) showcase.push(p); }
-  $('#ch-vis').innerHTML = showcase.map((p, i) => `<img src="${p.i}" alt="" class="f${i}" ${i ? 'loading="lazy"' : 'fetchpriority="high"'} onerror="this.remove()">`).join('');
+  $('#ch-vis').innerHTML = showcase.map((p, i) => `<img src="${src(p)}" alt="" class="f${i}" width="480" height="480" ${i ? '' : 'fetchpriority="high"'} onerror="this.remove()">`).join('');
   if (!showcase.length) $('.ch').classList.add('novis');
 
   /* ---------- toolbar + filter panel ---------- */
@@ -122,7 +124,7 @@
     const tag = p.d || (p.w ? 'Sale' : '');
     return `<a class="card pc pk" href="${esc(p.u)}" style="--i:${i % PAGE}">
       <div class="ph">${tag ? `<span class="badge b-sale">${esc(tag)}</span>` : ''}
-        ${p.i ? `<img class="a" src="${p.i}" alt="${esc(p.n)}" loading="lazy" decoding="async" onload="this.parentNode.classList.add('ok')" onerror="this.remove()">` : U.ic(NAV.icon)}
+        ${p.i ? `<img class="a" src="${src(p)}" alt="${esc(p.n)}" width="480" height="480" ${i < 8 ? (i < 4 ? 'fetchpriority="high"' : '') : 'loading="lazy"'} decoding="async" onload="this.parentNode.classList.add('ok')" onerror="if(this.dataset.fb!=='1'&&this.src!=='${p.i}'){this.dataset.fb='1';this.src='${p.i}'}else this.remove()">` : U.ic(NAV.icon)}
         ${p.j ? `<img class="b" data-src="${p.j}" alt="" aria-hidden="true">` : ''}</div>
       <div class="info"><span class="brand">${esc(p.b || ' ')}</span><span class="name">${esc(p.b && p.n.toLowerCase().startsWith(p.b.toLowerCase() + " ") ? p.n.slice(p.b.length + 1) : p.n)}</span>
       <span class="price${p.w ? ' sale' : ''}"><b>${eur(p.p)}</b>${p.w ? `<s>${eur(p.w)}</s>` : ''}</span></div></a>`;

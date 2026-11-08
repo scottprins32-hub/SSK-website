@@ -11,6 +11,7 @@ rd = lambda f: open(os.path.join(src, f), encoding='utf-8').read()
 css, js, head = rd('base.css'), rd('data.js') + '\n' + rd('ui.js'), rd('head.html')
 home_css, home_js = rd('home.css'), rd('home.js')
 cat_css, cat_js, cat_tpl = rd('cat.css'), rd('cat.js'), rd('category.html')
+theme_css = rd('theme.css')  # light and dark themes, last so they win over every page style
 
 
 def page(text, assets, extra=None):
@@ -18,7 +19,9 @@ def page(text, assets, extra=None):
     body = body.replace('/*DATA*/', js.replace('/*ASSETS*/', assets)).replace('/*HOME_CSS*/', home_css).replace('/*HOME_JS*/', home_js)
     for k, v in (extra or {}).items():
         body = body.replace(k, v)
-    return head.replace('{{TITLE}}', H.escape(title.strip(), quote=False)).replace('/*CSS*/', css) + body
+    out = head.replace('{{TITLE}}', H.escape(title.strip(), quote=False)).replace('{{ASSETS}}', assets).replace('/*CSS*/', css) + body
+    # Theme styles go last in <head>, after the page's own styles, so they win and apply before the first paint.
+    return out.replace('</head>', '<style>\n' + theme_css + '\n</style>\n</head>', 1)
 
 
 def write(dest, text):
