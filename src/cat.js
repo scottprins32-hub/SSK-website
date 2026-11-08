@@ -124,7 +124,7 @@
     const tag = p.d || (p.w ? 'Sale' : '');
     return `<a class="card pc pk" href="${esc(p.u)}" style="--i:${i % PAGE}">
       <div class="ph">${tag ? `<span class="badge b-sale">${esc(tag)}</span>` : ''}
-        ${p.i ? `<img class="a" src="${src(p)}" alt="${esc(p.n)}" width="480" height="480" ${i < 8 ? (i < 4 ? 'fetchpriority="high"' : '') : 'loading="lazy"'} decoding="async" onload="this.parentNode.classList.add('ok')" onerror="if(this.dataset.fb!=='1'&&this.src!=='${p.i}'){this.dataset.fb='1';this.src='${p.i}'}else this.remove()">` : U.ic(NAV.icon)}
+        ${p.i ? `<img class="a" ${i < 8 ? `src="${src(p)}"${i < 4 ? ' fetchpriority="high"' : ''}` : `data-src="${src(p)}"`} alt="${esc(p.n)}" width="480" height="480" decoding="async" onload="this.parentNode.classList.add('ok')" onerror="if(this.dataset.fb!=='1'&&this.src!=='${p.i}'){this.dataset.fb='1';this.src='${p.i}'}else this.remove()">` : U.ic(NAV.icon)}
         ${p.j ? `<img class="b" data-src="${p.j}" alt="" aria-hidden="true">` : ''}</div>
       <div class="info"><span class="brand">${esc(p.b || ' ')}</span><span class="name">${esc(p.b && p.n.toLowerCase().startsWith(p.b.toLowerCase() + " ") ? p.n.slice(p.b.length + 1) : p.n)}</span>
       <span class="price${p.w ? ' sale' : ''}"><b>${eur(p.p)}</b>${p.w ? `<s>${eur(p.w)}</s>` : ''}</span></div></a>`;
@@ -155,6 +155,12 @@
     $('#more-fill').style.transform = `scaleX(${Math.min(1, st.n / list.length)})`;
   }
   $('#more').addEventListener('click', appendMore);
+  // Photos past the first two rows wait until the page has loaded, then come in as they near the screen.
+  let loaded = document.readyState === 'complete';
+  const lazy = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { const im = e.target; im.src = im.dataset.src; im.removeAttribute('data-src'); lazy.unobserve(im); } }), { rootMargin: '600px 0px' });
+  const watch = () => { if (loaded) $$('img.a[data-src]', grid).forEach(im => lazy.observe(im)); };
+  addEventListener('load', () => { loaded = true; watch(); });
+  new MutationObserver(watch).observe(grid, { childList: true });
   // Second photo on hover: load it only when the pointer gets there.
   grid.addEventListener('pointerover', e => { const b = e.target.closest('.pk')?.querySelector('img.b[data-src]'); if (b) { b.src = b.dataset.src; b.removeAttribute('data-src'); } });
 
