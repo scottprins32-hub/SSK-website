@@ -589,9 +589,49 @@ section{padding-block:48px}
 
 
 PAGES = [('1-clean.html', clean), ('2-performance.html', performance), ('3-game-ready.html', game_ready), ('4-heritage.html', heritage)]
+INFO = [('1-clean.html', 'Clean', 'Wit canvas, grote beeldvlakken, ronde knoppen, carrousels van rand tot rand', CUT['glove'], '#f5f5f5'),
+        ('2-performance.html', 'Performance', 'Zwart, wit en rood, brede zware kapitalen, harde randen, strakke rasters', CUT['rev'], '#0b0b0b'),
+        ('3-game-ready.html', 'Game Ready', 'In de lijn van SSK USA: handschoenen op het veld, kwastletters, fototegels', CW['zwart-goud'], '#2c6e2a'),
+        ('4-heritage.html', 'Heritage', 'Zachte neutrale tinten met één rood, afgeronde kaarten, ronde categoriefoto\'s', CUT['catcher'], '#f3f1f0')]
+
+
+def document(body):
+    """GitHub Pages serves each file as it is, so it gets its own doctype and <html> around the page."""
+    return '<!doctype html>\n<html lang="nl">\n<head>\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<meta name="robots" content="noindex">\n' + body.replace('</style>\n', '</style>\n</head>\n<body>\n', 1) + '\n</body>\n</html>\n'
+
+
+def overview():
+    css = """:root{--bg:#f4f4f4;--fg:#111;--muted:#666;--card:#fff;--line:#e2e2e2;--accent:#c8102e;--display:'Barlow Condensed','Arial Narrow',sans-serif;--body:'Barlow',Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e0e0e;--fg:#f2f2f2;--muted:#a3a3a3;--card:#181818;--line:#2a2a2a;--accent:#ff4b5f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e0e0e;--fg:#f2f2f2;--muted:#a3a3a3;--card:#181818;--line:#2a2a2a;--accent:#ff4b5f;color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.5 var(--body)}
+.top{padding-block:48px 28px}
+.kick{font:700 13px/1 var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+h1{font:800 clamp(40px,6vw,76px)/.95 var(--display);text-transform:uppercase;margin:10px 0 14px}
+.top p{max-width:60ch;color:var(--muted)}
+.top a{color:var(--fg);text-decoration:underline;text-underline-offset:3px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;padding-bottom:56px}
+.st{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden;transition:transform .25s,box-shadow .25s}
+.st:hover{transform:translateY(-4px);box-shadow:0 18px 40px -16px rgba(0,0,0,.35)}
+.st .im{position:relative;aspect-ratio:16/9}
+.st .im img{position:absolute;inset:8% 20%;width:60%;height:84%;object-fit:contain;filter:drop-shadow(0 18px 18px rgba(0,0,0,.3));transition:transform .5s}
+.st:hover .im img{transform:scale(1.06) rotate(-3deg)}
+.st .tx{padding:18px 20px 22px;display:grid;gap:4px}
+.st small{font:600 12px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.st b{font:800 30px/1 var(--display);text-transform:uppercase}
+.st span{color:var(--muted)}
+.st em{font-style:normal;margin-top:8px;font:700 14px/1 var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+@media (max-width:700px){.grid{grid-template-columns:1fr}}
+"""
+    b = head('SSK Europe stijlconcepten', 'family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;600', css)
+    b += '<div class="w top"><div class="kick">Conceptontwerpen · SSK Europe</div><h1>Vier stijlen voor de homepage</h1><p>Dezelfde webshop in vier verschillende vormgevingen. Alle producten, prijzen en links komen uit de webshop. Klik een stijl om hem te bekijken; ze werken ook op de telefoon. De huidige versie staat op <a href="../">de homepage</a>.</p></div>\n'
+    b += '<main class="w grid">' + ''.join('<a class="st" href="%s"><div class="im" style="background:%s"><img src="%s" alt=""></div><div class="tx"><small>Stijl %d van 4</small><b>%s</b><span>%s</span><em>Bekijk stijl %d &rarr;</em></div></a>' % (f, bg, i, k + 1, n, d, k + 1) for k, (f, n, d, i, bg) in enumerate(INFO)) + '</main>\n'
+    return b
+
+
 if __name__ == '__main__':
-    for name, fn in PAGES:
-        text = fn()
+    for name, fn in PAGES + [('index.html', overview)]:
+        text = document(fn())
         open(os.path.join(HERE, name), 'w', encoding='utf-8').write(text)
         print('built stijlen/%s  %d kB' % (name, len(text) // 1024))
     print(len(os.listdir(IMG)), 'photos in stijlen/img')
