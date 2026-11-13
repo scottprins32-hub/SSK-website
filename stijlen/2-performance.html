@@ -1,0 +1,133 @@
+<meta charset="utf-8">
+<title>SSK Concept Performance</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+h1,h2,h3,p,ul,ol,dl,dd,figure{margin:0;padding:0}
+ul,ol{list-style:none}
+a{color:inherit;text-decoration:none}
+img{display:block}
+table{color:inherit;font:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.w{max-width:1320px;margin-inline:auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.car{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.car::-webkit-scrollbar{display:none}
+.car>*{scroll-snap-align:start}
+.ftr .w>*{min-width:0}
+@media (max-width:560px){.ftr .w{grid-template-columns:1fr!important}}
+.concept{font-size:12px;text-align:center;padding-block:7px;letter-spacing:.02em}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* Layout: black header and hero with a red diagonal, wide heavy capitals, square bordered cards in dense grids */
+:root{--bg:#ffffff;--fg:#0b0b0b;--muted:#5d5d5d;--panel:#f1f1f1;--line:#d6d6d6;--accent:#c8102e;--ink:#0b0b0b;--paper:#ffffff;--red:#c8102e;--ink-muted:#a8a8a8;--ink-line:#2a2a2a;--photo:#ffffff;
+  --display:'Archivo','Arial Black',Arial,sans-serif;--body:'Archivo',Arial,Helvetica,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0b0b;--fg:#ffffff;--muted:#a8a8a8;--panel:#171717;--line:#2a2a2a;--accent:#ff3b52;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b0b0b;--fg:#ffffff;--muted:#a8a8a8;--panel:#171717;--line:#2a2a2a;--accent:#ff3b52;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:400 15px/1.5 var(--body);-webkit-font-smoothing:antialiased}
+.wide{font-family:var(--display);font-stretch:125%;font-weight:900;text-transform:uppercase;letter-spacing:-.01em}
+.concept{background:var(--panel);color:var(--fg)}
+.promo{background:var(--red);color:var(--paper);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;text-align:center;padding-block:9px}
+.promo a{text-decoration:underline;text-underline-offset:3px}
+.hdr{background:var(--ink);color:var(--paper)}
+.hdr .w{display:flex;align-items:center;gap:28px;min-height:68px}
+.logo{font:900 26px/1 var(--display);font-stretch:125%;letter-spacing:-.02em}
+.logo i{font-style:normal;color:var(--red)}
+.nav{display:flex;gap:24px;font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.nav a{padding-block:24px;border-bottom:3px solid transparent}
+.nav a:hover{border-bottom-color:var(--red)}
+.acts{margin-left:auto;display:flex;gap:18px;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
+.acts a:hover{color:var(--paper)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:50px;padding:0 26px;font-weight:800;font-size:13px;letter-spacing:.1em;text-transform:uppercase;border:2px solid transparent;transition:background-color .15s,color .15s,border-color .15s}
+.btn.wh{background:var(--paper);color:var(--ink)}
+.btn.wh:hover{background:var(--red);color:var(--paper)}
+.btn.ol{border-color:var(--paper);color:var(--paper)}
+.btn.ol:hover{background:var(--paper);color:var(--ink)}
+.btn.bk{background:var(--fg);color:var(--bg)}
+.btn.bk:hover{background:var(--accent);color:var(--paper)}
+.hero{background:var(--ink);color:var(--paper);position:relative;overflow:hidden}
+.hero:before{content:'';position:absolute;right:-8%;top:0;bottom:0;width:52%;background:var(--red);transform:skewX(-14deg)}
+.hero:after{content:'';position:absolute;right:38%;top:0;bottom:0;width:10px;background:var(--paper);transform:skewX(-14deg);opacity:.9}
+.hero .w{position:relative;z-index:1;display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:center;padding-block:56px}
+.kick{font-weight:800;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.hero .kick{color:var(--paper);display:inline-block;background:var(--red);padding:6px 10px}
+.hero h1{font-size:clamp(40px,6.6vw,96px);line-height:.9;margin:18px 0 18px}
+.hero h1 em{font-style:normal;color:transparent;-webkit-text-stroke:2px var(--paper)}
+.hero p{max-width:42ch;color:#d2d2d2;font-size:17px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.hero img{width:100%;max-width:520px;justify-self:center;filter:drop-shadow(0 40px 40px rgba(0,0,0,.55));transform:rotate(-6deg)}
+.stats{background:var(--ink);color:var(--paper);border-top:1px solid var(--ink-line)}
+.stats .w{display:grid;grid-template-columns:repeat(4,1fr)}
+.stats .w>div{padding:22px 20px 22px 0;border-right:1px solid var(--ink-line)}
+.stats .w>div+div{padding-left:20px}
+.stats .w>div:last-child{border-right:0}
+.stats b{display:block;font-size:clamp(22px,2.6vw,34px);line-height:1}
+.stats span{display:block;margin-top:8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
+section{padding-block:56px}
+.sh{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;border-bottom:3px solid var(--fg);padding-bottom:12px}
+.sh h2{font-size:clamp(24px,3.4vw,44px);line-height:1}
+.sh a{font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;display:inline-flex;gap:8px;align-items:center}
+.sh a:hover{color:var(--accent)}
+.cats{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.cat{display:block;border:1px solid var(--line);background:var(--photo)}
+.cat .im{aspect-ratio:1/1;overflow:hidden;position:relative}
+.cat img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:14%;transition:transform .4s}
+.cat:hover img{transform:scale(1.1)}
+.cat b{display:block;background:var(--ink);color:var(--paper);font-weight:800;font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:10px 6px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cat:hover b{background:var(--red)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pc{display:flex;flex-direction:column;border:1px solid var(--line);background:var(--bg);transition:border-color .15s,transform .15s;min-width:0}
+.pc:hover{border-color:var(--fg);transform:translateY(-3px)}
+.pc .im{background:var(--photo);aspect-ratio:1/1;position:relative;border-bottom:1px solid var(--line);overflow:hidden}
+.pc img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:9%}
+.tag{position:absolute;left:0;top:12px;background:var(--ink);color:var(--paper);font-weight:800;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:5px 9px}
+.tag.s{background:var(--red)}
+.pc .tx{padding:14px;display:grid;gap:4px}
+.pc .br{font-weight:800;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pc b{font-weight:700;font-size:14px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
+.price{font-weight:800;font-size:16px;margin-top:4px;font-variant-numeric:tabular-nums}
+.price.sale{color:var(--accent)}
+.price s{color:var(--muted);font-weight:500;font-size:13px;margin-left:6px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pro{position:relative;min-height:340px;padding:36px;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:10px;overflow:hidden}
+.pro.r{background:var(--red);color:var(--paper)}
+.pro.k{background:var(--ink);color:var(--paper)}
+.pro .big{font-size:clamp(48px,7vw,104px);line-height:.85}
+.pro p{max-width:34ch}
+.pro img{position:absolute;right:-4%;top:-4%;height:86%;transform:rotate(10deg);filter:drop-shadow(0 30px 30px rgba(0,0,0,.4))}
+.pro>*:not(img){position:relative}
+.cz{background:var(--ink);color:var(--paper);background-image:repeating-linear-gradient(-55deg,transparent 0 22px,rgba(255,255,255,.035) 22px 24px)}
+.cz .w{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;padding-block:64px}
+.cz h2{font-size:clamp(32px,5vw,72px);line-height:.9;margin:14px 0}
+.cz h2 em{font-style:normal;color:var(--red)}
+.cz p{color:#d2d2d2;max-width:42ch}
+.cz ul{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.cz li{border:1px solid var(--ink-line);padding:8px 12px;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.cz-vis{display:flex;justify-content:center}
+.cz-vis img{width:46%;margin-inline:-7%;filter:drop-shadow(0 30px 30px rgba(0,0,0,.6))}
+.cz-vis img:nth-child(2){transform:translateY(-8%) scale(1.12);z-index:1}
+.ftr{background:var(--ink);color:var(--ink-muted);border-top:4px solid var(--red)}
+.ftr .w{display:grid;grid-template-columns:1.3fr 1fr 1fr 1.2fr;gap:28px;padding-block:44px}
+.ftr h3{color:var(--paper);font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+.ftr li{margin-bottom:7px;font-size:14px}
+.ftr a:hover{color:var(--paper)}
+.ftr table{border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.ftr th{text-align:left;font-weight:400;padding:2px 18px 2px 0}
+@media (max-width:1000px){.cats{grid-template-columns:repeat(4,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.nav{display:none}}
+@media (max-width:760px){.cats{grid-template-columns:repeat(2,1fr)}.hero .w,.cz .w,.split{grid-template-columns:1fr}.hero:before{width:120%;right:-60%;top:46%}.hero:after{display:none}.hero img{max-width:320px;order:-1}.stats .w{grid-template-columns:1fr 1fr}.stats .w>div{padding:16px 12px 16px 0;border-bottom:1px solid var(--ink-line)}.stats .w>div+div{padding-left:0}.stats .w>div:nth-child(2n){border-right:0;padding-left:14px}.ftr .w{grid-template-columns:1fr 1fr}.pro img{height:60%}.acts a:first-child{display:none}}
+</style>
+<div class="concept"><div class="w">Conceptontwerp voor SSK Europe · stijl 2 van 4: Performance · producten, prijzen en links komen uit de webshop</div></div>
+<div class="promo"><div class="w">Outlet: tot 50% korting · <a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-10665083/Outlet.html">Shop de outlet</a></div></div>
+<header class="hdr"><div class="w"><a class="logo" href="https://sskeurope.ccvshop.nl">SSK<i>/</i>EUROPE</a><nav class="nav" aria-label="Hoofdmenu"><a href="https://sskeurope.ccvshop.nl/New-Arrivals">Nieuw</a><a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5784651/Handschoenen.html">Handschoenen</a><a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5784631/Knuppels.html">Knuppels</a><a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5725835/Helmen.html">Helmen</a><a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5784701/Catcher.html">Catcher</a><a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5743459/Clubkleding.html">Clubkleding</a><a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-10665083/Outlet.html">Outlet</a></nav><div class="acts"><a href="https://sskeurope.ccvshop.nl/website/index.php?Show=WebShopUserLogin">Account</a><a href="https://sskeurope.ccvshop.nl/website/index.php?Show=WebShopBasket">Winkelwagen</a></div></div></header>
+<main>
+<div class="hero"><div class="w"><div><span class="kick">Seizoen 2026</span><h1 class="wide">Gebouwd<br>voor het<br><em>veld.</em></h1><p>Handschoenen, knuppels en bescherming van SSK, Rawlings, Wilson en Easton. Online besteld, of gepast in de showroom in Kwintsheul.</p><div class="btns"><a class="btn wh" href="https://sskeurope.ccvshop.nl/New-Arrivals">Shop nieuw binnen <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn ol" href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5784651/Handschoenen.html">Alle handschoenen</a></div></div><img src="img/2410122391.webp" alt="Rawlings REV1X catcherhandschoen" fetchpriority="high"></div></div>
+<div class="stats"><div class="w"><div><b class="wide">3–5</b><span>Werkdagen levertijd op voorraad</span></div><div><b class="wide">343</b><span>Handschoenen in de webshop</span></div><div><b class="wide">237</b><span>Knuppels in de webshop</span></div><div><b class="wide">121</b><span>Verenigingen met clubkleding</span></div></div></div>
+<section><div class="w"><div class="sh"><h2 class="wide">Shop per categorie</h2></div><div class="cats"><a class="cat" href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5784651/Handschoenen.html"><div class="im"><img src="img/2410112359.webp" alt="" loading="lazy"></div><b>Handschoenen</b></a><a class="cat" href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5784631/Knuppels.html"><div class="im"><img src="img/2363268062.webp" alt="" loading="lazy"></div><b>Knuppels</b></a><a class="cat" href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5758263/Ballen.html"><div class="im"><img src="img/2417010101.webp" alt="" loading="lazy"></div><b>Ballen</b></a><a class="cat" href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5725835/Helmen.html"><div class="im"><img src="img/2382805112.webp" alt="" loading="lazy"></div><b>Helmen</b></a><a class="cat" href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5784701/Catcher.html"><div class="im"><img src="img/2382787655.webp" alt="" loading="lazy"></div><b>Catcher</b></a><a class="cat" href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5784991/Slaghandschoenen.html"><div class="im"><img src="img/2352738890.webp" alt="" loading="lazy"></div><b>Slaghandschoenen</b></a><a class="cat" href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5725725/Schoenen.html"><div class="im"><img src="img/2389423541.webp" alt="" loading="lazy"></div><b>Schoenen</b></a><a class="cat" href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5728421/Tassen.html"><div class="im"><img src="img/2354503637.webp" alt="" loading="lazy"></div><b>Tassen</b></a></div></div></section>
+<section style="padding-top:0"><div class="w"><div class="sh"><h2 class="wide">Nieuw binnen</h2><a href="https://sskeurope.ccvshop.nl/New-Arrivals">Alles bekijken <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div><div class="grid"><a class="pc" href="https://sskeurope.ccvshop.nl/Rawlings-Heart-of-the-Hide-Fun-Burst-2.0-11.5-Infield-Glove-Camel/Columbia-Blue/Pink-RHT"><div class="im"><span class="tag">Nieuw</span><img src="img/2410156659.webp" alt="Heart of the Hide Fun Burst 2.0 11.5&quot; Infield Glove Camel/Columbia Blue/Pink RHT" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">Rawlings</span><b>Heart of the Hide Fun Burst 2.0 11.5&quot; Infield Glove Camel/Columbia Blue/Pink RHT</b><span class="price">€ 449,95</span></div></a><a class="pc" href="https://sskeurope.ccvshop.nl/Rawlings-Heart-of-the-Hide-Fun-Burst-2.0-11.5-Infield-Glove-Navy/Mint-RHT"><div class="im"><span class="tag">Nieuw</span><img src="img/2410154631.webp" alt="Heart of the Hide Fun Burst 2.0 11.5&quot; Infield Glove Navy/Mint RHT" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">Rawlings</span><b>Heart of the Hide Fun Burst 2.0 11.5&quot; Infield Glove Navy/Mint RHT</b><span class="price">€ 449,95</span></div></a><a class="pc" href="https://sskeurope.ccvshop.nl/Rawlings-REV1X-34-Catcher-Glove-Columbia-blue/Black/Pink-RHT"><div class="im"><span class="tag">Nieuw</span><img src="img/2410122391.webp" alt="REV1X 34&quot; Catcher Glove Columbia blue/Black/Pink RHT" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">Rawlings</span><b>REV1X 34&quot; Catcher Glove Columbia blue/Black/Pink RHT</b><span class="price">€ 494,95</span></div></a><a class="pc" href="https://sskeurope.ccvshop.nl/Rawlings-REV1X-12.75-Outfield-Glove-Columbia-Blue/Purple/Pink-RHT"><div class="im"><span class="tag">Nieuw</span><img src="img/2410115931.webp" alt="REV1X 12.75&quot; Outfield Glove Columbia Blue/Purple/Pink RHT" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">Rawlings</span><b>REV1X 12.75&quot; Outfield Glove Columbia Blue/Purple/Pink RHT</b><span class="price">€ 494,95</span></div></a><a class="pc" href="https://sskeurope.ccvshop.nl/Rawlings-Pro-Preferred-Vladimir-Guerrero-Jr-13-First-Base-Glove-Navy/Scarlet-RHT"><div class="im"><span class="tag">Nieuw</span><img src="img/2410112359.webp" alt="Pro Preferred Vladimir Guerrero Jr 13&quot; First Base Glove Navy/Scarlet RHT" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">Rawlings</span><b>Pro Preferred Vladimir Guerrero Jr 13&quot; First Base Glove Navy/Scarlet RHT</b><span class="price">€ 499,95</span></div></a><a class="pc" href="https://sskeurope.ccvshop.nl/Rawlings-Heart-Of-The-Hide-13-First-Base-Glove-Mint/Hot-Pink/Pink/Columbia-Blue"><div class="im"><span class="tag">Nieuw</span><img src="img/2382824876.webp" alt="Heart Of The Hide 13&quot; First Base Glove Mint/Hot Pink/Pink/Columbia Blue" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">Rawlings</span><b>Heart Of The Hide 13&quot; First Base Glove Mint/Hot Pink/Pink/Columbia Blue</b><span class="price">€ 429,95</span></div></a><a class="pc" href="https://sskeurope.ccvshop.nl/Rawlings-RX2-Adjustable-Batting-Helmet-Extension-Black"><div class="im"><span class="tag">Nieuw</span><img src="img/2382812486.webp" alt="RX2 Adjustable Batting Helmet Extension Black" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">Rawlings</span><b>RX2 Adjustable Batting Helmet Extension Black</b><span class="price">€ 29,95</span></div></a><a class="pc" href="https://sskeurope.ccvshop.nl/Rawlings-RX2-Adjustable-Batting-Helmet-Extension-Dark-Green"><div class="im"><span class="tag">Nieuw</span><img src="img/2382812012.webp" alt="RX2 Adjustable Batting Helmet Extension Dark Green" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">Rawlings</span><b>RX2 Adjustable Batting Helmet Extension Dark Green</b><span class="price">€ 29,95</span></div></a></div></div></section>
+<section style="padding-top:0"><div class="w"><div class="split"><a class="pro r" href="https://sskeurope.ccvshop.nl/Webwinkel-Category-10665083/Outlet.html"><img src="img/2382805112.webp" alt="" loading="lazy"><span class="kick" style="color:inherit">Outlet</span><span class="big wide">−50%</span><p>Catcher-uitrusting, knuppels en handschoenen. Op is op.</p><span class="btn wh">Naar de outlet</span></a><a class="pro k" href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5743459/Clubkleding.html"><span class="kick">Voor verenigingen</span><span class="big wide" style="font-size:clamp(34px,4.4vw,64px)">Club&shy;kleding</span><p>Jerseys, caps en jassen voor 121 verenigingen. Met logo, nummers en namen.</p><span class="btn ol">Zoek je club</span></a></div></div></section>
+<section style="padding-top:0"><div class="w"><div class="sh"><h2 class="wide">Knuppels 2026</h2><a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5784631/Knuppels.html">Alle knuppels <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div><div class="grid"><a class="pc" href="https://sskeurope.ccvshop.nl/Easton-Ghost-Advanced-2026-10"><div class="im"><span class="tag">2026</span><img src="img/2363268062.webp" alt="Ghost Advanced 2026 -10" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">Easton</span><b>Ghost Advanced 2026 -10</b><span class="price">€ 544,95</span></div></a><a class="pc" href="https://sskeurope.ccvshop.nl/Rawlings-Mantra-2026-10"><div class="im"><span class="tag">2026</span><img src="img/2363268137.webp" alt="Mantra 2026 -10" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">Rawlings</span><b>Mantra 2026 -10</b><span class="price">€ 539,95</span></div></a><a class="pc" href="https://sskeurope.ccvshop.nl/DeMarini-The-Goods-26-BBCOR-3"><div class="im"><span class="tag">2026</span><img src="img/2354495435.webp" alt="The Goods 26 BBCOR -3" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">DeMarini</span><b>The Goods 26 BBCOR -3</b><span class="price">€ 529,95</span></div></a><a class="pc" href="https://sskeurope.ccvshop.nl/Easton-Hype-Fire-BBCOR-Baseball-Bat-2026-3"><div class="im"><span class="tag">2026</span><img src="img/2363268116.webp" alt="Hype Fire BBCOR Baseball Bat 2026 -3" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">Easton</span><b>Hype Fire BBCOR Baseball Bat 2026 -3</b><span class="price">€ 529,95</span></div></a></div></div></section>
+<div class="cz"><div class="w"><div><span class="kick">Glove Customizer</span><h2 class="wide">Jouw model.<br><em>Jouw kleuren.</em></h2><p>Stel een SSK Pro Custom samen en zie hem meteen van vier kanten. Vanaf € 374,95.</p><ul><li>20 onderdelen</li><li>5 webs</li><li>Naam op de duim</li></ul><div class="btns"><a class="btn wh" href="https://scottprins32-hub.github.io/ssk-glove-demo/">Start de customizer <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div><div class="cz-vis"><img src="img/glove-zwart-goud.webp" alt="" loading="lazy"><img src="img/glove-cardinal.webp" alt="SSK Pro Custom in cardinal en wit" loading="lazy"><img src="img/glove-navy-columbia.webp" alt="" loading="lazy"></div></div></div>
+<section><div class="w"><div class="sh"><h2 class="wide">Outlet</h2><a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-10665083/Outlet.html">Alles in de outlet <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div><div class="grid"><a class="pc" href="https://sskeurope.ccvshop.nl/Champro-Contour-Fit-Body-Protector-14.5-Navy"><div class="im"><span class="tag s">−50%</span><img src="img/274531413.webp" alt="Contour Fit Body Protector 14.5&quot; Navy" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">Champro</span><b>Contour Fit Body Protector 14.5&quot; Navy</b><span class="price sale">€ 37,50 <s>€ 75,00</s></span></div></a><a class="pc" href="https://sskeurope.ccvshop.nl/CM5-Champro-Adult-Hockey-Stijl-Catchers-Helm"><div class="im"><span class="tag s">−33%</span><img src="img/342096839.webp" alt="Hockey Style Catcher Helmet Adult Royal" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">Champro</span><b>Hockey Style Catcher Helmet Adult Royal</b><span class="price sale">€ 60,00 <s>€ 90,00</s></span></div></a><a class="pc" href="https://sskeurope.ccvshop.nl/Champro-Pro-Plus-Catcher-Helmet-Silver-Adult-Black"><div class="im"><span class="tag s">−26%</span><img src="img/2123885028.webp" alt="Pro-Plus Catcher Helmet Silver Adult Black" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">Champro</span><b>Pro-Plus Catcher Helmet Silver Adult Black</b><span class="price sale">€ 70,00 <s>€ 95,00</s></span></div></a><a class="pc" href="https://sskeurope.ccvshop.nl/Champro-Rubberized-Mat-Finish-Pro-Plus-Catcher-Helmet-Adult-Navy"><div class="im"><span class="tag s">−27%</span><img src="img/274546459.webp" alt="Pro-Plus Matte Rubberized Catcher Helmet Adult Navy" loading="lazy" width="480" height="480"></div><div class="tx"><span class="br">Champro</span><b>Pro-Plus Matte Rubberized Catcher Helmet Adult Navy</b><span class="price sale">€ 80,00 <s>€ 110,00</s></span></div></a></div></div></section>
+</main>
+<footer class="ftr"><div class="w"><div><div class="logo" style="color:var(--paper);margin-bottom:14px">SSK<i>/</i>EUROPE</div><p>SSK European Baseball Center<br>Heulweg 128B, 2295 KK Kwintsheul<br>+31 174 501 888 · info@sskeurope.com</p></div><div><h3>Shop</h3><ul><li><a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5784651/Handschoenen.html">Handschoenen</a></li><li><a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5784631/Knuppels.html">Knuppels</a></li><li><a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5758263/Ballen.html">Ballen</a></li><li><a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5725835/Helmen.html">Helmen</a></li><li><a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5725725/Schoenen.html">Schoenen</a></li><li><a href="https://sskeurope.ccvshop.nl/Webwinkel-Category-5728421/Tassen.html">Tassen</a></li></ul></div><div><h3>Service</h3><ul><li><a href="https://sskeurope.ccvshop.nl/Webwinkel-Page-1182239/Levertijden.html">Levertijden</a></li><li><a href="https://sskeurope.ccvshop.nl/Webwinkel-Page-1182445/Retour-Zenden.html">Retour zenden</a></li><li><a href="https://sskeurope.ccvshop.nl/Maten">Maten</a></li><li><a href="https://sskeurope.ccvshop.nl/Garantie">Garantie</a></li><li><a href="https://www.google.com/maps/search/?api=1&query=Heulweg+128B%2C+2295+KK+Kwintsheul">Route plannen</a></li></ul></div><div><h3>Openingstijden</h3><table><tr><th scope="row">Maandag</th><td>Gesloten</td></tr><tr><th scope="row">Dinsdag</th><td>12:00 – 16:30</td></tr><tr><th scope="row">Woensdag</th><td>10:00 – 17:30</td></tr><tr><th scope="row">Donderdag</th><td>12:00 – 16:30</td></tr><tr><th scope="row">Vrijdag</th><td>12:00 – 20:30</td></tr><tr><th scope="row">Zaterdag</th><td>10:00 – 16:00</td></tr><tr><th scope="row">Zondag</th><td>Gesloten</td></tr></table></div></div></footer>
