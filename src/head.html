@@ -9,6 +9,7 @@
 document.documentElement.classList.add('js'); /* lets the intro states apply before the first paint */
 try { var t = localStorage.getItem('ssk-theme'); if (t === 'licht' || t === 'donker') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
 </script>
+<link rel="icon" type="image/svg+xml" href="{{ASSETS}}assets/brand/favicon.svg">
 <link rel="preload" href="{{ASSETS}}assets/fonts/{{HEADFONT}}.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ASSETS}}assets/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ASSETS}}assets/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>

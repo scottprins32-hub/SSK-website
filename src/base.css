@@ -66,8 +66,8 @@ img{display:block;max-width:100%}
 .topbar .ui{width:16px;height:16px;color:var(--navy-100)}
 .hdr{position:sticky;top:0;z-index:50;background:var(--navy-900);color:#fff}
 .hdr .bar{display:flex;align-items:center;gap:24px;height:72px}
-.logo{display:flex;align-items:baseline;gap:6px;font-family:var(--display);font-weight:800;text-transform:uppercase;line-height:1;white-space:nowrap}
-.logo b{font-size:32px;letter-spacing:.02em}
+.logo{display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:800;text-transform:uppercase;line-height:1;white-space:nowrap}
+.logo-m{display:block;height:28px;width:auto;aspect-ratio:1199.8/256.8;flex:none}
 .logo i{font-style:normal;font-size:16px;letter-spacing:.14em}
 .search{flex:1;max-width:520px;display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border-radius:var(--r1);background:#fff;color:var(--g700)}
 .search input{flex:1;border:0;outline:0;background:none;min-width:0;font-size:15px}
@@ -294,7 +294,7 @@ img{display:block;max-width:100%}
   .hdr .bar{gap:8px;height:60px;flex-wrap:wrap}
   .hdr .search{order:9;flex-basis:100%;max-width:none;margin-bottom:12px}
   .hdr .bar{height:auto;padding-top:10px}
-  .logo b{font-size:28px}
+  .logo-m{height:24px}
   .cats{grid-template-columns:repeat(2,1fr)}
   .cat{min-height:120px;padding:16px}
   .grid4,.grid3{gap:10px}

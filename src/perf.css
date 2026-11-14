@@ -7,10 +7,9 @@
 .d-xl,.d-lg,.d-md,.d-sm{font-family:var(--wide);font-weight:900;letter-spacing:-.015em}
 .d-md{font-size:clamp(18px,1.9vw,24px);line-height:1.02}
 .sec-h .d-lg{font-size:clamp(24px,3.4vw,46px);line-height:.95}
-.logo{gap:0}
-.logo b{font-family:var(--wide);font-weight:900;font-size:24px;letter-spacing:-.03em}
-.logo b:after{content:'/';color:var(--red-600);margin:0 3px 0 4px}
-.logo i{font-family:var(--wide);font-weight:900;font-size:13px;letter-spacing:0}
+.logo{gap:9px}
+.logo-m{height:26px}
+.logo i{font-family:var(--wide);font-weight:900;font-size:12px;letter-spacing:.02em;padding-left:9px;border-left:1px solid color-mix(in srgb,currentColor 35%,transparent);line-height:20px}
 
 /* ---------- hard edges ---------- */
 .btn,.rbtn,.totop,.open-now,.czw-frame,.ch-vis img,.tb-subs button,.pills button,.tb-n,.f-check .box,.hx-thumbs button,.bt,.hx-pick{border-radius:0}
@@ -161,7 +160,9 @@ html[data-theme=donker] .sec-h:after{background:#fff}
 @media (max-width:600px){
   .hx-title{font-size:clamp(34px,10.4vw,56px)}
   .hx-kick{letter-spacing:.06em;font-size:11px;padding:7px 10px}
-  .logo b{font-size:21px}
+  .logo-m{height:22px}
+  .logo{gap:7px}
+  .logo i{font-size:10px;padding-left:7px;line-height:16px}
   .bt-tx{padding:10px 44px 10px 12px}
   .bt.big .bt-tx{padding:14px 56px 14px 16px}
   .bt-tx b{font-size:16px}
@@ -301,3 +302,8 @@ html[data-theme=donker] .ft2{--ft-bg:#000;--ft-fg:#a8a8a8;--ft-strong:#fff;--ft-
   .ft2 .top>div:first-child{grid-column:1/-1}
 }
 @media (max-width:700px){.heri2-type{font-size:clamp(28px,9vw,40px)}}
+
+/* ---------- the official logo, large, in the footer ---------- */
+.ftr-mark span:first-child{color:var(--ft-strong,#fff);line-height:0}
+.ftr-mark .logo-m{height:.74em}
+@media (max-width:380px){.hdr .logo i{display:none}}

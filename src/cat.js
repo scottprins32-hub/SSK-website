@@ -230,7 +230,7 @@
   const brRow = hide => S.BRANDS.map(b => `<a href="${S.brandUrl(b)}"${hide ? ' tabindex="-1" aria-hidden="true"' : ` aria-label="Alles van ${b} in de webshop"`}><span>${b}</span><small>Bekijk ${U.ui('arrow')}</small></a><i></i>`).join('');
   $('#brands').innerHTML = `<div>${brRow(false)}</div><div>${brRow(true)}</div>`;
   const fbot = $('.ftr .bot');
-  if (fbot) fbot.insertAdjacentHTML('beforebegin', '<div class="ftr-mark rv" aria-hidden="true"><span>SSK</span><span>Europe</span></div>');
+  if (fbot) fbot.insertAdjacentHTML('beforebegin', '<div class="ftr-mark rv" aria-hidden="true"><span>' + U.logo() + '</span><span>Europe</span></div>');
 
   readURL(); render(true);
 

@@ -218,7 +218,7 @@
 
   /* ---------- footer wordmark ---------- */
   const fbot = $('.ftr .bot');
-  if (fbot) fbot.insertAdjacentHTML('beforebegin', '<div class="ftr-mark rv" aria-hidden="true"><span>SSK</span><span>Europe</span></div>');
+  if (fbot) fbot.insertAdjacentHTML('beforebegin', '<div class="ftr-mark rv" aria-hidden="true"><span>' + U.logo() + '</span><span>Europe</span></div>');
 
   /* ---------- reveal on scroll ---------- */
   document.documentElement.classList.add('js');
