@@ -48,6 +48,10 @@ The live site is the homepage and category pages above, restyled with the Perfor
 
 Motion: the red diagonal opens the page by sweeping back from full width while the headline slams in line by line; hero products change with a diagonal wipe and a white stripe crossing the slab; the counters run when the stats bar comes into view; the brand band and the big heritage type lean and speed up with the scroll speed; section rules draw themselves; the dark sections arrive with a slanted edge that straightens; product cards tilt towards the pointer and show a red corner; category tiles fill red on hover; and going from one page to the next wipes the new page in on the diagonal. All of it is off with *reduce motion*.
 
+### Logo
+
+The header, the menu drawer and the footer use the official SSK logo from the Drive folder *SSK Europe / ssk-custom-kleding / brand*. The four original files are in `assets/brand/`; `src/ui.js` draws the logo from the same paths, with the S mark in the text colour (dark on light, light on dark) and the letters in SSK red. `assets/brand/favicon.svg` is the S mark alone.
+
 ### Themes
 
 A picker in the header switches between **Licht** (the whole site light), **Standaard** (the original look: black header and hero, light content) and **Donker** (the whole site dark). The choice is remembered per visitor and applied before the first paint; switching reveals the new theme in a circle from the button. On phones the picker is one button that steps through the three. The themes live in `src/theme.css`, which `build.py` adds last on every page.

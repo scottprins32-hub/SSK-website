@@ -123,7 +123,7 @@ html[data-theme=licht] .ftr .soc a{border-color:var(--g300)}
 html[data-theme=licht] .ftr .soc a:hover{border-color:var(--navy-900)}
 html[data-theme=licht] .ftr .bot,html[data-theme=licht] .ftr-mark{border-top-color:var(--g200);color:var(--g500)}
 html[data-theme=licht] .ftr-mark{color:transparent;-webkit-text-stroke-color:rgba(0,0,0,.28)}
-html[data-theme=licht] .ftr-mark span:first-child{color:var(--red-600)}
+html[data-theme=licht] .ftr-mark span:first-child{color:var(--navy-900)}
 
 /* ---------- 4. Donker ---------- */
 html[data-theme=donker]{color-scheme:dark;--chalk:#0B0B0B;--sh-card:0 0 0 1px rgba(255,255,255,.02);--sh-raised:0 18px 40px -12px rgba(0,0,0,.8)}
