@@ -40,6 +40,12 @@ Every category has its own page: `handschoenen/`, `knuppels/`, `ballen/`, `helme
 
 The products come from `src/catalog/<slug>.json`, written by `scripts/fetch_catalog.py`, which reads every page and subcategory of each category in the shop. Photos load from the shop's own 620×620 thumbnails. The *Catalogue* GitHub Action runs it every Monday (or on demand from the Actions tab), rebuilds the pages and commits the result, so prices stay current.
 
+### Performance mix
+
+The live site is the homepage and category pages above, restyled with the Performance concept from `stijlen/`: wide black capitals for every heading (one small self-hosted font file, `assets/fonts/archivo-wide-900.woff2`), hard edges, a red diagonal in the hero, a stats bar with counters, black label bars on the category tiles and flush tags on the product cards. `src/perf.css` holds the look and `src/motion.js` the movement; `build.py` adds both to the homepage and the category pages only.
+
+Motion: the red diagonal opens the page by sweeping back from full width while the headline slams in line by line; hero products change with a diagonal wipe and a white stripe crossing the slab; the counters run when the stats bar comes into view; marquees and the big heritage type lean and speed up with the scroll speed; section rules draw themselves; the dark sections arrive with a slanted edge that straightens; product cards tilt towards the pointer and show a red corner; category tiles fill red on hover; a red pointer label says what a click does; and going from one page to the next wipes the new page in on the diagonal. All of it is off with *reduce motion*.
+
 ### Themes
 
 A picker in the header switches between **Licht** (the whole site light), **Standaard** (the original look: black header and hero, light content) and **Donker** (the whole site dark). The choice is remembered per visitor and applied before the first paint; switching reveals the new theme in a circle from the button. On phones the picker is one button that steps through the three. The themes live in `src/theme.css`, which `build.py` adds last on every page.

@@ -206,7 +206,10 @@
     // A circle grows out of the button that was pressed and reveals the new theme.
     const r = from.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
     const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
-    document.startViewTransition(apply).ready.then(() => {
+    const root = document.documentElement; root.classList.add('theme-vt');
+    const vt = document.startViewTransition(apply);
+    vt.finished.finally(() => root.classList.remove('theme-vt'));
+    vt.ready.then(() => {
       document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
         { duration: 650, easing: 'cubic-bezier(.65,0,.25,1)', pseudoElement: '::view-transition-new(root)' });
     }).catch(() => {});

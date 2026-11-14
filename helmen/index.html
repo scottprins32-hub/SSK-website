@@ -6,13 +6,15 @@
 <title>Helmen · SSK Europe</title>
 <script>
 /* Theme before first paint: "licht", "donker" or the standard look (no attribute). */
+document.documentElement.classList.add('js'); /* lets the intro states apply before the first paint */
 try { var t = localStorage.getItem('ssk-theme'); if (t === 'licht' || t === 'donker') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
 </script>
-<link rel="preload" href="../assets/fonts/barlow-condensed-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/archivo-wide-900.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* Fonts are hosted with the site (latin subset), so no request leaves for Google before the first paint. */
+@font-face{font-family:'Archivo Wide';font-style:normal;font-weight:900;font-display:swap;src:url(../assets/fonts/archivo-wide-900.woff2) format('woff2')}
 @font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:700;font-display:swap;src:url(../assets/fonts/barlow-condensed-700.woff2) format('woff2')}
 @font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:800;font-display:swap;src:url(../assets/fonts/barlow-condensed-800.woff2) format('woff2')}
 @font-face{font-family:'Barlow';font-style:normal;font-weight:400;font-display:swap;src:url(../assets/fonts/barlow-400.woff2) format('woff2')}
@@ -891,6 +893,194 @@ body.lock{overflow:hidden}
 
 </style>
 <style>
+/* Performance mix. The wide heavy capitals, hard edges, red diagonal and stats bar of the Performance concept,
+   laid over the current site, with the motion that belongs to it. build.py adds this file after the page's own
+   styles and before theme.css, on the homepage and the category pages. Motion lives in src/motion.js. */
+:root{--r1:0px;--r2:0px;--r3:0px;--wide:'Archivo Wide','Arial Black','Helvetica Neue',Arial,sans-serif;--slant:-14deg;--snap:cubic-bezier(.77,0,.18,1)}
+
+/* ---------- type: wide black capitals for every heading ---------- */
+.d-xl,.d-lg,.d-md,.d-sm{font-family:var(--wide);font-weight:900;letter-spacing:-.015em}
+.d-md{font-size:clamp(18px,1.9vw,24px);line-height:1.02}
+.sec-h .d-lg{font-size:clamp(24px,3.4vw,46px);line-height:.95}
+.logo{gap:0}
+.logo b{font-family:var(--wide);font-weight:900;font-size:24px;letter-spacing:-.03em}
+.logo b:after{content:'/';color:var(--red-600);margin:0 3px 0 4px}
+.logo i{font-family:var(--wide);font-weight:900;font-size:13px;letter-spacing:0}
+
+/* ---------- hard edges ---------- */
+.btn,.rbtn,.totop,.open-now,.czw-frame,.ch-vis img,.tb-subs button,.pills button,.tb-n,.f-check .box,.hx-thumbs button,.bt,.hx-pick{border-radius:0}
+.hdr .theme,.hdr .theme button{border-radius:0}
+.btn-ghost:hover{background:#fff;color:#0A0A0A;border-color:#fff}
+/* primary button: a slanted panel sweeps in on hover */
+.btn-red:after{inset:0 -26%;background:#0A0A0A;transform:translateX(-102%) skewX(var(--slant));transition:transform .45s var(--snap)}
+.btn-red:hover{background:var(--red-600)}
+.btn-red:hover:after{transform:translateX(0) skewX(var(--slant))}
+.hx .btn-red:after,.czw .btn-red:after{background:#fff}
+.hx .btn-red:hover,.czw .btn-red:hover{color:#0A0A0A}
+
+/* ---------- hero: black field, red diagonal ---------- */
+.hx-in{grid-template-columns:1.1fr .9fr;min-height:min(620px,calc(100svh - 270px));padding-top:36px;padding-bottom:44px}
+.hx-slab{position:absolute;z-index:-1;top:0;bottom:0;right:-12%;width:50%;background:var(--red-600);transform:skewX(var(--slant));transform-origin:100% 50%;translate:calc(var(--sp,0) * 16%) 0}
+.hx-slab:after{content:'';position:absolute;top:0;bottom:0;left:-30px;width:10px;background:#fff}
+.js .hx-slab{transform:skewX(var(--slant)) scaleX(3.8)}
+.ready .hx-slab{transform:skewX(var(--slant)) scaleX(1);transition:transform 1.15s var(--snap) .05s}
+.swap .hx-slab:after{animation:stripe .8s var(--snap)}
+@keyframes stripe{0%{translate:0 0}55%{translate:62vw 0;opacity:1}56%{translate:0 0;opacity:0}100%{opacity:1}}
+.hx-glow{opacity:.3}
+.hx-ghost{font:900 clamp(60px,9vw,140px)/.9 var(--wide);bottom:-1.2vw}
+.hx-ghost span{display:inline-block;transform:skewX(calc(var(--vel,0) * -1deg))}
+.hx-kick{border:0;border-radius:0;background:var(--red-600);padding:7px 12px;backdrop-filter:none;letter-spacing:.16em}
+.hx-kick .dot{width:6px;height:6px;border-radius:0;background:#fff;animation:none;box-shadow:none}
+.hx-title{margin:22px 0;font:900 clamp(38px,min(5.5vw,9vh),84px)/.9 var(--wide);letter-spacing:-.02em}
+.hx-title .ln{padding-bottom:.06em}
+.hx-title em{color:transparent;-webkit-text-stroke:2px #fff}
+.js .hx-title .ln>span{transform:translateY(112%) skewY(7deg);transform-origin:0 100%}
+.ready .hx-title .ln>span{transform:none;transition:transform .95s cubic-bezier(.16,1,.3,1) .3s}
+.ready .hx-title .ln:nth-child(2)>span{transition-delay:.4s}
+.ready .hx-title .ln:nth-child(3)>span{transition-delay:.5s}
+.hx-stage{width:min(100%,430px,calc(100svh - 585px));translate:0 calc(var(--sp,0) * -46px)}
+.hx-pick{background:#0A0A0A;border:0;backdrop-filter:none;box-shadow:0 30px 60px -22px rgba(0,0,0,.7)}
+.hx-cue{display:none}
+/* products change with a diagonal wipe */
+.hx-float img{opacity:0;transform:none;transition:none}
+.hx-float img.on{opacity:1;animation:heroIn .9s cubic-bezier(.2,.8,.15,1) both}
+.hx-float img.out{animation:heroOut .5s cubic-bezier(.6,0,.9,.3) both}
+@keyframes heroIn{from{clip-path:polygon(125% -20%,125% -20%,100% 120%,100% 120%);transform:translateX(10%) rotate(9deg) scale(.9)}to{clip-path:polygon(-45% -20%,125% -20%,125% 120%,-70% 120%);transform:none}}
+@keyframes heroOut{from{opacity:1;transform:none}to{opacity:0;transform:translateX(-24%) rotate(-14deg) scale(.8)}}
+
+/* ---------- stats bar ---------- */
+.stats{background:#000;color:#fff;border-top:1px solid #222}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.stats .wrap>div{position:relative;padding:22px 20px 22px 0;border-right:1px solid #222}
+.stats .wrap>div+div{padding-left:22px}
+.stats .wrap>div:last-child{border-right:0}
+.stats .wrap>div:before{content:'';position:absolute;left:0;right:0;top:-1px;height:3px;background:var(--red-600);transform:scaleX(0);transform-origin:0 50%;transition:transform 1.5s cubic-bezier(.2,.8,.2,1)}
+.stats .wrap>div.done:before{transform:scaleX(1)}
+.stats b{display:block;font:900 clamp(22px,2.7vw,36px)/1 var(--wide);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stats span{display:block;margin-top:8px;font:700 12px/1.3 var(--display);letter-spacing:.12em;text-transform:uppercase;color:#9a9a9a}
+
+/* ---------- marquees lean with the scroll speed ---------- */
+.mq{border-block:0}
+.mq span{display:inline-block;transform:skewX(calc(var(--vel,0) * -1deg))}
+.brandmq a{transform:skewX(calc(var(--vel,0) * -1deg))}
+.brandmq a span{font:900 clamp(22px,2.7vw,36px)/104px var(--wide);letter-spacing:-.01em}
+
+/* ---------- section heads: a thick rule that draws itself ---------- */
+.sec-h{position:relative;padding-bottom:14px}
+.sec-h:after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--navy-900);transform-origin:0 50%}
+.js .sec-h.rv:after{transform:scaleX(0)}
+.js .sec-h.rv.in:after{transform:scaleX(1);transition:transform 1.1s var(--snap) .15s}
+html[data-theme=donker] .sec-h:after{background:#fff}
+
+/* ---------- category tiles: black label bar, red on hover ---------- */
+.bt-tx{left:0;right:0;bottom:0;padding:12px 56px 12px 16px;background:#0A0A0A;overflow:hidden}
+.bt-tx:before{content:'';position:absolute;inset:0 -34px;background:var(--red-600);transform:translateX(-103%) skewX(var(--slant));transition:transform .5s var(--snap)}
+.bt:hover .bt-tx:before,.bt:focus-visible .bt-tx:before{transform:translateX(0) skewX(var(--slant))}
+.bt-tx small,.bt-tx b{position:relative}
+.bt-tx small{color:#a8a8a8}
+.bt-tx b{margin-top:4px;color:#fff;font:800 clamp(17px,1.5vw,21px)/1 var(--display);letter-spacing:.05em}
+.bt.big .bt-tx{padding:18px 76px 18px 22px}
+.bt.big .bt-tx b{font:900 clamp(20px,2.5vw,34px)/1 var(--wide);letter-spacing:-.015em}
+.bt-go{right:12px;bottom:12px;width:30px;height:30px;border-radius:0;background:transparent;color:#fff}
+.bt.big .bt-go{right:22px;bottom:22px}
+.bt:hover .bt-go{background:transparent;transform:translateX(6px)}
+.bt.sale .bt-tx{background:var(--red-600)}
+.bt.sale .bt-tx:before{background:#0A0A0A}
+.bt.sale .bt-tx b{color:#fff}
+.bt.sale:before{left:0;top:14px}
+.bt-img img{padding:14px 18px 74px}
+.bt.big .bt-img img{padding:36px 40px 104px}
+.bento .bt .bt-img:before{bottom:70px}
+.bento .bt.big .bt-img:before{bottom:98px}
+
+/* ---------- product cards: flush tag, red corner, tilt ---------- */
+.pc .badge{left:0;top:12px;border-radius:0;padding:5px 9px;letter-spacing:.12em}
+.pc .brand{letter-spacing:.16em}
+.pc:after{content:'';position:absolute;z-index:4;right:0;top:0;width:46px;height:46px;background:var(--red-600) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E") no-repeat 25px 6px/15px;clip-path:polygon(0 0,100% 0,100% 100%);transform:translate(101%,-101%);transition:transform .35s var(--snap)}
+.pc:hover:after,.pc:focus-visible:after{transform:none}
+@media (pointer:fine) and (prefers-reduced-motion:no-preference){
+  body.home .card.pc:hover{transform:perspective(900px) rotateX(calc((var(--ty,.5) - .5) * -9deg)) rotateY(calc((var(--tx,.5) - .5) * 11deg)) translateY(-5px);transition:transform .12s ease-out,box-shadow .3s var(--ease),border-color .3s var(--ease)}
+}
+.cz-card b{font:900 22px/.95 var(--wide);letter-spacing:-.02em}
+
+/* ---------- customiser, heritage, footer ---------- */
+.czw{background-image:repeating-linear-gradient(-55deg,transparent 0 22px,rgba(255,255,255,.035) 22px 24px);clip-path:polygon(0 2.6vw,100% 0,100% 100%,0 100%);padding-top:calc(72px + 2.6vw)}
+.czw:before{display:none}
+.czw-side .d-lg{font-size:clamp(26px,3vw,42px);line-height:.95}
+.heri2{clip-path:polygon(0 0,100% 2.6vw,100% 100%,0 100%);padding-top:calc(90px + 2.6vw)}
+.heri2-type{font:900 clamp(40px,7.2vw,112px)/.9 var(--wide);letter-spacing:-.02em;transform:skewX(calc(var(--vel,0) * -.7deg))}
+.ftr-mark{font:900 clamp(34px,8vw,124px)/.82 var(--wide);letter-spacing:-.03em}
+
+/* ---------- category page hero ---------- */
+.ch-copy{container-type:inline-size}
+.ch-title{font:900 clamp(18px,calc(100cqi / var(--len,12.4)),84px)/.92 var(--wide);letter-spacing:-.02em}
+.ch .hx-slab{width:44%}
+.ch-glow{opacity:.45}
+.hx-vis,.ch-vis{isolation:isolate}
+
+/* ---------- pointer follower: a red parallelogram with a word in it ---------- */
+.cur{position:fixed;left:0;top:0;z-index:150;pointer-events:none;width:92px;height:40px;margin:18px 0 0 18px;display:grid;place-items:center;background:var(--red-600);color:#fff;font:800 13px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;clip-path:polygon(14% 0,100% 0,86% 100%,0 100%);scale:0;transition:scale .28s cubic-bezier(.2,.8,.2,1.3)}
+.cur.on{scale:1}
+
+/* ---------- moving between pages: the next page wipes in on the diagonal ---------- */
+@media (prefers-reduced-motion:no-preference){
+  @view-transition{navigation:auto}
+  html:not(.theme-vt)::view-transition-old(root){animation:vt-out .5s var(--snap) both}
+  html:not(.theme-vt)::view-transition-new(root){animation:vt-in .6s var(--snap) both}
+}
+@keyframes vt-out{to{transform:translateX(-7%);filter:brightness(.45)}}
+@keyframes vt-in{from{clip-path:polygon(128% 0,128% 0,100% 100%,100% 100%)}to{clip-path:polygon(0 0,128% 0,100% 100%,-28% 100%)}}
+
+/* ---------- tied to the scroll position, where the browser can do that without script ---------- */
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    .czw{animation:slantL linear both;animation-timeline:view();animation-range:entry 0% entry 100%}
+    .heri2{animation:slantR linear both;animation-timeline:view();animation-range:entry 0% entry 100%}
+    @keyframes slantL{from{clip-path:polygon(0 11vw,100% 0,100% 100%,0 100%)}to{clip-path:polygon(0 2.6vw,100% 0,100% 100%,0 100%)}}
+    @keyframes slantR{from{clip-path:polygon(0 0,100% 11vw,100% 100%,0 100%)}to{clip-path:polygon(0 0,100% 2.6vw,100% 100%,0 100%)}}
+    .bt-img img{animation:rise linear both;animation-timeline:view();animation-range:entry 0% cover 55%}
+    @keyframes rise{from{translate:0 26px;scale:.93}to{translate:0 0;scale:1}}
+    .sec-h .d-lg{animation:slide linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
+    @keyframes slide{from{translate:46px 0}to{translate:0 0}}
+    .stats b{animation:slide linear both;animation-timeline:view();animation-range:entry 0% cover 25%}
+  }
+}
+
+/* ---------- small screens ---------- */
+@media (max-width:900px){
+  .hx-in{min-height:0;grid-template-columns:1fr}
+  .hx-slab{display:none}
+  .hx-vis:before,.ch-vis:before{content:'';position:absolute;z-index:-1;top:2%;bottom:30%;left:36%;right:-45%;background:var(--red-600);transform:skewX(var(--slant))}
+  .ch-vis:before{bottom:0;top:0}
+  .hx-stage{width:min(72%,340px);translate:none}
+  .stats .wrap{grid-template-columns:1fr 1fr}
+  .stats .wrap>div{padding:16px 12px 16px 0;border-bottom:1px solid #222}
+  .stats .wrap>div+div{padding-left:0}
+  .stats .wrap>div:nth-child(2n){border-right:0;padding-left:16px}
+}
+@media (max-width:600px){
+  .hx-title{font-size:clamp(34px,10.4vw,56px)}
+  .hx-kick{letter-spacing:.06em;font-size:11px;padding:7px 10px}
+  .logo b{font-size:21px}
+  .bt-tx{padding:10px 44px 10px 12px}
+  .bt.big .bt-tx{padding:14px 56px 14px 16px}
+  .bt-tx b{font-size:16px}
+  .bt-go{right:8px;bottom:8px}
+  .bt.big .bt-go{right:14px;bottom:14px}
+  .brandmq a span{line-height:80px}
+}
+@media (prefers-reduced-motion:reduce){
+  .js .hx-slab{transform:skewX(var(--slant))}
+  .hx-float img.on,.hx-float img.out{animation:none}
+  .js .sec-h.rv:after{transform:none}
+  .cur{display:none}
+}
+
+/* ---------- Holland Series: the year, large and outlined, drifts in on hover ---------- */
+.split .panel.navy{position:relative;overflow:hidden;isolation:isolate}
+.split .panel.navy:before{content:'2026';position:absolute;right:-10px;top:48%;transform:translateY(-50%);z-index:-1;font:900 clamp(70px,9.5vw,136px)/1 var(--wide);letter-spacing:-.03em;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.22);transition:-webkit-text-stroke-color .4s var(--ease),transform .7s var(--snap)}
+.split .panel.navy:hover:before{-webkit-text-stroke-color:rgba(200,16,46,.85);transform:translateY(-50%) translateX(-14px) skewX(var(--slant))}
+
 /* Loaded last on every page (build.py puts it at the end of <head>).
    1. Product photos on a lit stage, for every theme.
    2. The theme picker in the header.
@@ -925,7 +1115,7 @@ body.lock{overflow:hidden}
 .theme button:hover{color:#fff}
 .theme button[aria-pressed=true]{background:#fff;color:#000}
 .hdr .theme+.acts{margin-left:8px}
-::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+html.theme-vt::view-transition-old(root),html.theme-vt::view-transition-new(root){animation:none;mix-blend-mode:normal}
 ::view-transition-new(root){z-index:2}
 @media (max-width:600px){
   .theme{--cycle:1;padding:0;border:0;margin-left:auto}
@@ -1132,6 +1322,19 @@ html[data-theme=donker] .others .chips .chip{background:#131313}
   html[data-theme=donker] .f-foot{border-top-color:#222}
 }
 
+/* ---------- Performance mix in the light and dark themes ---------- */
+html[data-theme=licht] .hx-title em{-webkit-text-stroke-color:var(--navy-900)}
+html[data-theme=licht] .hx .btn-red:after,html[data-theme=licht] .czw .btn-red:after{background:#0A0A0A}
+html[data-theme=licht] .hx .btn-red:hover,html[data-theme=licht] .czw .btn-red:hover{color:#fff}
+html[data-theme=licht] .hx .btn-ghost:hover{background:var(--navy-900);color:#fff;border-color:var(--navy-900)}
+html[data-theme=licht] .hx-pick{background:#fff}
+html[data-theme=licht] .hx-kick{background:var(--red-600);color:#fff;border:0}
+html[data-theme=licht] .stats{background:#fff;color:var(--navy-900);border-block:1px solid var(--g200)}
+html[data-theme=licht] .stats .wrap>div{border-color:var(--g200)}
+html[data-theme=licht] .stats span{color:var(--g600)}
+html[data-theme=licht] .czw{background-image:repeating-linear-gradient(-55deg,transparent 0 22px,rgba(0,0,0,.03) 22px 24px)}
+html[data-theme=donker] .pc:after{background-color:var(--red-600)}
+
 </style>
 </head>
 <body class="home catpage">
@@ -1143,6 +1346,7 @@ html[data-theme=donker] .others .chips .chip{background:#131313}
   <section class="ch" aria-labelledby="ch-title">
     <div class="hx-grain" aria-hidden="true"></div>
     <div class="ch-glow" aria-hidden="true"></div>
+    <div class="hx-slab" aria-hidden="true"></div>
     <div class="wrap ch-in">
       <div class="ch-copy">
         <nav class="crumbs rv" aria-label="Kruimelpad"><a href="../">Home</a><span aria-hidden="true">/</span><span aria-current="page" id="crumb"></span></nav>
@@ -1634,7 +1838,10 @@ html[data-theme=donker] .others .chips .chip{background:#131313}
     // A circle grows out of the button that was pressed and reveals the new theme.
     const r = from.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
     const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
-    document.startViewTransition(apply).ready.then(() => {
+    const root = document.documentElement; root.classList.add('theme-vt');
+    const vt = document.startViewTransition(apply);
+    vt.finished.finally(() => root.classList.remove('theme-vt'));
+    vt.ready.then(() => {
       document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
         { duration: 650, easing: 'cubic-bezier(.65,0,.25,1)', pseudoElement: '::view-transition-new(root)' });
     }).catch(() => {});
@@ -1783,6 +1990,14 @@ window.CAT = {"name":"Helmen","slug":"helmen","shop":"https://sskeurope.ccvshop.
   title.innerHTML = C.name.split(' ').map((w, i) => `<span class="w"><span style="--wi:${i}">${esc(w)}</span></span>`).join(' ');
   title.classList.add('wsplit');
   if (!C.name.includes(' ')) title.classList.add('one');
+  // The wide title is sized so its longest word fills the column: --len is that word's width in em.
+  const longest = C.name.toUpperCase().split(' ').sort((a, b) => b.length - a.length)[0];
+  const fit = em => title.style.setProperty('--len', (em + (C.name.includes(' ') ? .15 : .75)).toFixed(2));
+  fit(longest.length * .98);
+  if (document.fonts && document.fonts.load) document.fonts.load('900 100px "Archivo Wide"').then(() => {
+    const c = document.createElement('canvas').getContext('2d'); c.font = '900 100px "Archivo Wide"';
+    const w = c.measureText(longest).width / 100; if (w > 1) fit(w * .985);
+  }).catch(() => {});
   $('#ch-sub').textContent = NAV.sub || '';
   $('#ch-count').textContent = C.count + (C.count === 1 ? ' product' : ' producten');
   const topBrands = brandsAll.map(b => [b, P.filter(p => p.b === b).length]).sort((a, b) => b[1] - a[1]).slice(0, 4).map(x => x[0]);
@@ -1974,6 +2189,86 @@ window.CAT = {"name":"Helmen","slug":"helmen","shop":"https://sskeurope.ccvshop.
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   onScroll();
   top.addEventListener('click', () => scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' }));
+})();
+
+</script>
+<script>
+/* Motion shared by the homepage and the category pages (styles in src/perf.css).
+   Everything here is decoration: the page works the same without it, and it stays off with "reduce motion". */
+(function () {
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(pointer: fine)').matches;
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => [...(r || document).querySelectorAll(s)];
+
+  /* ---------- counters in the stats bar ---------- */
+  const nums = $$('[data-n]');
+  if (nums.length) {
+    const run = el => {
+      const to = +el.dataset.n, cell = el.parentNode;
+      cell.classList.add('done');
+      if (RM) { el.textContent = to; return; }
+      let t0 = 0;
+      const step = t => { t0 = t0 || t; const f = Math.min(1, (t - t0) / 1500); el.textContent = Math.round(to * (1 - Math.pow(2, -10 * f)) / (1 - Math.pow(2, -10))); if (f < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    };
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { io.unobserve(e.target); run(e.target); } }), { threshold: .6 });
+    nums.forEach(n => io.observe(n));
+    $$('.stats .wrap>div').forEach(d => { if (!$('[data-n]', d)) new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { d.classList.add('done'); o.disconnect(); } }), { threshold: .6 }).observe(d); });
+  }
+  if (RM) return;
+
+  /* ---------- scroll: speed leans the marquees and big type, progress moves the hero ---------- */
+  const lean = $$('.mq, .brandmq, .hx-ghost, .heri2-type');
+  const loops = $$('.mq-in, .hx-ghost').map(el => (el.getAnimations ? el.getAnimations()[0] : null)).filter(Boolean);
+  const hero = $('.hx') || $('.ch');
+  let last = scrollY, vel = 0, raf = 0;
+  function frame() {
+    const y = scrollY, d = y - last; last = y;
+    vel += (d - vel) * .18;
+    const v = Math.max(-16, Math.min(16, vel * .45));
+    lean.forEach(el => el.style.setProperty('--vel', v.toFixed(2)));
+    const rate = 1 + Math.min(6, Math.abs(vel) / 7);
+    loops.forEach(a => { a.playbackRate = rate; });
+    if (hero) hero.style.setProperty('--sp', Math.max(0, Math.min(1, y / (hero.offsetHeight || 1))).toFixed(3));
+    if (Math.abs(vel) > .05 || Math.abs(d) > 0) raf = requestAnimationFrame(frame);
+    else { raf = 0; lean.forEach(el => el.style.setProperty('--vel', 0)); loops.forEach(a => { a.playbackRate = 1; }); }
+  }
+  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(frame); }, { passive: true });
+
+  /* ---------- hero: a white stripe crosses the red slab each time the product changes ---------- */
+  const name = $('#hp-name');
+  if (name && hero) new MutationObserver(() => { hero.classList.remove('swap'); void hero.offsetWidth; hero.classList.add('swap'); }).observe(name, { childList: true, characterData: true, subtree: true });
+
+  if (!fine) return;
+
+  /* ---------- product cards tilt towards the pointer ---------- */
+  document.addEventListener('pointermove', e => {
+    const c = e.target.closest && e.target.closest('.pc'); if (!c) return;
+    const r = c.getBoundingClientRect();
+    c.style.setProperty('--tx', ((e.clientX - r.left) / r.width).toFixed(3));
+    c.style.setProperty('--ty', ((e.clientY - r.top) / r.height).toFixed(3));
+  }, { passive: true });
+
+  /* ---------- pointer follower with a word: "Sleep" on the rail, "Shop" on tiles, "Bekijk" on the hero product ---------- */
+  [['#rail', 'Sleep'], ['#stage', 'Bekijk'], ['#ch-vis', 'Shop']].forEach(([s, t]) => { const el = $(s); if (el) el.dataset.cur = t; });
+  $$('.bt').forEach(el => { el.dataset.cur = 'Shop'; });
+  const cur = document.createElement('div'); cur.className = 'cur'; cur.setAttribute('aria-hidden', 'true'); document.body.appendChild(cur);
+  let cx = 0, cy = 0, tx = 0, ty = 0, craf = 0, shown = false;
+  const follow = () => {
+    cx += (tx - cx) * .22; cy += (ty - cy) * .22;
+    cur.style.transform = `translate3d(${cx.toFixed(1)}px,${cy.toFixed(1)}px,0)`;
+    craf = shown || Math.abs(tx - cx) + Math.abs(ty - cy) > .5 ? requestAnimationFrame(follow) : 0;
+  };
+  document.addEventListener('pointermove', e => {
+    tx = e.clientX; ty = e.clientY;
+    const t = e.target.closest && e.target.closest('[data-cur]');
+    if (t) { if (!shown) { cx = tx; cy = ty; } cur.textContent = t.dataset.cur; }
+    shown = !!t; cur.classList.toggle('on', shown);
+    if (shown && !craf) craf = requestAnimationFrame(follow);
+  }, { passive: true });
+  document.addEventListener('pointerleave', () => { shown = false; cur.classList.remove('on'); });
+  addEventListener('scroll', () => { if (shown) { shown = false; cur.classList.remove('on'); } }, { passive: true });
 })();
 
 </script>

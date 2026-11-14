@@ -12,16 +12,18 @@ css, js, head = rd('base.css'), rd('data.js') + '\n' + rd('ui.js'), rd('head.htm
 home_css, home_js = rd('home.css'), rd('home.js')
 cat_css, cat_js, cat_tpl = rd('cat.css'), rd('cat.js'), rd('category.html')
 theme_css = rd('theme.css')  # light and dark themes, last so they win over every page style
+perf_css, motion_js = rd('perf.css'), rd('motion.js')  # the Performance mix: homepage and category pages only
 
 
-def page(text, assets, extra=None):
+def page(text, assets, extra=None, perf=False):
     title, body = text.split('\n', 1)
     body = body.replace('/*DATA*/', js.replace('/*ASSETS*/', assets)).replace('/*HOME_CSS*/', home_css).replace('/*HOME_JS*/', home_js)
     for k, v in (extra or {}).items():
         body = body.replace(k, v)
-    out = head.replace('{{TITLE}}', H.escape(title.strip(), quote=False)).replace('{{ASSETS}}', assets).replace('/*CSS*/', css) + body
+    body = body.replace('/*MOTION_JS*/', motion_js)
+    out = head.replace('{{TITLE}}', H.escape(title.strip(), quote=False)).replace('{{HEADFONT}}', 'archivo-wide-900' if perf else 'barlow-condensed-800').replace('{{ASSETS}}', assets).replace('/*CSS*/', css) + body
     # Theme styles go last in <head>, after the page's own styles, so they win and apply before the first paint.
-    return out.replace('</head>', '<style>\n' + theme_css + '\n</style>\n</head>', 1)
+    return out.replace('</head>', '<style>\n' + (perf_css + '\n' if perf else '') + theme_css + '\n</style>\n</head>', 1)
 
 
 def preloads(cat):
@@ -51,14 +53,16 @@ def write(dest, text):
     print('built', os.path.relpath(dest, here))
 
 
-write(os.path.join(here, 'index.html'), page(rd('v2-homepage.html'), ''))
+count = lambda slug: json.load(open(os.path.join(src, 'catalog', slug + '.json'), encoding='utf-8'))
+home = rd('v2-homepage.html').replace('{{N_GLOVES}}', str(count('handschoenen')['count'])).replace('{{N_BATS}}', str(count('knuppels')['count'])).replace('{{N_CLUBS}}', str(len(count('clubkleding')['subs'])))
+write(os.path.join(here, 'index.html'), page(home, '', perf=True))
 
 for f in sorted(glob.glob(os.path.join(src, 'catalog', '*.json'))):
     cat = json.load(open(f, encoding='utf-8'))
     data = json.dumps(cat, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     text = cat_tpl.replace('{{CAT_NAME}}', H.escape(cat['name'])).replace('{{CAT_COUNT}}', str(cat['count'])).replace('{{PRELOAD}}', preloads(cat))
     write(os.path.join(here, cat['slug'], 'index.html'),
-          page(text, '../', {'/*CAT_CSS*/': cat_css, '/*CAT_JS*/': cat_js, '/*CAT_JSON*/': data}))
+          page(text, '../', {'/*CAT_CSS*/': cat_css, '/*CAT_JS*/': cat_js, '/*CAT_JSON*/': data}, perf=True))
 
 for f in sorted(glob.glob(os.path.join(src, '0*.html'))):
     write(os.path.join(here, 'concepts', os.path.basename(f)), page(open(f, encoding='utf-8').read(), '../'))
