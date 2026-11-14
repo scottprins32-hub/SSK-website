@@ -109,7 +109,7 @@
   // Custom gloves from the customiser: each one lifts when the pointer is over it (from the Clean concept).
   $('#czw-row').innerHTML = ['navy-columbia', 'cardinal', 'zalm-mint', 'zwart-goud', 'nederland', 'roze-wit', 'curacao'].map((k, i) => {
     const c = S.COLOURWAYS.find(x => x.key === k);
-    return `<a href="${S.CUSTOMIZER_URL}" style="--i:${i}" aria-label="Ontwerp je eigen handschoen, voorbeeld ${c.name}"><img data-src="${c.img.replace('.webp', '-s.webp')}" alt="" width="321" height="380"><span>${c.name}</span></a>`;
+    return `<a href="${c.url}" style="--i:${i}" aria-label="Open de customizer met het ontwerp ${c.name}"><img data-src="${c.img.replace('.webp', '-s.webp')}" alt="" width="321" height="380"><span>${c.name}</span></a>`;
   }).join('');
 
   /* ---------- glove rail ---------- */
