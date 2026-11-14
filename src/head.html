@@ -6,13 +6,15 @@
 <title>{{TITLE}}</title>
 <script>
 /* Theme before first paint: "licht", "donker" or the standard look (no attribute). */
+document.documentElement.classList.add('js'); /* lets the intro states apply before the first paint */
 try { var t = localStorage.getItem('ssk-theme'); if (t === 'licht' || t === 'donker') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
 </script>
-<link rel="preload" href="{{ASSETS}}assets/fonts/barlow-condensed-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ASSETS}}assets/fonts/{{HEADFONT}}.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ASSETS}}assets/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ASSETS}}assets/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* Fonts are hosted with the site (latin subset), so no request leaves for Google before the first paint. */
+@font-face{font-family:'Archivo Wide';font-style:normal;font-weight:900;font-display:swap;src:url({{ASSETS}}assets/fonts/archivo-wide-900.woff2) format('woff2')}
 @font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:700;font-display:swap;src:url({{ASSETS}}assets/fonts/barlow-condensed-700.woff2) format('woff2')}
 @font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:800;font-display:swap;src:url({{ASSETS}}assets/fonts/barlow-condensed-800.woff2) format('woff2')}
 @font-face{font-family:'Barlow';font-style:normal;font-weight:400;font-display:swap;src:url({{ASSETS}}assets/fonts/barlow-400.woff2) format('woff2')}

@@ -63,6 +63,14 @@
   title.innerHTML = C.name.split(' ').map((w, i) => `<span class="w"><span style="--wi:${i}">${esc(w)}</span></span>`).join(' ');
   title.classList.add('wsplit');
   if (!C.name.includes(' ')) title.classList.add('one');
+  // The wide title is sized so its longest word fills the column: --len is that word's width in em.
+  const longest = C.name.toUpperCase().split(' ').sort((a, b) => b.length - a.length)[0];
+  const fit = em => title.style.setProperty('--len', (em + (C.name.includes(' ') ? .15 : .75)).toFixed(2));
+  fit(longest.length * .98);
+  if (document.fonts && document.fonts.load) document.fonts.load('900 100px "Archivo Wide"').then(() => {
+    const c = document.createElement('canvas').getContext('2d'); c.font = '900 100px "Archivo Wide"';
+    const w = c.measureText(longest).width / 100; if (w > 1) fit(w * .985);
+  }).catch(() => {});
   $('#ch-sub').textContent = NAV.sub || '';
   $('#ch-count').textContent = C.count + (C.count === 1 ? ' product' : ' producten');
   const topBrands = brandsAll.map(b => [b, P.filter(p => p.b === b).length]).sort((a, b) => b[1] - a[1]).slice(0, 4).map(x => x[0]);

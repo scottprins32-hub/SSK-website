@@ -32,7 +32,7 @@
 .theme button:hover{color:#fff}
 .theme button[aria-pressed=true]{background:#fff;color:#000}
 .hdr .theme+.acts{margin-left:8px}
-::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+html.theme-vt::view-transition-old(root),html.theme-vt::view-transition-new(root){animation:none;mix-blend-mode:normal}
 ::view-transition-new(root){z-index:2}
 @media (max-width:600px){
   .theme{--cycle:1;padding:0;border:0;margin-left:auto}
@@ -238,3 +238,16 @@ html[data-theme=donker] .others .chips .chip{background:#131313}
   html[data-theme=donker] .f-x{color:#fff}
   html[data-theme=donker] .f-foot{border-top-color:#222}
 }
+
+/* ---------- Performance mix in the light and dark themes ---------- */
+html[data-theme=licht] .hx-title em{-webkit-text-stroke-color:var(--navy-900)}
+html[data-theme=licht] .hx .btn-red:after,html[data-theme=licht] .czw .btn-red:after{background:#0A0A0A}
+html[data-theme=licht] .hx .btn-red:hover,html[data-theme=licht] .czw .btn-red:hover{color:#fff}
+html[data-theme=licht] .hx .btn-ghost:hover{background:var(--navy-900);color:#fff;border-color:var(--navy-900)}
+html[data-theme=licht] .hx-pick{background:#fff}
+html[data-theme=licht] .hx-kick{background:var(--red-600);color:#fff;border:0}
+html[data-theme=licht] .stats{background:#fff;color:var(--navy-900);border-block:1px solid var(--g200)}
+html[data-theme=licht] .stats .wrap>div{border-color:var(--g200)}
+html[data-theme=licht] .stats span{color:var(--g600)}
+html[data-theme=licht] .czw{background-image:repeating-linear-gradient(-55deg,transparent 0 22px,rgba(0,0,0,.03) 22px 24px)}
+html[data-theme=donker] .pc:after{background-color:var(--red-600)}

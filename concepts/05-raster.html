@@ -6,6 +6,7 @@
 <title>SSK Europe · Versie 05 · Promoraster</title>
 <script>
 /* Theme before first paint: "licht", "donker" or the standard look (no attribute). */
+document.documentElement.classList.add('js'); /* lets the intro states apply before the first paint */
 try { var t = localStorage.getItem('ssk-theme'); if (t === 'licht' || t === 'donker') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
 </script>
 <link rel="preload" href="../assets/fonts/barlow-condensed-800.woff2" as="font" type="font/woff2" crossorigin>
@@ -13,6 +14,7 @@ try { var t = localStorage.getItem('ssk-theme'); if (t === 'licht' || t === 'don
 <link rel="preload" href="../assets/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* Fonts are hosted with the site (latin subset), so no request leaves for Google before the first paint. */
+@font-face{font-family:'Archivo Wide';font-style:normal;font-weight:900;font-display:swap;src:url(../assets/fonts/archivo-wide-900.woff2) format('woff2')}
 @font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:700;font-display:swap;src:url(../assets/fonts/barlow-condensed-700.woff2) format('woff2')}
 @font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:800;font-display:swap;src:url(../assets/fonts/barlow-condensed-800.woff2) format('woff2')}
 @font-face{font-family:'Barlow';font-style:normal;font-weight:400;font-display:swap;src:url(../assets/fonts/barlow-400.woff2) format('woff2')}
@@ -395,7 +397,7 @@ img{display:block;max-width:100%}
 .theme button:hover{color:#fff}
 .theme button[aria-pressed=true]{background:#fff;color:#000}
 .hdr .theme+.acts{margin-left:8px}
-::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+html.theme-vt::view-transition-old(root),html.theme-vt::view-transition-new(root){animation:none;mix-blend-mode:normal}
 ::view-transition-new(root){z-index:2}
 @media (max-width:600px){
   .theme{--cycle:1;padding:0;border:0;margin-left:auto}
@@ -601,6 +603,19 @@ html[data-theme=donker] .others .chips .chip{background:#131313}
   html[data-theme=donker] .f-x{color:#fff}
   html[data-theme=donker] .f-foot{border-top-color:#222}
 }
+
+/* ---------- Performance mix in the light and dark themes ---------- */
+html[data-theme=licht] .hx-title em{-webkit-text-stroke-color:var(--navy-900)}
+html[data-theme=licht] .hx .btn-red:after,html[data-theme=licht] .czw .btn-red:after{background:#0A0A0A}
+html[data-theme=licht] .hx .btn-red:hover,html[data-theme=licht] .czw .btn-red:hover{color:#fff}
+html[data-theme=licht] .hx .btn-ghost:hover{background:var(--navy-900);color:#fff;border-color:var(--navy-900)}
+html[data-theme=licht] .hx-pick{background:#fff}
+html[data-theme=licht] .hx-kick{background:var(--red-600);color:#fff;border:0}
+html[data-theme=licht] .stats{background:#fff;color:var(--navy-900);border-block:1px solid var(--g200)}
+html[data-theme=licht] .stats .wrap>div{border-color:var(--g200)}
+html[data-theme=licht] .stats span{color:var(--g600)}
+html[data-theme=licht] .czw{background-image:repeating-linear-gradient(-55deg,transparent 0 22px,rgba(0,0,0,.03) 22px 24px)}
+html[data-theme=donker] .pc:after{background-color:var(--red-600)}
 
 </style>
 </head>
@@ -1047,7 +1062,10 @@ html[data-theme=donker] .others .chips .chip{background:#131313}
     // A circle grows out of the button that was pressed and reveals the new theme.
     const r = from.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
     const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
-    document.startViewTransition(apply).ready.then(() => {
+    const root = document.documentElement; root.classList.add('theme-vt');
+    const vt = document.startViewTransition(apply);
+    vt.finished.finally(() => root.classList.remove('theme-vt'));
+    vt.ready.then(() => {
       document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
         { duration: 650, easing: 'cubic-bezier(.65,0,.25,1)', pseudoElement: '::view-transition-new(root)' });
     }).catch(() => {});
