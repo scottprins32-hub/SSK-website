@@ -21,11 +21,11 @@
     [P.gloves[0], '2410112359', '#C8102E'], [P.gloves[2], '2382787655', '#22B5A0'],
     [P.gloves[3], '2410122391', '#E0559A'], [P.bats[0], '2363268062', '#C8102E'],
     [P.helmets[1], '2382805112', '#C8102E'], [P.balls[0], '2417010101', '#2F4A9A']
-  ].map(([p, id, accent]) => ({ p, accent, img: 'assets/hero/' + id + '.webp' }));
+  ].map(([p, id, accent]) => ({ p, accent, img: 'assets/hero/' + id + '.webp', th: (window.SSK_HEROTH || {})[id] || 'assets/hero/' + id + '-s.webp' }));
   const hi = $('#heroimgs'), th = $('#thumbs'), hx = $('.hx');
-  // Only the first product photo loads with the page; the other five follow after the load event. The picker uses 112px copies.
+  // Only the first product photo loads with the page; the other five follow after the load event. The picker uses 96px copies that build.py puts in the page itself.
   hi.innerHTML = HERO.map((h, i) => `<img ${i ? 'data-wait data-src' : 'fetchpriority="high" src'}="${h.img}" alt="${h.p.brand} ${h.p.name}" width="600" height="600" class="${i ? '' : 'on'}">`).join('');
-  th.innerHTML = HERO.map((h, i) => `<button type="button" aria-label="${h.p.brand} ${h.p.name}" aria-pressed="${i === 0}" data-i="${i}"><img src="${h.img.replace('.webp', '-s.webp')}" alt="" width="112" height="112"><i></i></button>`).join('');
+  th.innerHTML = HERO.map((h, i) => `<button type="button" aria-label="${h.p.brand} ${h.p.name}" aria-pressed="${i === 0}" data-i="${i}"><img src="${h.th}" alt="" width="96" height="96"><i></i></button>`).join('');
   const need = im => { if (im && im.dataset.src) { im.src = im.dataset.src; im.removeAttribute('data-src'); } };
   addEventListener('load', () => setTimeout(() => $$('img[data-src]', hi).forEach((im, k) => setTimeout(() => need(im), k * 250)), 400));
   let cur = -1, timer = null;

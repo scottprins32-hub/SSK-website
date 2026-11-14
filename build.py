@@ -4,7 +4,7 @@ src/v2-homepage.html (+ home.css, home.js)          -> index.html (the chosen ve
 src/category.html (+ cat.css, cat.js, catalog/*.json) -> <slug>/index.html, one page per category
 src/0*.html                                         -> concepts/ (the five earlier versions)
 """
-import glob, html as H, json, os, re
+import base64, glob, html as H, json, os, re
 here = os.path.dirname(os.path.abspath(__file__))
 src = os.path.join(here, 'src')
 rd = lambda f: open(os.path.join(src, f), encoding='utf-8').read()
@@ -69,8 +69,10 @@ def write(dest, text):
 
 count = lambda slug: json.load(open(os.path.join(src, 'catalog', slug + '.json'), encoding='utf-8'))
 hero_ids = re.findall(r"'(\d{8,12})', '#", _rd('home.js'))  # the hero products, in order (see HERO in src/home.js)
-hero_pre = '<link rel="preload" as="image" href="assets/hero/%s.webp" fetchpriority="high">\n' % hero_ids[0] + ''.join('<link rel="preload" as="image" href="assets/hero/%s-s.webp">\n' % i for i in hero_ids)
-home = rd('v2-homepage.html').replace('<meta name="theme-color"', hero_pre + '<meta name="theme-color"', 1).replace('{{N_GLOVES}}', str(count('handschoenen')['count'])).replace('{{N_BATS}}', str(count('knuppels')['count'])).replace('{{N_CLUBS}}', str(len(count('clubkleding')['subs'])))
+hero_pre = '<link rel="preload" as="image" href="assets/hero/%s.webp" fetchpriority="high">\n' % hero_ids[0]
+# The small photos of the hero picker go into the page as data, so the first screen needs six requests fewer.
+hero_th = {i: 'data:image/webp;base64,' + base64.b64encode(open(os.path.join(here, 'assets', 'hero', i + '-s.webp'), 'rb').read()).decode() for i in hero_ids}
+home = rd('v2-homepage.html').replace('<meta name="theme-color"', hero_pre + '<meta name="theme-color"', 1).replace('/*HOME_JS*/', 'window.SSK_HEROTH=' + json.dumps(hero_th, separators=(',', ':')) + ';\n/*HOME_JS*/', 1).replace('{{N_GLOVES}}', str(count('handschoenen')['count'])).replace('{{N_BATS}}', str(count('knuppels')['count'])).replace('{{N_CLUBS}}', str(len(count('clubkleding')['subs'])))
 write(os.path.join(here, 'index.html'), page(home, '', perf=True))
 
 for f in sorted(glob.glob(os.path.join(src, 'catalog', '*.json'))):
