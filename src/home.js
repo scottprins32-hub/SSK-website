@@ -82,6 +82,62 @@
     }
   }
 
+  /* ---------- positions: pick your spot on the field ---------- */
+  // Counts, photos and links come from build.py (window.SSK_POS), so they follow the catalogue.
+  const PD = window.SSK_POS || {};
+  const GROUPS = {
+    pitcher: ['Een gesloten web, zodat de slagman je grip niet ziet. Meestal 11,5 tot 12 inch.', 'pitcherhandschoenen'],
+    catcher: ['Een mitt met extra vulling, gemaakt voor honderden worpen per wedstrijd. Meestal 32 tot 34 inch.', 'catchermitts', ['Complete catcheruitrusting', U.nav('Catcher').url]],
+    first: ['Een lange, diepe mitt waarmee je lage en wijde aangooien opschept.', 'eerstehonkmitts'],
+    infield: ['Kort en ondiep, zodat de bal snel van handschoen naar werphand gaat. Meestal 11 tot 11,75 inch.', 'infieldhandschoenen'],
+    outfield: ['Lang en diep, voor hoge ballen en extra bereik. Meestal 12,5 tot 12,75 inch.', 'outfieldhandschoenen'],
+    batter: ['Knuppel, slaghandschoenen en helm: alles voor aan slag.', 'knuppels', ['Slaghandschoenen', U.nav('Slaghandschoenen').url], ['Helmen', U.nav('Helmen').url]]
+  };
+  // number, name, short label, x and y on the 600 x 540 field, group
+  const SPOTS = [['6', 'Korte stop', 'Korte stop', 238, 268, 'infield'], ['1', 'Pitcher', 'Pitcher', 300, 365, 'pitcher'], ['2', 'Catcher', 'Catcher', 300, 512, 'catcher'],
+    ['3', 'Eerste honk', '1e honk', 428, 340, 'first'], ['4', 'Tweede honk', '2e honk', 362, 268, 'infield'], ['5', 'Derde honk', '3e honk', 172, 340, 'infield'],
+    ['7', 'Linksveld', 'Links', 128, 170, 'outfield'], ['8', 'Midveld', 'Midden', 300, 105, 'outfield'], ['9', 'Rechtsveld', 'Rechts', 472, 170, 'outfield'], ['S', 'Slagman', 'Slag', 248, 470, 'batter']];
+  const field = $('#pos-field'), pcard = $('#pos-card'), ball = $('#pos-ball'), thr = $('#pos-throw');
+  field.insertAdjacentHTML('beforeend', SPOTS.map((s, i) => `<button type="button" class="spot" data-i="${i}" style="left:${(s[3] / 6).toFixed(2)}%;top:${(s[4] / 5.4).toFixed(2)}%;--i:${i}" aria-pressed="false" aria-label="${s[1]}"><b>${s[0]}</b><span>${s[2]}</span></button>`).join(''));
+  const spots = $$('.spot', field);
+  let spot = -1;
+  function pick(i) {
+    if (i === spot) return;
+    spot = i;
+    const s = SPOTS[i], g = GROUPS[s[5]], d = PD[s[5]] || { n: '', u: U.nav('Handschoenen').url };
+    spots.forEach((b, j) => { b.setAttribute('aria-pressed', j === i); b.classList.toggle('mate', j !== i && SPOTS[j][5] === s[5]); });
+    ball.style.transform = `translate(${s[3]}px,${s[4]}px)`;
+    thr.setAttribute('x2', s[3]); thr.setAttribute('y2', s[4]);
+    pcard.innerHTML = `<div class="pos-ph">${d.t ? `<img ${document.readyState === 'complete' ? 'src' : 'data-src'}="${d.t}" alt="" width="400" height="400">` : ''}</div>
+      <div class="pos-tx"><span class="pos-no">${s[0] === 'S' ? 'Aan slag' : 'Positie ' + s[0]}</span><h3>${s[1]}</h3><p>${g[0]}</p>
+        <a class="btn btn-red" href="${d.u}">Bekijk ${d.n} ${g[1]} ${arrow}</a>
+        ${g.length > 2 ? `<div class="pos-more">${g.slice(2).map(([t, u]) => `<a href="${u}">${t} ${arrow}</a>`).join('')}</div>` : ''}</div>`;
+    pcard.classList.remove('sw'); void pcard.offsetWidth; pcard.classList.add('sw');
+  }
+  pick(0);
+  // The field plays through the positions on its own until someone touches it.
+  const TOUR = [7, 3, 2, 1, 9, 0];  // midveld, eerste honk, catcher, pitcher, slagman, korte stop
+  let tour = RM ? 0 : 1, tourT = 0, tourK = 0;
+  const stopTour = () => { tour = 0; clearInterval(tourT); };
+  field.addEventListener('click', e => { const b = e.target.closest('.spot'); if (b) { stopTour(); pick(+b.dataset.i); } });
+  field.addEventListener('pointerover', e => { const b = e.target.closest('.spot'); if (b && e.pointerType === 'mouse') { stopTour(); pick(+b.dataset.i); } });
+  field.addEventListener('focusin', e => { const b = e.target.closest('.spot'); if (b && b.matches(':focus-visible')) { stopTour(); pick(+b.dataset.i); } });
+  pcard.addEventListener('pointerenter', stopTour); pcard.addEventListener('focusin', stopTour);
+  if (tour) new IntersectionObserver(es => {
+    clearInterval(tourT);
+    if (tour && es[0].isIntersecting) tourT = setInterval(() => pick(TOUR[tourK++ % TOUR.length]), 3200);
+  }, { threshold: .35 }).observe(field);
+
+  /* ---------- outlet band ---------- */
+  const DL = window.SSK_DEALS;
+  if (DL && DL.items.length) {
+    $('#deal-pct').textContent = '−' + DL.max + '%';
+    $('#deal-title').innerHTML = `Tot <em><span data-n="${DL.max}">${DL.max}</span>%</em><br>korting.`;
+    $('#deal-sub').textContent = `${DL.n} artikelen in de outlet, van handschoenen tot knuppels en catcheruitrusting.`;
+    $('#deal-cta').href = U.nav('Outlet').url;
+    $('#deal-grid').innerHTML = DL.items.map((p, i) => U.card({ url: p.u, photo: p.t, brand: p.b, name: p.n, price: p.p, was: p.w, tag: '−' + p.off + '%' }).replace('class="card', `style="--i:${i}" class="rv card`)).join('');
+  } else $('#deal').remove();
+
   /* ---------- brand band ---------- */
   // Brand band: every name links to that brand in the shop. The second copy only makes the loop seamless.
   const brRow = hide => S.BRANDS.map(b => `<a href="${S.brandUrl(b)}"${hide ? ' tabindex="-1" aria-hidden="true"' : ` aria-label="Alles van ${b} in de webshop"`}><span>${b}</span><small>Bekijk ${U.ui('arrow')}</small></a><i></i>`).join('');
@@ -97,7 +153,7 @@
     ['Catcher', find(P.more, 'Catcher'), '', 'Handschoenen en gear'],
     ['Slaghandschoenen', P.outlet[3], '', 'Grip aan de knuppel'],
     ['New Arrivals', find(P.gloves, 'REV1X 12.75'), '', 'Net binnen'],
-    ['Outlet', P.outlet[1], 'sale', 'Tot 50% korting']
+    ['Outlet', P.outlet[1], 'sale', `Tot ${(window.SSK_DEALS || { max: 50 }).max}% korting`]
   ];
   $('#bento').innerHTML = tiles.map(([n, p, cls, sub], i) => {
     const c = U.nav(n);
@@ -168,7 +224,7 @@
     ['Ballen', P.balls, 'Ballen'], ['Outlet', P.outlet, 'Outlet']
   ];
   const tl = $('#tabs'), tp = $('#tabpanel');
-  tl.innerHTML = TABS.map(([t], i) => `<button role="tab" id="tab-${i}" aria-controls="tabpanel" aria-selected="${i === 0}" tabindex="${i ? -1 : 0}">${t}${t === 'Outlet' ? '<sup>−50%</sup>' : ''}</button>`).join('') + '<span class="tab-ink" aria-hidden="true"></span>';
+  tl.innerHTML = TABS.map(([t], i) => `<button role="tab" id="tab-${i}" aria-controls="tabpanel" aria-selected="${i === 0}" tabindex="${i ? -1 : 0}">${t}${t === 'Outlet' ? `<sup>−${(window.SSK_DEALS || { max: 50 }).max}%</sup>` : ''}</button>`).join('') + '<span class="tab-ink" aria-hidden="true"></span>';
   const tbs = $$('[role=tab]', tl);
   function tab(i, focus) {
     tbs.forEach((b, k) => { b.setAttribute('aria-selected', k === i); b.tabIndex = k === i ? 0 : -1; });

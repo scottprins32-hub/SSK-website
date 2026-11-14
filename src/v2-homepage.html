@@ -69,12 +69,48 @@ SSK Europe · Honkbal en softbal · Ontwerp je eigen handschoen
   <div class="wrap"><div class="rail-bar" aria-hidden="true"><i id="railbar"></i></div>
   </div></section>
 
+  <!-- POSITIONS: pick your spot on the field, get the gloves for it -->
+  <section class="pos" id="positie" aria-labelledby="pos-title">
+    <div class="hx-grain" aria-hidden="true"></div>
+    <div class="wrap pos-in">
+      <div class="pos-side">
+        <div class="kick rv">Vind je handschoen</div>
+        <h2 class="d-lg rv" style="--i:1" id="pos-title">Welke positie<br>speel je?</h2>
+        <div class="pos-card rv" style="--i:2" id="pos-card"></div>
+      </div>
+      <div class="pos-field rv" id="pos-field" role="group" aria-label="Kies een positie op het veld">
+        <svg viewBox="0 0 600 540" aria-hidden="true">
+          <path class="f-grass" d="M300 470 40 210A286 286 0 0 1 560 210Z"/>
+          <path class="f-line f-draw" pathLength="1" d="M40 210A286 286 0 0 1 560 210"/>
+          <path class="f-line f-draw" pathLength="1" d="M300 470 40 210"/>
+          <path class="f-line f-draw" pathLength="1" d="M300 470 560 210"/>
+          <path class="f-line thin" d="M155 325A150 150 0 0 1 445 325"/>
+          <path class="f-dirt f-draw" pathLength="1" d="M300 470 410 360 300 250 190 360Z"/>
+          <circle class="f-line thin" cx="300" cy="365" r="16"/>
+          <path class="f-base" d="M410 351l9 9-9 9-9-9zM300 241l9 9-9 9-9-9zM190 351l9 9-9 9-9-9zM291 461h18v9l-9 9-9-9z"/>
+          <line class="f-throw" id="pos-throw" x1="300" y1="470" x2="300" y2="470"/>
+          <circle class="f-ball" id="pos-ball" r="6" style="transform:translate(300px,470px)"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
   <!-- CATEGORIES -->
   <section class="sec" id="shop" aria-labelledby="cat-title"><div class="wrap">
     <div class="sec-h rv"><div><div class="kick">Webshop</div><h2 class="d-lg" id="cat-title">Shop per categorie</h2></div>
       <a class="link" href="#" data-open="mega">Alle 17 categorieën <svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
     <div class="bento" id="bento"></div>
   </div></section>
+
+  <!-- OUTLET: built on the real highest discount in the outlet -->
+  <section class="deal" id="deal" aria-labelledby="deal-title">
+    <div class="deal-pct" aria-hidden="true" id="deal-pct"></div>
+    <div class="wrap deal-in">
+      <div class="deal-tx rv"><div class="kick">Outlet</div><h2 class="d-lg" id="deal-title"></h2><p id="deal-sub"></p>
+        <a class="btn" id="deal-cta">Naar de outlet <svg class="ui" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <div class="deal-grid" id="deal-grid"></div>
+    </div>
+  </section>
 
   <!-- SHOP TABS -->
   <section class="sec" aria-labelledby="tabs-title"><div class="wrap">

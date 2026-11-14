@@ -24,7 +24,7 @@
   if (RM) return;
 
   /* ---------- scroll: speed leans the marquees and big type, progress moves the hero ---------- */
-  const lean = $$('.brandmq, .hx-ghost, .heri2-type');
+  const lean = $$('.brandmq, .hx-ghost, .heri2-type, .deal-pct');
   const loops = $$('.mq-in, .hx-ghost').map(el => (el.getAnimations ? el.getAnimations()[0] : null)).filter(Boolean);
   const hero = $('.hx') || $('.ch');
   let last = scrollY, vel = 0, raf = 0;

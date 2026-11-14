@@ -4,7 +4,7 @@ src/v2-homepage.html (+ home.css, home.js)          -> index.html (the chosen ve
 src/category.html (+ cat.css, cat.js, catalog/*.json) -> <slug>/index.html, one page per category
 src/0*.html                                         -> concepts/ (the five earlier versions)
 """
-import base64, glob, html as H, json, os, re
+import base64, glob, html as H, json, os, re, unicodedata
 here = os.path.dirname(os.path.abspath(__file__))
 src = os.path.join(here, 'src')
 rd = lambda f: open(os.path.join(src, f), encoding='utf-8').read()
@@ -68,11 +68,52 @@ def write(dest, text):
 
 
 count = lambda slug: json.load(open(os.path.join(src, 'catalog', slug + '.json'), encoding='utf-8'))
+# Positions on the field -> (category page, subcategory, word in the product name). The same filters work on the category page.
+POS = {'pitcher': ('handschoenen', 'Veld Handschoenen', 'pitcher'), 'catcher': ('handschoenen', 'Catcher Handschoenen', ''),
+       'first': ('handschoenen', 'Eerste Honk Handschoenen', ''), 'infield': ('handschoenen', 'Veld Handschoenen', 'infield'),
+       'outfield': ('handschoenen', 'Veld Handschoenen', 'outfield'), 'batter': ('knuppels', '', '')}
+slugify = lambda t: re.sub(r'[^a-z0-9]+', '-', ''.join(c for c in unicodedata.normalize('NFD', t.lower()) if not unicodedata.combining(c))).strip('-')
+
+
+def positions():
+    """For every position: how many products match, a photo of one of them, and the link to the filtered category page."""
+    out, used = {}, set()
+    for key, (cat, sub, word) in POS.items():
+        c = count(cat)
+        ps = c['products']
+        if sub:
+            i = [s['name'] for s in c['subs']].index(sub)
+            ps = [p for p in ps if i in (p.get('s') or [])]
+        if word:
+            ps = [p for p in ps if word in p['n'].lower()]
+        t = next((p['t'] for p in ps if p.get('t') and p['t'] not in used), '')
+        used.add(t)
+        q = '&'.join(x for x in ['sub=' + slugify(sub) if sub else '', 'q=' + word if word else ''] if x)
+        out[key] = {'n': len(ps), 't': t, 'u': cat + '/' + ('?' + q if q else '')}
+    return out
+
+
+def deals():
+    """The outlet band: the highest discount in the outlet and four products with the biggest discounts, spread over its subcategories."""
+    c = count('outlet')
+    off = lambda p: round((1 - p['p'] / p['w']) * 100)
+    ps = sorted([p for p in c['products'] if p.get('w') and p.get('t')], key=lambda p: -off(p))
+    pick, subs, fams = [], set(), set()
+    for spread in (True, False):
+        for p in ps:
+            fam, sub = ' '.join(p['n'].split()[:3]), (p.get('s') or [None])[0]
+            if p in pick or fam in fams or (spread and sub in subs) or len(pick) == 4:
+                continue
+            pick.append(p); fams.add(fam); subs.add(sub)
+    return {'max': max(off(p) for p in c['products'] if p.get('w')), 'n': c['count'],
+            'items': [{'n': p['n'], 'u': p['u'], 'p': p['p'], 'w': p['w'], 'b': p.get('b', ''), 't': p['t'], 'off': off(p)} for p in pick]}
+
+
 hero_ids = re.findall(r"'(\d{8,12})', '#", _rd('home.js'))  # the hero products, in order (see HERO in src/home.js)
 hero_pre = '<link rel="preload" as="image" href="assets/hero/%s.webp" fetchpriority="high">\n' % hero_ids[0]
 # The small photos of the hero picker go into the page as data, so the first screen needs six requests fewer.
 hero_th = {i: 'data:image/webp;base64,' + base64.b64encode(open(os.path.join(here, 'assets', 'hero', i + '-s.webp'), 'rb').read()).decode() for i in hero_ids}
-home = rd('v2-homepage.html').replace('<meta name="theme-color"', hero_pre + '<meta name="theme-color"', 1).replace('/*HOME_JS*/', 'window.SSK_HEROTH=' + json.dumps(hero_th, separators=(',', ':')) + ';\n/*HOME_JS*/', 1).replace('{{N_GLOVES}}', str(count('handschoenen')['count'])).replace('{{N_BATS}}', str(count('knuppels')['count'])).replace('{{N_CLUBS}}', str(len(count('clubkleding')['subs'])))
+home = rd('v2-homepage.html').replace('<meta name="theme-color"', hero_pre + '<meta name="theme-color"', 1).replace('/*HOME_JS*/', 'window.SSK_HEROTH=' + json.dumps(hero_th, separators=(',', ':')) + ';\nwindow.SSK_POS=' + json.dumps(positions(), separators=(',', ':')) + ';\nwindow.SSK_DEALS=' + json.dumps(deals(), ensure_ascii=False, separators=(',', ':')) + ';\n/*HOME_JS*/', 1).replace('{{N_GLOVES}}', str(count('handschoenen')['count'])).replace('{{N_BATS}}', str(count('knuppels')['count'])).replace('{{N_CLUBS}}', str(len(count('clubkleding')['subs'])))
 write(os.path.join(here, 'index.html'), page(home, '', perf=True))
 
 for f in sorted(glob.glob(os.path.join(src, 'catalog', '*.json'))):
