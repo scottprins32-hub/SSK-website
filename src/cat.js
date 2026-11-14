@@ -13,7 +13,9 @@
   const src = p => p.t ? '../' + p.t : p.i;
   const NAV = S.NAV.find(n => n.slug === C.slug) || { name: C.name, icon: 'ball', sub: '' };
 
-  U.mount({ header: U.header(), footer: U.footer() });
+  window.SSK_DEFER = true;
+  const EAGER = innerWidth < 700 ? 2 : 4;  // product photos that load with the page: the first row. build.py preloads the same ones.
+  U.mount({ header: U.header(), footer: U.footer2() });
   document.documentElement.classList.add('js');
 
   /* ---------- data ---------- */
@@ -85,7 +87,7 @@
   // Prefer three different subcategories, so the hero shows the range of the category.
   for (const p of pool) { const k = p.s.length ? p.s[0] : p.b + p.k; if (!seen.has(k)) { seen.add(k); showcase.push(p); } if (showcase.length === 3) break; }
   for (const p of pool) { if (showcase.length === 3) break; if (!showcase.includes(p)) showcase.push(p); }
-  $('#ch-vis').innerHTML = showcase.map((p, i) => `<img src="${src(p)}" alt="" class="f${i}" width="480" height="480" ${i ? '' : 'fetchpriority="high"'} onerror="this.remove()">`).join('');
+  $('#ch-vis').innerHTML = showcase.map((p, i) => `<img src="${src(p)}" alt="" class="f${i}" width="400" height="400" ${i ? '' : 'fetchpriority="high"'} onerror="this.remove()">`).join('');
   if (!showcase.length) $('.ch').classList.add('novis');
 
   /* ---------- toolbar + filter panel ---------- */
@@ -102,7 +104,7 @@
   const pmin = $('#pmin'), pmax = $('#pmax');
   [pmin, pmax].forEach(r => { r.min = PMIN; r.max = PMAX; r.step = PMAX - PMIN > 200 ? 5 : 1; });
   if (PMAX - PMIN < 2) $('#range').closest('.f-grp').hidden = true;
-  if (NAV.name === 'Handschoenen' || NAV.name === 'Catcher') $('#f-extra').innerHTML = `<a class="f-cz" href="${S.CUSTOMIZER_URL}"><img src="${S.COLOURWAYS[0].img}" alt="" loading="lazy"><span><small>Glove Customizer</small><b>Liever je eigen handschoen?</b></span>${U.ui('arrow')}</a>`;
+  if (NAV.name === 'Handschoenen' || NAV.name === 'Catcher') $('#f-extra').innerHTML = `<a class="f-cz" href="${S.CUSTOMIZER_URL}"><img data-src="${S.COLOURWAYS[0].img.replace('.webp', '-s.webp')}" alt="" width="52" height="52"><span><small>Glove Customizer</small><b>Liever je eigen handschoen?</b></span>${U.ui('arrow')}</a>`;
 
   function facets() {
     // Brand counts follow every other filter, so a number always tells what you will get.
@@ -132,7 +134,7 @@
     const tag = p.d || (p.w ? 'Sale' : '');
     return `<a class="card pc pk" href="${esc(p.u)}" style="--i:${i % PAGE}">
       <div class="ph">${tag ? `<span class="badge b-sale">${esc(tag)}</span>` : ''}
-        ${p.i ? `<img class="a" ${i < 8 ? `src="${src(p)}"${i < 4 ? ' fetchpriority="high"' : ''}` : `data-src="${src(p)}"`} alt="${esc(p.n)}" width="480" height="480" decoding="async" onload="this.parentNode.classList.add('ok')" onerror="if(this.dataset.fb!=='1'&&this.src!=='${p.i}'){this.dataset.fb='1';this.src='${p.i}'}else this.remove()">` : U.ic(NAV.icon)}
+        ${p.i ? `<img class="a" ${i < EAGER ? `src="${src(p)}" fetchpriority="high"` : `data-src="${src(p)}"`} alt="${esc(p.n)}" width="400" height="400" decoding="async" onload="this.parentNode.classList.add('ok')" onerror="if(this.dataset.fb!=='1'&&this.src!=='${p.i}'){this.dataset.fb='1';this.src='${p.i}'}else this.remove()">` : U.ic(NAV.icon)}
         ${p.j ? `<img class="b" data-src="${p.j}" alt="" aria-hidden="true">` : ''}</div>
       <div class="info"><span class="brand">${esc(p.b || ' ')}</span><span class="name">${esc(p.b && p.n.toLowerCase().startsWith(p.b.toLowerCase() + " ") ? p.n.slice(p.b.length + 1) : p.n)}</span>
       <span class="price${p.w ? ' sale' : ''}"><b>${eur(p.p)}</b>${p.w ? `<s>${eur(p.w)}</s>` : ''}</span></div></a>`;
@@ -149,6 +151,7 @@
     const more = list.length > shown.length;
     $('#more-wrap').hidden = !list.length;
     $('#more').hidden = !more;
+    $('#more').textContent = 'Toon nog ' + Math.min(PAGE, list.length - shown.length);
     $('#more-txt').textContent = `${shown.length} van ${list.length}`;
     $('#more-fill').style.transform = `scaleX(${list.length ? shown.length / list.length : 0})`;
     $('#count').textContent = list.length + (list.length === 1 ? ' product' : ' producten');
@@ -159,16 +162,12 @@
     const from = st.n; st.n += PAGE;
     grid.insertAdjacentHTML('beforeend', list.slice(from, st.n).map(card).join(''));
     $('#more').hidden = list.length <= st.n;
+    $('#more').textContent = 'Toon nog ' + Math.min(PAGE, Math.max(0, list.length - st.n));
     $('#more-txt').textContent = `${Math.min(st.n, list.length)} van ${list.length}`;
     $('#more-fill').style.transform = `scaleX(${Math.min(1, st.n / list.length)})`;
   }
   $('#more').addEventListener('click', appendMore);
-  // Photos past the first two rows wait until the page has loaded, then come in as they near the screen.
-  let loaded = document.readyState === 'complete';
-  const lazy = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { const im = e.target; im.src = im.dataset.src; im.removeAttribute('data-src'); lazy.unobserve(im); } }), { rootMargin: '600px 0px' });
-  const watch = () => { if (loaded) $$('img.a[data-src]', grid).forEach(im => lazy.observe(im)); };
-  addEventListener('load', () => { loaded = true; watch(); });
-  new MutationObserver(watch).observe(grid, { childList: true });
+  // Photos past the first row wait for the load event and then load as they near the screen (UI.lazy).
   // Second photo on hover: load it only when the pointer gets there.
   grid.addEventListener('pointerover', e => { const b = e.target.closest('.pk')?.querySelector('img.b[data-src]'); if (b) { b.src = b.dataset.src; b.removeAttribute('data-src'); } });
 
@@ -227,7 +226,7 @@
 
   /* ---------- other categories, brands ---------- */
   $('#shop-link').href = C.shop;
-  $('#others').innerHTML = U.chips(S.NAV.filter(n => n.slug !== C.slug).map(n => n.name));
+  $('#others').innerHTML = U.rounds(C.slug);
   const brRow = hide => S.BRANDS.map(b => `<a href="${S.brandUrl(b)}"${hide ? ' tabindex="-1" aria-hidden="true"' : ` aria-label="Alles van ${b} in de webshop"`}><span>${b}</span><small>Bekijk ${U.ui('arrow')}</small></a><i></i>`).join('');
   $('#brands').innerHTML = `<div>${brRow(false)}</div><div>${brRow(true)}</div>`;
   const fbot = $('.ftr .bot');
@@ -255,9 +254,10 @@
     bar.style.transform = `scaleX(${H > 0 ? y / H : 0})`;
     hdr.classList.toggle('scrolled', y > 40);
     // The toolbar and filter panel stick just under the header, whatever its height.
-    document.documentElement.style.setProperty('--hdr', hdr.offsetHeight + 'px');
+    const hh = hdr.classList.contains('up') ? 0 : hdr.offsetHeight;  // the header steps aside on the way down
+    document.documentElement.style.setProperty('--hdr', hh + 'px');
     top.classList.toggle('show', y > innerHeight * 1.5);
-    tb.classList.toggle('stuck', tb.getBoundingClientRect().top <= (hdr.offsetHeight + 1));
+    tb.classList.toggle('stuck', tb.getBoundingClientRect().top <= hh + 1);
   }
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   onScroll();

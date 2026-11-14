@@ -19,13 +19,15 @@ Open `concepts/index.html` for an overview of the five earlier versions, or open
 `index.html` is version 02 "Customizer voorop" worked out as a complete homepage:
 
 - **Hero:** the shop first. Six new products from the shop (gloves, a 2026 bat, a helmet, the SSK ball) cycle on their own, each with its name, price and a link; thumbnails switch them. The cut-outs in `assets/hero/` are the shop's own product photos with their transparent background kept.
-- **Shop per categorie:** a photo grid with real product photos, plus buttons for the other categories.
+- **Round category photos:** all seventeen categories in one row right under the hero, each with a product photo from that category (picked from Pim's favourite parts of the Heritage concept). The same row closes every category page.
 - **Nieuw binnen:** a drag-to-scroll rail with eleven new gloves and a customiser card at the end.
+- **Shop per categorie:** a photo grid with real product photos.
 - **Uitgelicht:** tabs for 2026 bats, helmets, balls and outlet.
-- **Glove Customizer:** one compact block after the shop: the seven steps next to a real screenshot of each, which play on their own and open the customiser when clicked. Kept secondary on purpose (feedback from Pim: the custom gloves were too much in the foreground).
-- **Heritage, club apparel, Holland Series, showroom** (with a live open/closed label, route and call buttons), **brands** and the footer.
+- **Glove Customizer:** one compact block after the shop: the seven steps next to a real screenshot of each, which play on their own and open the customiser when clicked. Below it a row of seven custom gloves from the customiser that lift when the pointer is over them (from the Clean concept). Kept secondary on purpose (feedback from Pim: the custom gloves were too much in the foreground).
+- **Heritage, club apparel, Holland Series, brands** and the footer, which opens with the showroom: address, a live open/closed label, route and call buttons and the opening hours with today marked (from the Heritage concept).
+- **Header:** search on the left, logo in the middle, account and cart on the right, the menu centred below, and one message at a time in the top bar (the calmer bar from the Game Ready concept). It slides away when you scroll down and comes back when you scroll up.
 
-Motion: line-by-line title reveal, scroll reveals, a red stitch scroll bar, marquees, magnetic buttons and Everything respects *reduce motion*.
+Motion: line-by-line title reveal, scroll reveals, a red stitch scroll bar, a brand band and magnetic buttons. Everything respects *reduce motion*.
 
 Every product shown is a real product from the shop, with its real name, price, link and photo. Every button and link goes somewhere real: shop categories, shop pages, search (it searches the shop), account, cart, Google Maps, phone, e-mail and the customiser. The heritage line "Baseball, it's our game." comes from SSK's US site, sskbaseballshop.com.
 
@@ -44,7 +46,7 @@ The products come from `src/catalog/<slug>.json`, written by `scripts/fetch_cata
 
 The live site is the homepage and category pages above, restyled with the Performance concept from `stijlen/`: wide black capitals for every heading (one small self-hosted font file, `assets/fonts/archivo-wide-900.woff2`), hard edges, a red diagonal in the hero, a stats bar with counters, black label bars on the category tiles and flush tags on the product cards. `src/perf.css` holds the look and `src/motion.js` the movement; `build.py` adds both to the homepage and the category pages only.
 
-Motion: the red diagonal opens the page by sweeping back from full width while the headline slams in line by line; hero products change with a diagonal wipe and a white stripe crossing the slab; the counters run when the stats bar comes into view; marquees and the big heritage type lean and speed up with the scroll speed; section rules draw themselves; the dark sections arrive with a slanted edge that straightens; product cards tilt towards the pointer and show a red corner; category tiles fill red on hover; a red pointer label says what a click does; and going from one page to the next wipes the new page in on the diagonal. All of it is off with *reduce motion*.
+Motion: the red diagonal opens the page by sweeping back from full width while the headline slams in line by line; hero products change with a diagonal wipe and a white stripe crossing the slab; the counters run when the stats bar comes into view; the brand band and the big heritage type lean and speed up with the scroll speed; section rules draw themselves; the dark sections arrive with a slanted edge that straightens; product cards tilt towards the pointer and show a red corner; category tiles fill red on hover; and going from one page to the next wipes the new page in on the diagonal. All of it is off with *reduce motion*.
 
 ### Themes
 
@@ -55,6 +57,8 @@ A picker in the header switches between **Licht** (the whole site light), **Stan
 Every product photo sits on a soft studio spotlight with a contact shadow underneath; white photo backgrounds melt into it, colours get a little more saturation, and on hover the product lifts. In the dark theme the photos keep their light stage, so they stand out against the dark page.
 
 ### Speed
+
+Target: every page finishes loading within one second on a 4G connection (Chrome's "Fast 4G": 9 Mbit/s, 165 ms delay per request). What makes that work: the pages are minified by `build.py` (needs `pip install rjsmin rcssmin`; without them the build still works, only larger), fonts are cut down to the characters the site uses, everything the first screen needs is preloaded from the `<head>`, and every image below the first screen waits until the page has loaded. Measure with a throttled Chrome; on "Slow 4G" one second is not reachable for any page with photos.
 
 Fonts are hosted with the site (`assets/fonts/`, preloaded), so nothing waits on Google. The photos a category page shows first (its first 32 products and its hero) are copied small into `assets/thumbs/` by `scripts/fetch_thumbs.py` and load from the site itself; every other photo still comes from the shop when it is needed. The Catalogue workflow refreshes the thumbnails along with the products.
 

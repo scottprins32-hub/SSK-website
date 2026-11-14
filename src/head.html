@@ -12,15 +12,18 @@ try { var t = localStorage.getItem('ssk-theme'); if (t === 'licht' || t === 'don
 <link rel="preload" href="{{ASSETS}}assets/fonts/{{HEADFONT}}.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ASSETS}}assets/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ASSETS}}assets/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ASSETS}}assets/fonts/barlow-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ASSETS}}assets/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ASSETS}}assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ASSETS}}assets/fonts/barlow-condensed-800.woff2" as="font" type="font/woff2" crossorigin>
+<script type="speculationrules">{"prefetch":[{"where":{"selector_matches":"a[href]:not([href^='http']):not([href^='#']):not([href^='mailto:']):not([href^='tel:'])"},"eagerness":"moderate"}]}</script>
 <style>
-/* Fonts are hosted with the site (latin subset), so no request leaves for Google before the first paint. */
+/* Fonts are hosted with the site and cut down to the characters Dutch and English need (about 10 kB each). */
 @font-face{font-family:'Archivo Wide';font-style:normal;font-weight:900;font-display:swap;src:url({{ASSETS}}assets/fonts/archivo-wide-900.woff2) format('woff2')}
 @font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:700;font-display:swap;src:url({{ASSETS}}assets/fonts/barlow-condensed-700.woff2) format('woff2')}
 @font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:800;font-display:swap;src:url({{ASSETS}}assets/fonts/barlow-condensed-800.woff2) format('woff2')}
 @font-face{font-family:'Barlow';font-style:normal;font-weight:400;font-display:swap;src:url({{ASSETS}}assets/fonts/barlow-400.woff2) format('woff2')}
-@font-face{font-family:'Barlow';font-style:normal;font-weight:500;font-display:swap;src:url({{ASSETS}}assets/fonts/barlow-500.woff2) format('woff2')}
 @font-face{font-family:'Barlow';font-style:normal;font-weight:600;font-display:swap;src:url({{ASSETS}}assets/fonts/barlow-600.woff2) format('woff2')}
-@font-face{font-family:'Barlow';font-style:normal;font-weight:700;font-display:swap;src:url({{ASSETS}}assets/fonts/barlow-700.woff2) format('woff2')}
 @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url({{ASSETS}}assets/fonts/ibm-plex-mono-400.woff2) format('woff2')}
 @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url({{ASSETS}}assets/fonts/ibm-plex-mono-600.woff2) format('woff2')}
 /*CSS*/

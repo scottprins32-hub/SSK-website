@@ -6,13 +6,17 @@ the shop's server, which keeps those pages under half a second. Every other phot
 from the shop when it is needed. Run after scripts/fetch_catalog.py; it marks each copied product
 with "t" in src/catalog/<slug>.json and removes thumbnails no category uses any more.
 """
-import glob, io, json, os, re, urllib.request
+import glob, io, json, os, re, sys, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from PIL import Image
 
 here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(here, 'assets', 'thumbs')
-FIRST, SIZE = 32, 480
+FIRST, SIZE, QUALITY = 32, 400, 72
+FORCE = '--force' in sys.argv  # make every thumbnail again, e.g. after changing SIZE or QUALITY
+
+
+DONE = set()
 
 
 def thumb(url):
@@ -21,13 +25,14 @@ def thumb(url):
         return None
     rel = 'assets/thumbs/%s.webp' % m.group(1)
     dest = os.path.join(here, rel)
-    if os.path.exists(dest):
+    if os.path.exists(dest) and not (FORCE and rel not in DONE):
         return rel
     try:
         raw = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (SSK thumbnails)'}), timeout=40).read()
         im = Image.open(io.BytesIO(raw)).convert('RGBA')
         im.thumbnail((SIZE, SIZE), Image.LANCZOS)
-        im.save(dest, 'WEBP', quality=78, method=6)
+        im.save(dest, 'WEBP', quality=QUALITY, method=6)
+        DONE.add(rel)
         return rel
     except Exception as e:
         print('  FAILED', url, e)

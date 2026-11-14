@@ -251,3 +251,7 @@ html[data-theme=licht] .stats .wrap>div{border-color:var(--g200)}
 html[data-theme=licht] .stats span{color:var(--g600)}
 html[data-theme=licht] .czw{background-image:repeating-linear-gradient(-55deg,transparent 0 22px,rgba(0,0,0,.03) 22px 24px)}
 html[data-theme=donker] .pc:after{background-color:var(--red-600)}
+html[data-theme=licht] .ftr.ft2{background:#fff}
+html[data-theme=licht] .hdr .search{color:var(--g700)}
+html[data-theme=licht] .hdr .search input::placeholder{color:var(--g500)}
+html[data-theme=licht] .hdr .search .ui{color:var(--g500)}
