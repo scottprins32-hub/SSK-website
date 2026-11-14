@@ -7,7 +7,8 @@
   const fine = matchMedia('(pointer: fine)').matches;
   const arrow = U.ui('arrow');
 
-  U.mount({ header: U.header(), usp: U.usp(), club: U.club(), showroom: U.showroom(), footer: U.footer() });
+  window.SSK_DEFER = true;  // photos below the first screen wait for the load event (see UI.lazy)
+  U.mount({ header: U.header(), club: U.club(), footer: U.footer2() });
 
   /* ---------- links ---------- */
   $('#cz-end').href = S.CUSTOMIZER_URL;
@@ -22,14 +23,18 @@
     [P.helmets[1], '2382805112', '#C8102E'], [P.balls[0], '2417010101', '#2F4A9A']
   ].map(([p, id, accent]) => ({ p, accent, img: 'assets/hero/' + id + '.webp' }));
   const hi = $('#heroimgs'), th = $('#thumbs'), hx = $('.hx');
-  hi.innerHTML = HERO.map((h, i) => `<img src="${h.img}" alt="${h.p.brand} ${h.p.name}"${i ? ' loading="lazy"' : ' fetchpriority="high"'} class="${i ? '' : 'on'}">`).join('');
-  th.innerHTML = HERO.map((h, i) => `<button type="button" aria-label="${h.p.brand} ${h.p.name}" aria-pressed="${i === 0}" data-i="${i}"><img src="${h.img}" alt="" loading="lazy"><i></i></button>`).join('');
+  // Only the first product photo loads with the page; the other five follow after the load event. The picker uses 112px copies.
+  hi.innerHTML = HERO.map((h, i) => `<img ${i ? 'data-wait data-src' : 'fetchpriority="high" src'}="${h.img}" alt="${h.p.brand} ${h.p.name}" width="600" height="600" class="${i ? '' : 'on'}">`).join('');
+  th.innerHTML = HERO.map((h, i) => `<button type="button" aria-label="${h.p.brand} ${h.p.name}" aria-pressed="${i === 0}" data-i="${i}"><img src="${h.img.replace('.webp', '-s.webp')}" alt="" width="112" height="112"><i></i></button>`).join('');
+  const need = im => { if (im && im.dataset.src) { im.src = im.dataset.src; im.removeAttribute('data-src'); } };
+  addEventListener('load', () => setTimeout(() => $$('img[data-src]', hi).forEach((im, k) => setTimeout(() => need(im), k * 250)), 400));
   let cur = -1, timer = null;
   const imgs = $$('img', hi), btns = $$('button', th);
   function show(i, user) {
     i = (i + HERO.length) % HERO.length;
     if (i === cur) return;
     const prev = cur; cur = i;
+    need(imgs[cur]);
     imgs.forEach((im, k) => { im.classList.toggle('on', k === cur); im.classList.toggle('out', k === prev); });
     btns.forEach((b, k) => b.setAttribute('aria-pressed', k === cur));
     const p = HERO[cur].p;
@@ -77,10 +82,7 @@
     }
   }
 
-  /* ---------- marquee ---------- */
-  const mqItems = ['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Slaghandschoenen', 'Clubkleding', 'Outlet', 'Showroom Kwintsheul'];
-  const mqRow = mqItems.map(t => `<span>${t}</span><i>✶</i>`).join('');
-  $('#mq').innerHTML = `<div>${mqRow}</div><div>${mqRow}</div>`;
+  /* ---------- brand band ---------- */
   // Brand band: every name links to that brand in the shop. The second copy only makes the loop seamless.
   const brRow = hide => S.BRANDS.map(b => `<a href="${S.brandUrl(b)}"${hide ? ' tabindex="-1" aria-hidden="true"' : ` aria-label="Alles van ${b} in de webshop"`}><span>${b}</span><small>Bekijk ${U.ui('arrow')}</small></a><i></i>`).join('');
   $('#brands').innerHTML = `<div>${brRow(false)}</div><div>${brRow(true)}</div>`;
@@ -103,12 +105,16 @@
       <span class="bt-img">${U.photo(p.photo, n, c.icon, p.remote)}</span>
       <span class="bt-tx"><small>${sub}</small><b>${n}</b></span><span class="bt-go">${arrow}</span></a>`;
   }).join('');
-  const rest = S.NAV.filter(n => !tiles.some(t => t[0] === n.name));
-  $('#morecats').innerHTML = U.chips(rest.map(n => n.name));
+  $('#rounds').innerHTML = U.rounds();
+  // Custom gloves from the customiser: each one lifts when the pointer is over it (from the Clean concept).
+  $('#czw-row').innerHTML = ['navy-columbia', 'cardinal', 'zalm-mint', 'zwart-goud', 'nederland', 'roze-wit', 'curacao'].map((k, i) => {
+    const c = S.COLOURWAYS.find(x => x.key === k);
+    return `<a href="${S.CUSTOMIZER_URL}" style="--i:${i}" aria-label="Ontwerp je eigen handschoen, voorbeeld ${c.name}"><img data-src="${c.img.replace('.webp', '-s.webp')}" alt="" width="321" height="380"><span>${c.name}</span></a>`;
+  }).join('');
 
   /* ---------- glove rail ---------- */
   const rail = $('#rail');
-  rail.innerHTML = '<div class="rail-pad"></div>' + P.gloves.concat(P.more).map(U.card).join('') + `<a class="card cz-card" href="${S.CUSTOMIZER_URL}"><img src="${S.COLOURWAYS[1].img}" alt="" loading="lazy"><b>Of ontwerp<br>je eigen</b><span class="btn btn-red sm">Start de customizer</span></a><div class="rail-pad"></div>`;
+  rail.innerHTML = '<div class="rail-pad"></div>' + P.gloves.concat(P.more).map(U.card).join('') + `<a class="card cz-card" href="${S.CUSTOMIZER_URL}"><img data-src="${S.COLOURWAYS[1].img.replace('.webp', '-s.webp')}" alt=""><b>Of ontwerp<br>je eigen</b><span class="btn btn-red sm">Start de customizer</span></a><div class="rail-pad"></div>`;
   const step = () => Math.min(rail.clientWidth * .8, 900);
   $$('[data-rail]').forEach(b => b.addEventListener('click', () => rail.scrollBy({ left: step() * b.dataset.rail, behavior: RM ? 'auto' : 'smooth' })));
   function railState() {
@@ -132,7 +138,7 @@
 
   /* ---------- customiser: compact czStep viewer ---------- */
   const ST = S.CZ_STEPS;
-  $('#czw-shots').innerHTML = ST.map((s, i) => `<img src="${s.img}" alt="Customizer, stap ${i + 1}: ${s.t}" width="1600" height="1000" loading="lazy" class="${i ? '' : 'on'}">`).join('') + `<span class="czw-try">Probeer het zelf ${arrow}</span>`;
+  $('#czw-shots').innerHTML = ST.map((s, i) => `<img ${i ? 'data-wait ' : ''}data-src="${s.img}" alt="Customizer, stap ${i + 1}: ${s.t}" width="1600" height="1000" class="${i ? '' : 'on'}">`).join('') + `<span class="czw-try">Probeer het zelf ${arrow}</span>`;
   $('#czw-shots').href = S.CUSTOMIZER_URL;
   $('#czw-prog').innerHTML = ST.map(() => '<i></i>').join('');
   $('#czw-steps').innerHTML = ST.map((s, i) => `<li><button type="button" role="tab" aria-selected="${i === 0}" data-i="${i}" title="${s.d}"><span class="n">${String(i + 1).padStart(2, '0')}</span>${s.t}</button></li>`).join('');
@@ -140,6 +146,7 @@
   let czStep = 0, stepTimer = null, stepVisible = false;
   function setStep(i) {
     czStep = (i + ST.length) % ST.length;
+    if (stepVisible) [shots[czStep], shots[(czStep + 1) % ST.length]].forEach(need);  // each screenshot loads just before its turn
     shots.forEach((im, k) => im.classList.toggle('on', k === czStep));
     sbs.forEach((b, k) => b.setAttribute('aria-selected', k === czStep));
     segs.forEach((g, k) => g.classList.toggle('on', k <= czStep));
@@ -238,7 +245,8 @@
     top.classList.toggle('show', y > innerHeight * 1.5);
     if (!RM) {
       const r = heri.getBoundingClientRect(), f = (innerHeight - r.top) / (innerHeight + r.height);
-      if (f > -0.1 && f < 1.1) { h1.style.transform = `translateX(${(-f * 22 + 6).toFixed(2)}%)`; h2.style.transform = `translateX(${(f * 22 - 14).toFixed(2)}%)`; }
+      if (f > -0.1 && f < 1.1) { const k = innerWidth < 700 ? .2 : 1;  // on a phone the words fill the screen, so they travel less and stay readable
+        h1.style.transform = `translateX(${((-f * 22 + 6) * k).toFixed(2)}%)`; h2.style.transform = `translateX(${((f * 22 - 14) * k).toFixed(2)}%)`; }
     }
   }
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });

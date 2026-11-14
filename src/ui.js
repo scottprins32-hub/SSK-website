@@ -37,7 +37,7 @@
   function photo(src, label, iconName, fallback) {
     const err = fallback ? `if(this.dataset.fb){this.src=this.dataset.fb;this.removeAttribute('data-fb')}else this.remove()` : 'this.remove()';
     return `<div class="phd">${ic(iconName || 'glove')}<span>${esc(label || 'Productfoto')}</span></div>` +
-      (src ? `<img src="${src}"${fallback ? ` data-fb="${fallback}"` : ''} alt="${esc(label)}" loading="lazy" onerror="${err}">` : '');
+      (src ? `<img ${window.SSK_DEFER ? 'data-src' : 'loading="lazy" src'}="${src}"${fallback ? ` data-fb="${fallback}"` : ''} alt="${esc(label)}" onerror="${err}">` : '');
   }
 
   function header(o) {
@@ -52,8 +52,8 @@
     <header class="hdr${o.light ? ' light' : ''}">
       <div class="wrap bar">
         <button class="burger" aria-label="Menu" data-open="drawer">${ui('menu')}</button>
-        <a class="logo" href="./" aria-label="SSK Europe, naar de homepage"><b>SSK</b><i>Europe</i></a>
-        <form class="search" role="search" action="${S.BASE}/website/index.php" method="get" data-search>${ui('search')}<input type="hidden" name="Show" value="Search"><input type="search" name="KeyWord" placeholder="Zoek op product, merk of artikelnummer" aria-label="Zoeken in de webshop" autocomplete="off" required role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugg"><button type="submit" class="go" aria-label="Zoeken">${ui('arrow')}</button><div class="sugg" id="sugg" role="listbox" aria-label="Suggesties" hidden></div></form>
+        <a class="logo" href="${S.ROOT}" aria-label="SSK Europe, naar de homepage"><b>SSK</b><i>Europe</i></a>
+        <form class="search" role="search" action="${S.BASE}/website/index.php" method="get" data-search>${ui('search')}<input type="hidden" name="Show" value="Search"><input type="search" name="KeyWord" placeholder="Zoek product of merk" aria-label="Zoeken in de webshop" autocomplete="off" required role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugg"><button type="submit" class="go" aria-label="Zoeken">${ui('arrow')}</button><div class="sugg" id="sugg" role="listbox" aria-label="Suggesties" hidden></div></form>
         <div class="theme" role="group" aria-label="Weergave">
           <button type="button" data-theme-set="licht" aria-label="Lichte weergave" title="Licht">${ui('sun')}</button>
           <button type="button" data-theme-set="std" aria-label="Standaard weergave" title="Standaard">${ui('half')}</button>
@@ -186,6 +186,39 @@
     </div></footer>`;
   }
 
+  const ROUND_FIRST = ['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Slaghandschoenen', 'Schoenen', 'Clubkleding'];
+  // Round category photos in one row that scrolls sideways (from the Heritage concept).
+  const rounds = skip => `<div class="rounds-w"><button class="rbtn" type="button" data-slide="-1" aria-label="Vorige categorieën" disabled>${ui('arrow')}</button>
+    <div class="rounds">${S.NAV.filter(n => n.slug !== skip).map((n, i) => [n, (ROUND_FIRST.indexOf(n.name) + 1 || 99) * 100 + i]).sort((a, b) => a[1] - b[1]).map(x => x[0]).map((n, i) => `<a class="round" href="${n.url}" style="--i:${i}"><i>${n.img ? `<img ${window.SSK_DEFER ? 'data-src' : 'loading="lazy" src'}="${n.img}" alt="" width="120" height="120">` : ic(n.icon)}</i><span>${n.name.replace('Hoofdklasse ', '').replace(' 2026', '')}</span></a>`).join('')}</div>
+    <button class="rbtn" type="button" data-slide="1" aria-label="Volgende categorieën">${ui('arrow')}</button></div>`;
+
+  // Footer after the Heritage concept: the showroom with its opening hours first, then the links.
+  function footer2() {
+    const c = S.CONTACT, o = openNow(), tel = c.phone.replace(/\s/g, '');
+    const hrs = S.HOURS.map(([a, b], i) => `<tr class="${b === 'Gesloten' ? 'closed' : ''}${i === o.d ? ' today' : ''}"><th scope="row">${a}${i === o.d ? '<em>vandaag</em>' : ''}</th><td>${b}</td></tr>`).join('');
+    const col = (t, items) => `<div><h3>${t}</h3><ul>${items.map(([l, u]) => `<li><a href="${u}">${l}</a></li>`).join('')}</ul></div>`;
+    const pg = n => [n, S.PAGE[n]];
+    return `<footer class="ftr ft2">
+      <div class="room"><div class="wrap">
+        <div class="room-tx rv"><div class="kick">Showroom</div><h2 class="d-lg">Handschoenen moet je passen.</h2>
+          <p>In de showroom van het ${c.name} vind je de complete collectie. Kom langs, pas en vergelijk.</p>
+          <span class="open-now${o.open ? ' yes' : ''}">${o.text}</span>
+          <address><a href="${S.SHOP.maps}" target="_blank" rel="noopener">${ui('pin')}${c.street}, ${c.city}</a><a href="tel:${tel}">${ui('phone')}${c.phone}</a><a href="mailto:${c.email}">${ui('mail')}${c.email}</a></address>
+          <div class="btns"><a class="btn btn-navy" href="${S.SHOP.maps}" target="_blank" rel="noopener">Route plannen</a><a class="btn btn-line" href="tel:${tel}">Bel ons</a></div></div>
+        <table class="room-h rv" style="--i:1"><caption>Openingstijden</caption>${hrs}</table>
+      </div></div>
+      <div class="wrap">
+        <div class="top">
+          <div><a class="logo" href="${S.ROOT}"><b>SSK</b><i>Europe</i></a><p>Honkbal en softbal voor spelers, teams en verenigingen.</p>
+            <div class="soc"><a href="${c.instagram}" aria-label="Instagram">${ui('ig')}</a><a href="${c.facebook}" aria-label="Facebook">${ui('fb')}</a></div></div>
+          ${col('Shop', ['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Schoenen', 'Outlet'].map(n => [n, nav(n).url]))}
+          ${col('Service', ['Levertijden', 'Retour Zenden', 'Maten', 'Garantie', 'Prijslijst', 'Algemene voorwaarden', 'Privacy Verklaring'].map(pg))}
+          ${col('Voor clubs', [['Clubkleding', nav('Clubkleding').url], ['Bedrukken en borduren', S.PAGE['3D Geborduurde Caps en Sublimatie Jerseys']], ['Scheidsrechter', nav('Scheidsrechter').url], ['Veldmateriaal', nav('Veld').url], ['Voorverkoop ballen 2027', S.PAGE['Voorverkoop Aanbieding Ballen 2027']]])}
+        </div>
+        <div class="bot"><span>© 2026 SSK Europe</span><span>${c.street}, ${c.city}</span></div>
+      </div></footer>`;
+  }
+
   // Wire up: menu, mega menu.
   // Light, standard and dark. The choice is kept per visitor; head.html applies it before the first paint.
   const THEMES = ['licht', 'std', 'donker'];
@@ -215,8 +248,46 @@
     }).catch(() => {});
   }
 
+  // Photos written with data-src wait for the page's load event and then load as they come near the screen,
+  // so nothing below the first screen competes with it on a slow connection.
+  let lazyIO = null, lazyOn = document.readyState === 'complete', lazyTick = 0;
+  function lazy() {
+    if (!lazyOn) return;
+    if (!lazyIO) lazyIO = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const im = e.target; lazyIO.unobserve(im);
+      if (im.dataset.src) { im.src = im.dataset.src; im.removeAttribute('data-src'); }
+    }), { rootMargin: '900px 0px' });
+    document.querySelectorAll('img[data-src]:not([data-wait])').forEach(im => lazyIO.observe(im));
+  }
+  addEventListener('load', () => {
+    lazyOn = true; lazy();
+    new MutationObserver(() => { if (!lazyTick) lazyTick = requestAnimationFrame(() => { lazyTick = 0; lazy(); }); }).observe(document.body, { childList: true, subtree: true });
+  });
+
   function wire() {
     markTheme();
+    // The header steps aside while you scroll down and comes back as soon as you scroll up.
+    const hdr = document.querySelector('.hdr');
+    let lastY = scrollY;
+    if (hdr) addEventListener('scroll', () => {
+      const y = scrollY; if (Math.abs(y - lastY) < 6) return;
+      const busy = document.querySelector('.mega.open, .search.open, .drawer.open') || hdr.contains(document.activeElement);
+      hdr.classList.toggle('up', y > lastY && y > 320 && !busy);
+      lastY = y;
+    }, { passive: true });
+    // The arrows beside a sideways row hide at the end they point to. Scroll events do not bubble, so listen while capturing.
+    document.addEventListener('scroll', e => {
+      const row = e.target; if (!row.classList || !row.classList.contains('rounds')) return;
+      const [prev, next] = row.parentNode.querySelectorAll('.rbtn');
+      prev.disabled = row.scrollLeft < 8; next.disabled = row.scrollLeft > row.scrollWidth - row.clientWidth - 8;
+    }, { capture: true, passive: true });
+    // Arrow buttons beside a sideways row move it by most of its width.
+    document.addEventListener('click', e => {
+      const b = e.target.closest('[data-slide]'); if (!b) return;
+      const row = b.parentNode.querySelector('.rounds'); if (!row) return;
+      row.scrollBy({ left: (+b.dataset.slide) * row.clientWidth * .8, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
     document.addEventListener('click', e => {
       const b = e.target.closest('[data-theme-set]'); if (!b) return;
       // On phones only one button shows: it steps to the next theme.
@@ -287,5 +358,5 @@
   }
   function mount(map) { for (const k in map) document.querySelectorAll(`[data-ui="${k}"]`).forEach(el => el.outerHTML = map[k]); wire(); search(); }
 
-  window.UI = { ui, ic, photo, header, card, grid, secHead, cats, chips, usp, customizer, club, brands, showroom, footer, mount, nav };
+  window.UI = { rounds, footer2, lazy, ui, ic, photo, header, card, grid, secHead, cats, chips, usp, customizer, club, brands, showroom, footer, mount, nav };
 })();

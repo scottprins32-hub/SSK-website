@@ -8,10 +8,22 @@ import glob, html as H, json, os, re
 here = os.path.dirname(os.path.abspath(__file__))
 src = os.path.join(here, 'src')
 rd = lambda f: open(os.path.join(src, f), encoding='utf-8').read()
-css, js, head = rd('base.css'), rd('data.js') + '\n' + rd('ui.js'), rd('head.html')
+try:  # smaller pages when the minifiers are installed (pip install rjsmin rcssmin); the site builds the same without
+    import rcssmin, rjsmin
+    mincss, minjs = rcssmin.cssmin, rjsmin.jsmin
+except ImportError:
+    mincss = minjs = lambda t: t
+_rd = rd
+rd = lambda f: mincss(_rd(f)) if f.endswith('.css') else minjs(_rd(f)) if f.endswith('.js') else _rd(f)
+css, js, head = rd('base.css'), rd('data.js') + ';\n' + rd('ui.js'), rd('head.html')
 home_css, home_js = rd('home.css'), rd('home.js')
 cat_css, cat_js, cat_tpl = rd('cat.css'), rd('cat.js'), rd('category.html')
 theme_css = rd('theme.css')  # light and dark themes, last so they win over every page style
+catimg = {}  # slug -> the first locally stored product photo of that category, for the round category photos
+for f in sorted(glob.glob(os.path.join(src, 'catalog', '*.json'))):
+    c = json.load(open(f, encoding='utf-8'))
+    catimg[c['slug']] = next((p['t'] for p in c['products'] if p.get('t')), '')
+js = 'window.SSK_CATIMG=' + json.dumps(catimg, separators=(',', ':')) + ';\n' + js
 perf_css, motion_js = rd('perf.css'), rd('motion.js')  # the Performance mix: homepage and category pages only
 
 
@@ -39,12 +51,14 @@ def preloads(cat):
             seen.add(key); hero.append(p)
         if len(hero) == 3:
             break
-    urls = []
-    for p in hero[:1] + ps[:4] + hero[1:]:
+    urls, wide = [], set()  # wide: only needed where four products fit in a row, so a phone skips them
+    for k, p in enumerate(hero[:1] + ps[:2] + hero[1:] + ps[2:4]):
         u = '../' + p['t'] if p.get('t') else p.get('i')
         if u and u not in urls:
             urls.append(u)
-    return '\n'.join('<link rel="preload" as="image" href="%s"%s>' % (H.escape(u), ' fetchpriority="high"' if i < 2 else '') for i, u in enumerate(urls))
+            if k >= 5:
+                wide.add(u)
+    return '\n'.join('<link rel="preload" as="image" href="%s"%s%s>' % (H.escape(u), ' fetchpriority="high"' if i < 2 else '', ' media="(min-width:700px)"' if u in wide else '') for i, u in enumerate(urls))
 
 
 def write(dest, text):
@@ -54,7 +68,9 @@ def write(dest, text):
 
 
 count = lambda slug: json.load(open(os.path.join(src, 'catalog', slug + '.json'), encoding='utf-8'))
-home = rd('v2-homepage.html').replace('{{N_GLOVES}}', str(count('handschoenen')['count'])).replace('{{N_BATS}}', str(count('knuppels')['count'])).replace('{{N_CLUBS}}', str(len(count('clubkleding')['subs'])))
+hero_ids = re.findall(r"'(\d{8,12})', '#", _rd('home.js'))  # the hero products, in order (see HERO in src/home.js)
+hero_pre = '<link rel="preload" as="image" href="assets/hero/%s.webp" fetchpriority="high">\n' % hero_ids[0] + ''.join('<link rel="preload" as="image" href="assets/hero/%s-s.webp">\n' % i for i in hero_ids)
+home = rd('v2-homepage.html').replace('<meta name="theme-color"', hero_pre + '<meta name="theme-color"', 1).replace('{{N_GLOVES}}', str(count('handschoenen')['count'])).replace('{{N_BATS}}', str(count('knuppels')['count'])).replace('{{N_CLUBS}}', str(len(count('clubkleding')['subs'])))
 write(os.path.join(here, 'index.html'), page(home, '', perf=True))
 
 for f in sorted(glob.glob(os.path.join(src, 'catalog', '*.json'))):

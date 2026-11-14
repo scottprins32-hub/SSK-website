@@ -115,13 +115,10 @@ body.home{background:var(--chalk)}
 .bt-img:has(img) .phd,.pc .ph:has(img) .phd{visibility:hidden}
 
 /* ---------- marquee ---------- */
-.mq{background:var(--red-600);color:#fff;overflow:hidden;border-block:1px solid #000}
 .mq-in{display:flex;width:max-content;animation:mq 38s linear infinite}
 .mq-in>div{display:flex;align-items:center;flex:none}
-.mq span{font:800 22px/56px var(--display);text-transform:uppercase;letter-spacing:.06em;padding:0 22px}
-.mq i{font-style:normal;font-size:16px;opacity:.7}
 @keyframes mq{to{transform:translateX(-50%)}}
-.mq:hover .mq-in,.brandmq:hover .mq-in{animation-play-state:paused}
+.brandmq:hover .mq-in{animation-play-state:paused}
 
 /* ---------- section head ---------- */
 .sec-h .d-lg{font-size:clamp(36px,5vw,60px);line-height:.95}
@@ -325,7 +322,6 @@ body.home{background:var(--chalk)}
   .hx-stats dd{font-size:26px}
   .hx-pick{grid-template-areas:'now' 'sw' 'open';grid-template-columns:1fr}
   .hx-open{justify-self:start}
-  .mq span{font-size:18px;line-height:46px;padding:0 14px}
   .bento{grid-auto-rows:170px;gap:10px}
   .bt.big{grid-row:span 2}
   .bt.wide{grid-column:span 2}

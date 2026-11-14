@@ -24,7 +24,7 @@
   if (RM) return;
 
   /* ---------- scroll: speed leans the marquees and big type, progress moves the hero ---------- */
-  const lean = $$('.mq, .brandmq, .hx-ghost, .heri2-type');
+  const lean = $$('.brandmq, .hx-ghost, .heri2-type');
   const loops = $$('.mq-in, .hx-ghost').map(el => (el.getAnimations ? el.getAnimations()[0] : null)).filter(Boolean);
   const hero = $('.hx') || $('.ch');
   let last = scrollY, vel = 0, raf = 0;
@@ -54,24 +54,4 @@
     c.style.setProperty('--tx', ((e.clientX - r.left) / r.width).toFixed(3));
     c.style.setProperty('--ty', ((e.clientY - r.top) / r.height).toFixed(3));
   }, { passive: true });
-
-  /* ---------- pointer follower with a word: "Sleep" on the rail, "Shop" on tiles, "Bekijk" on the hero product ---------- */
-  [['#rail', 'Sleep'], ['#stage', 'Bekijk'], ['#ch-vis', 'Shop']].forEach(([s, t]) => { const el = $(s); if (el) el.dataset.cur = t; });
-  $$('.bt').forEach(el => { el.dataset.cur = 'Shop'; });
-  const cur = document.createElement('div'); cur.className = 'cur'; cur.setAttribute('aria-hidden', 'true'); document.body.appendChild(cur);
-  let cx = 0, cy = 0, tx = 0, ty = 0, craf = 0, shown = false;
-  const follow = () => {
-    cx += (tx - cx) * .22; cy += (ty - cy) * .22;
-    cur.style.transform = `translate3d(${cx.toFixed(1)}px,${cy.toFixed(1)}px,0)`;
-    craf = shown || Math.abs(tx - cx) + Math.abs(ty - cy) > .5 ? requestAnimationFrame(follow) : 0;
-  };
-  document.addEventListener('pointermove', e => {
-    tx = e.clientX; ty = e.clientY;
-    const t = e.target.closest && e.target.closest('[data-cur]');
-    if (t) { if (!shown) { cx = tx; cy = ty; } cur.textContent = t.dataset.cur; }
-    shown = !!t; cur.classList.toggle('on', shown);
-    if (shown && !craf) craf = requestAnimationFrame(follow);
-  }, { passive: true });
-  document.addEventListener('pointerleave', () => { shown = false; cur.classList.remove('on'); });
-  addEventListener('scroll', () => { if (shown) { shown = false; cur.classList.remove('on'); } }, { passive: true });
 })();
