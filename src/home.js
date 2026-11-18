@@ -162,6 +162,7 @@
       <span class="bt-tx"><small>${sub}</small><b>${n}</b></span><span class="bt-go">${arrow}</span></a>`;
   }).join('');
   $('#rounds').innerHTML = U.rounds();
+  U.seen($('#seen'));
   // Custom gloves from the customiser: each one lifts when the pointer is over it (from the Clean concept).
   $('#czw-row').innerHTML = ['navy-columbia', 'cardinal', 'zalm-mint', 'zwart-goud', 'nederland', 'roze-wit', 'curacao'].map((k, i) => {
     const c = S.COLOURWAYS.find(x => x.key === k);

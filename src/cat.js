@@ -227,6 +227,7 @@
   /* ---------- other categories, brands ---------- */
   $('#shop-link').href = C.shop;
   $('#others').innerHTML = U.rounds(C.slug);
+  U.seen($('#seen'));
   const brRow = hide => S.BRANDS.map(b => `<a href="${S.brandUrl(b)}"${hide ? ' tabindex="-1" aria-hidden="true"' : ` aria-label="Alles van ${b} in de webshop"`}><span>${b}</span><small>Bekijk ${U.ui('arrow')}</small></a><i></i>`).join('');
   $('#brands').innerHTML = `<div>${brRow(false)}</div><div>${brRow(true)}</div>`;
   const fbot = $('.ftr .bot');
