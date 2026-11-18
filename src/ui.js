@@ -76,6 +76,9 @@
       <header><a class="logo" href="./" style="color:var(--navy-900)">${logo()}<i>Europe</i></a><button data-close aria-label="Sluiten">${ui('x')}</button></header>
       <a class="btn btn-red" href="${CZ}" style="width:100%;margin:4px 0 12px">Ontwerp je handschoen</a>
       ${S.NAV.map(n => `<a class="c" href="${n.url}">${ic(n.icon)}${n.name}</a>`).join('')}
+      <div class="d-theme" role="group" aria-label="Weergave"><span>Weergave</span>
+        <button type="button" data-theme-set="licht">${ui('sun')}Licht</button><button type="button" data-theme-set="std">${ui('half')}Standaard</button><button type="button" data-theme-set="donker">${ui('moon')}Donker</button></div>
+      <div class="d-acts"><a href="${S.SHOP.account}">${ui('user')}Account</a><a href="${S.SHOP.cart}">${ui('cart')}Winkelwagen</a></div>
     </div></div>`;
   }
 
@@ -190,6 +193,29 @@
   }
 
   const ROUND_FIRST = ['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Slaghandschoenen', 'Schoenen', 'Clubkleding'];
+  // Recently viewed: the product cards someone clicked, kept in this browser only (localStorage), newest first.
+  const SEEN_KEY = 'ssk-seen';
+  const seenGet = () => { try { const v = JSON.parse(localStorage.getItem(SEEN_KEY) || '[]'); return Array.isArray(v) ? v : []; } catch (e) { return []; } };
+  function seenAdd(a) {
+    const img = a.querySelector('.ph img'), txt = s => ((a.querySelector(s) || {}).textContent || '').trim();
+    const src = img ? (img.currentSrc || (img.getAttribute('src') ? img.src : img.dataset.src ? new URL(img.dataset.src, location.href).href : '')) : '';
+    const it = { u: a.href, b: txt('.brand'), n: txt('.name'), p: txt('.price b'), i: src };
+    if (!it.n) return;
+    try { localStorage.setItem(SEEN_KEY, JSON.stringify([it].concat(seenGet().filter(x => x.u !== it.u)).slice(0, 10))); } catch (e) {}
+  }
+  function seen(el) {
+    if (!el) return;
+    const list = seenGet();
+    el.hidden = list.length < 2;
+    if (el.hidden) return;
+    el.innerHTML = `<div class="wrap"><div class="seen-h"><b>Laatst bekeken</b><button type="button" class="seen-x">Wis</button></div>
+      <div class="seen-row">${list.map(x => `<a class="seen-i" href="${esc(x.u)}"><span class="seen-ph">${x.i ? `<img src="${esc(x.i)}" alt="" width="72" height="72" loading="lazy" onerror="this.remove()">` : ''}</span><span class="seen-tx"><small>${esc(x.b)}</small><span>${esc(x.n)}</span><b>${esc(x.p)}</b></span></a>`).join('')}</div></div>`;
+    el.querySelector('.seen-x').onclick = () => { try { localStorage.removeItem(SEEN_KEY); } catch (e) {} el.hidden = true; };
+  }
+  document.addEventListener('click', e => { const a = e.target.closest && e.target.closest('a.pc'); if (a) seenAdd(a); }, true);
+  // Coming back with the Back button restores the page from memory, so draw the row again.
+  addEventListener('pageshow', e => { if (e.persisted) seen(document.getElementById('seen')); });
+
   // Round category photos in one row that scrolls sideways (from the Heritage concept).
   const rounds = skip => `<div class="rounds-w"><button class="rbtn" type="button" data-slide="-1" aria-label="Vorige categorieën" disabled>${ui('arrow')}</button>
     <div class="rounds">${S.NAV.filter(n => n.slug !== skip).map((n, i) => [n, (ROUND_FIRST.indexOf(n.name) + 1 || 99) * 100 + i]).sort((a, b) => a[1] - b[1]).map(x => x[0]).map((n, i) => `<a class="round" href="${n.url}" style="--i:${i}"><i>${n.img ? `<img ${window.SSK_DEFER ? 'data-src' : 'loading="lazy" src'}="${n.img}" alt="" width="120" height="120">` : ic(n.icon)}</i><span>${n.name.replace('Hoofdklasse ', '').replace(' 2026', '')}</span></a>`).join('')}</div>
@@ -361,5 +387,5 @@
   }
   function mount(map) { for (const k in map) document.querySelectorAll(`[data-ui="${k}"]`).forEach(el => el.outerHTML = map[k]); wire(); search(); }
 
-  window.UI = { logo, rounds, footer2, lazy, ui, ic, photo, header, card, grid, secHead, cats, chips, usp, customizer, club, brands, showroom, footer, mount, nav };
+  window.UI = { seen, logo, rounds, footer2, lazy, ui, ic, photo, header, card, grid, secHead, cats, chips, usp, customizer, club, brands, showroom, footer, mount, nav };
 })();

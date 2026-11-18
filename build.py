@@ -109,6 +109,7 @@ def deals():
             'items': [{'n': p['n'], 'u': p['u'], 'p': p['p'], 'w': p['w'], 'b': p.get('b', ''), 't': p['t'], 'off': off(p)} for p in pick]}
 
 
+js = js.replace('Tot 50% korting', 'Tot %d%% korting' % deals()['max'])  # menu, mega menu and search use the real highest outlet discount
 hero_ids = re.findall(r"'(\d{8,12})', '#", _rd('home.js'))  # the hero products, in order (see HERO in src/home.js)
 hero_pre = '<link rel="preload" as="image" href="assets/hero/%s.webp" fetchpriority="high">\n' % hero_ids[0]
 # The small photos of the hero picker go into the page as data, so the first screen needs six requests fewer.

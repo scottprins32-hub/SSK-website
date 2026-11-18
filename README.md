@@ -20,6 +20,7 @@ Open `concepts/index.html` for an overview of the five earlier versions, or open
 
 - **Hero:** the shop first. Six new products from the shop (gloves, a 2026 bat, a helmet, the SSK ball) cycle on their own, each with its name, price and a link; thumbnails switch them. The cut-outs in `assets/hero/` are the shop's own product photos with their transparent background kept.
 - **Round category photos:** all seventeen categories in one row right under the hero, each with a product photo from that category (picked from Pim's favourite parts of the Heritage concept). The same row closes every category page.
+- **Laatst bekeken:** a row with the last products someone clicked, under the round category photos and above "Andere categorieën" on every category page. It appears from two products on, is kept only in that browser (`localStorage`, key `ssk-seen`) and can be cleared with *Wis*.
 - **Nieuw binnen:** a drag-to-scroll rail with eleven new gloves and a customiser card at the end.
 - **Welke positie speel je?** A drawn field with the nine positions and the batter. Pick one and you get what that position needs, a real product photo, the number of matching products and a link to the category page with that filter on. It plays through the positions on its own until someone touches it. `build.py` works out the counts, photos and links from the catalogue (`POS`).
 - **Shop per categorie:** a photo grid with real product photos.
@@ -27,7 +28,7 @@ Open `concepts/index.html` for an overview of the five earlier versions, or open
 - **Uitgelicht:** tabs for 2026 bats, helmets, balls and outlet.
 - **Glove Customizer:** one compact block after the shop: the seven steps next to a real screenshot of each, which play on their own and open the customiser when clicked. Below it a row of seven custom gloves from the customiser that lift when the pointer is over them (from the Clean concept). Kept secondary on purpose (feedback from Pim: the custom gloves were too much in the foreground).
 - **Heritage, club apparel, Holland Series, brands** and the footer, which opens with the showroom: address, a live open/closed label, route and call buttons and the opening hours with today marked (from the Heritage concept).
-- **Header:** search on the left, logo in the middle, account and cart on the right, the menu centred below, and one message at a time in the top bar (the calmer bar from the Game Ready concept). It slides away when you scroll down and comes back when you scroll up.
+- **Header:** search on the left, logo in the middle, account and cart on the right, the menu centred below, and one message at a time in the top bar (the calmer bar from the Game Ready concept). It slides away when you scroll down and comes back when you scroll up. On phones it is one row (menu, logo, account, cart) with the search below; the light/dark choice is in the menu there.
 
 Motion: line-by-line title reveal, scroll reveals, a red stitch scroll bar, a brand band and magnetic buttons. Everything respects *reduce motion*.
 
