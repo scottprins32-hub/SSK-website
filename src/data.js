@@ -3,6 +3,11 @@
   const BASE = 'https://sskeurope.ccvshop.nl';
   // The SSK Pro Custom glove customiser (repo scottprins32-hub/ssk-glove-demo).
   const CUSTOMIZER_URL = 'https://scottprins32-hub.github.io/ssk-glove-demo/';
+  const STUDIO = {
+    glove: { href: BASE + '/SSK-Custom-Glove', icon: 'glove', title: 'Handschoen', action: 'Ontwerp je handschoen', detail: 'Kies het model, het web, de kleuren en je persoonlijke details.' },
+    clothing: { href: 'https://ssk-kleding-customizer-f9b8296e.base44.app/', icon: 'shirt', title: 'Teamkleding', action: 'Ontwerp teamkleding', detail: 'Stel jullie clubtenue samen met clubkleuren, logo, maten en rugnummers.' },
+    bag: { href: 'https://ssk-bag-configurator-f065396e.base44.app/', icon: 'bag', title: 'Tas', action: 'Ontwerp je tas', detail: 'Kies een model en bekijk hoe je tas eruitziet met jouw kleuren of clublogo.' }
+  };
   // Screenshot of the customiser for the hero and walkthrough (assets/customizer/, captured from the live customiser).
   const CUSTOMIZER_IMG = '/*ASSETS*/assets/customizer/step-4.webp';
   const CZ_DIR = '/*ASSETS*/assets/customizer/';
@@ -75,14 +80,12 @@
     ['Accessoires', 'cap', '/Webwinkel-Category-5856307/Accessoires.html', 'Alles voor de dugout'],
     ['Outlet', 'tag', '/Webwinkel-Category-10665083/Outlet.html', 'Tot 50% korting'],
     ['New Arrivals', 'star', '/New-Arrivals', 'Net binnen'],
-    ['Zomer Korting', 'sun', '/Zomer-Korting', 'Zomerdeals'],
     ['Hoofdklasse Holland Series 2026', 'trophy', '/Hoofdklasse-Holland-Series', 'De collectie van de Holland Series']
   ].map(([name, icon, url, sub]) => {
     // Every category has its own page on this site (built from src/catalog/<slug>.json); `shop` is the same category in the live shop.
     const slug = name.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     return { name, icon, slug, sub, shop: url.startsWith('/') ? BASE + url : url, url: '/*ASSETS*/' + slug + '/' };
   });
-  NAV[16].sub = 'De collectie van de Holland Series';
 
   const CAT_IMG = {
     'Handschoenen': BASE + '/Files/2/81000/81585/CategoryPhotos/1200x630/5784651.png',
@@ -184,7 +187,7 @@
     ['Levertijden', '/Webwinkel-Page-1182239/Levertijden.html'], ['Retour Zenden', '/Webwinkel-Page-1182445/Retour-Zenden.html'],
     ['Niet Te Ruilen', '/Webwinkel-Page-1164549/Niet-Te-Ruilen.html'], ['Maten', '/Maten'], ['Garantie', '/Garantie'],
     ['3D Geborduurde Caps en Sublimatie Jerseys', '/3d-borduring'], ['Was Voorschrift', '/Webwinkel-Page-4237210/Was-Voorschrift.html'],
-    ['Welke Bal Koopt U?', '/Welke-bal-koopt-U-'], ['Bedrukken Kleding / Caps', '/SSK-HQ-Gloves'],
+    ['Welke Bal Koopt U?', '/Welke-bal-koopt-U-'],
     ['Voorverkoop Aanbieding Ballen 2027', '/Voorverkoop-Aanbieding-Ballen-2027']
   ];
   const PAGE = Object.fromEntries(PAGES.map(([n, u]) => [n, BASE + u]));
@@ -198,5 +201,5 @@
   // Image with graceful fallback: if the shop image fails, the tile keeps its icon.
   const img = (src, alt) => src ? `<img src="${src}" alt="${alt}" loading="lazy" onerror="this.remove()">` : '';
 
-  window.SSK = { ROOT: '/*ASSETS*/' || './', brandUrl, LOGO, BASE, CUSTOMIZER_URL, CUSTOMIZER_IMG, COLOURWAYS, CZ_STEPS, PAGE, SHOP, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
+  window.SSK = { ROOT: '/*ASSETS*/' || './', brandUrl, LOGO, BASE, CUSTOMIZER_URL, CUSTOMIZER_IMG, STUDIO, COLOURWAYS, CZ_STEPS, PAGE, SHOP, NAV, PRODUCTS, BRANDS, HOURS, PAGES, CONTACT, LEAD, icon, eur, img };
 })();

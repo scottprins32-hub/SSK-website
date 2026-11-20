@@ -18,6 +18,18 @@
   U.mount({ header: U.header(), footer: U.footer2() });
   document.documentElement.classList.add('js');
 
+  // Old bookmarks still explain what happened; don't show expired campaign prices.
+  if (C.slug === 'zomer-korting') {
+    document.title = 'Zomeractie afgelopen · SSK Europe';
+    $('#main').innerHTML = `<section class="sec archive-promo" id="grid" tabindex="-1"><div class="wrap">
+      <div class="kick">Afgelopen actie</div>
+      <h1 class="d-lg">De zomeractie is voorbij</h1>
+      <p>Bekijk de actuele aanbiedingen in de outlet.</p>
+      <a class="btn btn-red" href="${U.nav('Outlet').url}">Naar de outlet ${U.ui('arrow')}</a>
+    </div></section>`;
+    return;
+  }
+
   /* ---------- data ---------- */
   const P = C.products.map((p, k) => ({ ...p, k, s: p.s || [], key: norm(p.b + ' ' + p.n), off: p.w ? Math.round((1 - p.p / p.w) * 100) : 0 }));
   const subs = C.subs.map((s, i) => ({ ...s, i, slug: slug(s.name) }));
@@ -105,6 +117,8 @@
   [pmin, pmax].forEach(r => { r.min = PMIN; r.max = PMAX; r.step = PMAX - PMIN > 200 ? 5 : 1; });
   if (PMAX - PMIN < 2) $('#range').closest('.f-grp').hidden = true;
   if (NAV.name === 'Handschoenen' || NAV.name === 'Catcher') $('#f-extra').innerHTML = `<a class="f-cz" href="${S.CUSTOMIZER_URL}"><img data-src="${S.COLOURWAYS[0].img.replace('.webp', '-s.webp')}" alt="" width="52" height="52"><span><small>Glove Customizer</small><b>Liever je eigen handschoen?</b></span>${U.ui('arrow')}</a>`;
+  const studioItem = ['Kleding', 'Clubkleding'].includes(NAV.name) ? S.STUDIO.clothing : NAV.name === 'Tassen' ? S.STUDIO.bag : null;
+  if (studioItem) $('#ch-subs').insertAdjacentHTML('afterend', `<a class="link ch-studio" href="${studioItem.href}">${studioItem.action} ${U.ui('arrow')}</a>`);
 
   function facets() {
     // Brand counts follow every other filter, so a number always tells what you will get.

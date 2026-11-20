@@ -117,6 +117,19 @@ img{display:block;max-width:100%}
 .nav>.wrap>.all{display:flex;align-items:center;gap:8px;color:#fff;padding-left:0}
 .nav .cz{margin-left:auto;color:#fff}
 .nav .cz .ui{width:16px;height:16px;margin-right:6px}
+
+/* The shop comes first; the design entry belongs after its collection pages. */
+.studio{scroll-margin-top:130px}
+.studio-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.studio-card{display:flex;align-items:flex-start;gap:12px;padding:20px;min-height:106px}
+.studio-card:hover,.studio-card:focus-visible{border-color:var(--red-600)}
+.studio-icon{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;background:var(--navy-900);color:#fff}
+.studio-icon .ico{width:28px;height:28px}
+.studio-copy{display:grid;gap:5px;flex:1;min-width:0}
+.studio-copy strong{font:700 23px/1.1 var(--display)}
+.studio-copy>span{font-size:14px;line-height:1.35}
+.studio-arrow{width:17px;height:17px;flex:none;color:var(--red-600);margin-top:3px}
+@media(max-width:760px){.studio{scroll-margin-top:100px}.studio-grid{grid-template-columns:1fr}.studio-card{min-height:0;padding:15px}}
 .mega{display:none;position:absolute;left:0;right:0;top:100%;background:#fff;color:var(--g700);box-shadow:var(--sh-overlay);border-top:1px solid var(--g200)}
 .mega.open{display:block}
 .mega .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:4px 24px;padding-top:24px;padding-bottom:24px}

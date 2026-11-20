@@ -8,7 +8,7 @@
   const arrow = U.ui('arrow');
 
   window.SSK_DEFER = true;  // photos below the first screen wait for the load event (see UI.lazy)
-  U.mount({ header: U.header(), club: U.club(), footer: U.footer2() });
+  U.mount({ header: U.header(), studio: U.studio(), club: U.club(), footer: U.footer2() });
 
   /* ---------- links ---------- */
   $('#cz-end').href = S.CUSTOMIZER_URL;
