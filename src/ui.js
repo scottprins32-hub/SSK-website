@@ -32,6 +32,7 @@
   const ic = n => S.icon(n).replace('stroke-width="2.2"', 'stroke-width="3"');
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
   const CZ = S.CUSTOMIZER_URL;
+  const STUDIO_HOME = S.ROOT + '#zelf-ontwerpen';
   const nav = n => S.NAV.find(x => x.name === n);
   const MAIN = ['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Catcher', 'Schoenen', 'Clubkleding', 'Outlet'];
 
@@ -69,12 +70,12 @@
       </div>
       <nav class="nav" aria-label="Categorieën"><div class="wrap">
         <a href="#" class="all" data-open="mega">${ui('grid')} Alle categorieën</a>${links}
-        <a class="cz" href="${CZ}">${ui('pen')}Glove Customizer</a>
+        <a class="cz" href="${STUDIO_HOME}">${ui('pen')}Zelf ontwerpen</a>
       </div><div class="mega"><div class="wrap">${mega}</div></div></nav>
     </header>
     <div class="drawer"><div class="scrim" data-close></div><div class="dpanel">
-      <header><a class="logo" href="./" style="color:var(--navy-900)">${logo()}<i>Europe</i></a><button data-close aria-label="Sluiten">${ui('x')}</button></header>
-      <a class="btn btn-red" href="${CZ}" style="width:100%;margin:4px 0 12px">Ontwerp je handschoen</a>
+      <header><a class="logo" href="${S.ROOT}" style="color:var(--navy-900)">${logo()}<i>Europe</i></a><button data-close aria-label="Sluiten">${ui('x')}</button></header>
+      <a class="btn btn-red" href="${STUDIO_HOME}" data-close style="width:100%;margin:4px 0 12px">Zelf ontwerpen</a>
       ${S.NAV.map(n => `<a class="c" href="${n.url}">${ic(n.icon)}${n.name}</a>`).join('')}
       <div class="d-theme" role="group" aria-label="Weergave"><span>Weergave</span>
         <button type="button" data-theme-set="licht">${ui('sun')}Licht</button><button type="button" data-theme-set="std">${ui('half')}Standaard</button><button type="button" data-theme-set="donker">${ui('moon')}Donker</button></div>
@@ -128,13 +129,29 @@
     </div>`;
   }
 
+  function studio() {
+    return `<section class="sec studio" id="zelf-ontwerpen" aria-labelledby="studio-title" tabindex="-1">
+      <div class="wrap">
+        <div class="sec-h"><div><div class="kick">SSK Custom Studio</div><h2 class="d-lg" id="studio-title">Zelf ontwerpen</h2>
+          <p>Geef je uitrusting of clubtenue een eigen ontwerp.</p></div>
+          <a class="link" href="#shop">Naar de webshop ${ui('arrow')}</a>
+        </div>
+        <div class="studio-grid">${Object.values(S.STUDIO).map(o => `<a class="card studio-card" href="${o.href}" aria-label="${o.action}">
+          <span class="studio-icon">${ic(o.icon)}</span>
+          <span class="studio-copy"><strong>${o.title}</strong><span>${o.detail}</span></span>
+          ${ui('arrow', 'studio-arrow')}
+        </a>`).join('')}</div>
+      </div>
+    </section>`;
+  }
+
   function club() {
     const L2 = S.LEAD.map(([a, b]) => `<li><span>${a}</span><span class="mono">${b}</span></li>`).join('');
     return `<div class="split">
       <div class="card panel"><div class="kick">Voor verenigingen</div><h2 class="d-md">Clubkleding en bedrukken</h2>
         <p>Wedstrijdjerseys, 3D-geborduurde caps, sublimatie en club- en studentenjassen. Met jullie logo, nummers en namen.</p>
         <ul>${L2}</ul>
-        <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-navy sm" href="${nav('Clubkleding').url}">Clubkleding bekijken</a><a class="btn btn-line sm" href="mailto:${S.CONTACT.email}?subject=${encodeURIComponent('Offerte clubkleding')}">Offerte aanvragen</a></div></div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-navy sm" href="${nav('Clubkleding').url}">Clubkleding bekijken</a><a class="btn btn-line sm" href="${S.STUDIO.clothing.href}">Ontwerp teamkleding</a></div></div>
       <div class="card panel navy"><div class="kick">Hoofdklasse</div><h2 class="d-md">Holland Series 2026</h2>
         <p>Bekijk de collectie van de Hoofdklasse Holland Series 2026 in de webshop.</p>
         <a class="btn btn-red sm" href="${nav('Hoofdklasse Holland Series 2026').url}">Naar de collectie</a>
@@ -242,7 +259,7 @@
             <div class="soc"><a href="${c.instagram}" aria-label="Instagram">${ui('ig')}</a><a href="${c.facebook}" aria-label="Facebook">${ui('fb')}</a></div></div>
           ${col('Shop', ['Handschoenen', 'Knuppels', 'Ballen', 'Helmen', 'Schoenen', 'Outlet'].map(n => [n, nav(n).url]))}
           ${col('Service', ['Levertijden', 'Retour Zenden', 'Maten', 'Garantie', 'Prijslijst', 'Algemene voorwaarden', 'Privacy Verklaring'].map(pg))}
-          ${col('Voor clubs', [['Clubkleding', nav('Clubkleding').url], ['Bedrukken en borduren', S.PAGE['3D Geborduurde Caps en Sublimatie Jerseys']], ['Scheidsrechter', nav('Scheidsrechter').url], ['Veldmateriaal', nav('Veld').url], ['Voorverkoop ballen 2027', S.PAGE['Voorverkoop Aanbieding Ballen 2027']]])}
+          ${col('Voor clubs', [['Clubkleding', nav('Clubkleding').url], ['Zelf ontwerpen', STUDIO_HOME], ['Sublimatie en 3D-borduring', S.PAGE['3D Geborduurde Caps en Sublimatie Jerseys']], ['Scheidsrechter', nav('Scheidsrechter').url], ['Veldmateriaal', nav('Veld').url], ['Voorverkoop ballen 2027', S.PAGE['Voorverkoop Aanbieding Ballen 2027']]])}
         </div>
         <div class="bot"><span>© 2026 SSK Europe</span><span>${c.street}, ${c.city}</span></div>
       </div></footer>`;
@@ -349,7 +366,7 @@
       if (!q.length) {
         html = `<div class="sg-h">Populair</div><div class="sg-chips">${POP.map(n => `<a role="option" class="sg-chip" href="${nav(n).url}">${n}</a>`).join('')}</div>
           <div class="sg-h">Merken</div><div class="sg-chips">${S.BRANDS.map(b => `<a role="option" class="sg-chip" href="${S.brandUrl(b)}">${b}</a>`).join('')}</div>
-          <a role="option" class="sg-cz" href="${CZ}">${ui('pen')}<span><b>Glove Customizer</b><small>Ontwerp je eigen handschoen</small></span></a>`;
+          <a role="option" class="sg-cz" href="${STUDIO_HOME}">${ui('pen')}<span><b>Zelf ontwerpen</b><small>Handschoen, teamkleding of tas</small></span></a>`;
       } else {
         const cats = S.NAV.filter(n => q.every(w => norm(n.name + ' ' + n.sub).includes(w))).slice(0, 3);
         const prods = items.filter((p, i) => q.every(w => hay[i].includes(w))).slice(0, 6);
@@ -387,5 +404,5 @@
   }
   function mount(map) { for (const k in map) document.querySelectorAll(`[data-ui="${k}"]`).forEach(el => el.outerHTML = map[k]); wire(); search(); }
 
-  window.UI = { seen, logo, rounds, footer2, lazy, ui, ic, photo, header, card, grid, secHead, cats, chips, usp, customizer, club, brands, showroom, footer, mount, nav };
+  window.UI = { seen, logo, rounds, footer2, lazy, ui, ic, photo, header, card, grid, secHead, cats, chips, usp, customizer, studio, club, brands, showroom, footer, mount, nav };
 })();
